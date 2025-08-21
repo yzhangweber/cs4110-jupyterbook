@@ -32,3 +32,7 @@ parts:
     chapters:
     - file: content/Part_4_Advanced_Topics/Chapter17_P_and_NP_Problems
     - file: content/Part_4_Advanced_Topics/Chapter18_NP_Completeness
+  - caption: Appendix
+    numbered: 1
+    chapters:
+    - file: content/Appendix/Jupyter Notebook Setup Guide
