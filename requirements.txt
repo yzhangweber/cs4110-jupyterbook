@@ -1,0 +1,9 @@
+IPython
+graphviz
+importlib
+ipykernel
+jupyter-book
+matplotlib
+nltk
+numpy
+svgling

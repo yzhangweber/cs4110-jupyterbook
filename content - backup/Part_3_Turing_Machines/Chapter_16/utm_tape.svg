@@ -1,0 +1,120 @@
+
+    <svg width="900" height="250" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <style>
+                .section { fill: none; stroke: #666; stroke-width: 1; stroke-dasharray: 5,5; }
+                .tape-bg { fill: #f9f9f9; stroke: none; }
+                .cell { fill: white; stroke: black; stroke-width: 1.5; }
+                .delimiter { fill: #ddd; stroke: black; stroke-width: 2; }
+                .highlight { fill: #ffd700; fill-opacity: 0.3; }
+                .text { font-family: 'Consolas', 'Monaco', monospace; font-size: 14px; }
+                .label { font-family: Arial, sans-serif; font-size: 13px; fill: #444; }
+                .title { font-family: Arial, sans-serif; font-size: 16px; font-weight: bold; }
+            </style>
+        </defs>
+        
+        <text x="450" y="25" class="title" text-anchor="middle">UTM Tape Organization</text>
+        
+        <!-- Background sections -->
+        <rect x="30" y="60" width="840" height="80" class="tape-bg"/>
+        
+        <!-- Section 1: Machine Description -->
+        <g id="machine-section">
+            <rect x="50" y="70" width="320" height="60" class="section highlight"/>
+            <text x="210" y="55" class="label" text-anchor="middle">Encoded Turing Machine</text>
+            
+            <rect x="60" y="80" width="30" height="40" class="delimiter"/>
+            <text x="75" y="105" class="text" text-anchor="middle">#</text>
+            
+            <!-- Encoded TM cells showing a's and b's -->
+            <rect x="90" y="80" width="25" height="40" class="cell"/>
+            <text x="102.5" y="105" class="text" text-anchor="middle">a</text>
+            
+            <rect x="115" y="80" width="25" height="40" class="cell"/>
+            <text x="127.5" y="105" class="text" text-anchor="middle">b</text>
+            
+            <rect x="140" y="80" width="25" height="40" class="cell"/>
+            <text x="152.5" y="105" class="text" text-anchor="middle">a</text>
+            
+            <rect x="165" y="80" width="25" height="40" class="cell"/>
+            <text x="177.5" y="105" class="text" text-anchor="middle">a</text>
+            
+            <rect x="190" y="80" width="25" height="40" class="cell"/>
+            <text x="202.5" y="105" class="text" text-anchor="middle">b</text>
+            
+            <rect x="215" y="80" width="25" height="40" class="cell"/>
+            <text x="227.5" y="105" class="text" text-anchor="middle">b</text>
+            
+            <rect x="240" y="80" width="25" height="40" class="cell"/>
+            <text x="252.5" y="105" class="text" text-anchor="middle">a</text>
+            
+            <rect x="265" y="80" width="25" height="40" class="cell"/>
+            <text x="277.5" y="105" class="text" text-anchor="middle">b</text>
+            
+            <rect x="290" y="80" width="40" height="40" class="cell"/>
+            <text x="310" y="105" class="text" text-anchor="middle">...</text>
+            
+            <text x="195" y="145" class="label" text-anchor="middle" font-size="11">(CWL encoding)</text>
+            
+            <rect x="330" y="80" width="30" height="40" class="delimiter"/>
+            <text x="345" y="105" class="text" text-anchor="middle">$</text>
+        </g>
+        
+        <!-- Section 2: Data (Input to simulated TM) -->
+        <g id="data-section">
+            <rect x="370" y="70" width="390" height="60" class="section highlight"/>
+            <text x="565" y="55" class="label" text-anchor="middle">Data (Input String + Blanks)</text>
+            
+            <!-- Data cells - string of a's and b's -->
+            <rect x="380" y="80" width="30" height="40" class="cell"/>
+            <text x="395" y="105" class="text" text-anchor="middle">b</text>
+            
+            <rect x="410" y="80" width="30" height="40" class="cell"/>
+            <text x="425" y="105" class="text" text-anchor="middle">a</text>
+            
+            <rect x="440" y="80" width="30" height="40" class="cell" style="fill: #ffcccc;"/>
+            <text x="455" y="105" class="text" text-anchor="middle">b</text>
+            
+            <rect x="470" y="80" width="30" height="40" class="cell"/>
+            <text x="485" y="105" class="text" text-anchor="middle">b</text>
+            
+            <rect x="500" y="80" width="30" height="40" class="cell"/>
+            <text x="515" y="105" class="text" text-anchor="middle">a</text>
+            
+            <!-- Blank symbols -->
+            <rect x="530" y="80" width="30" height="40" class="cell"/>
+            <text x="545" y="105" class="text" text-anchor="middle">Δ</text>
+            
+            <rect x="560" y="80" width="30" height="40" class="cell"/>
+            <text x="575" y="105" class="text" text-anchor="middle">Δ</text>
+            
+            <rect x="590" y="80" width="30" height="40" class="cell"/>
+            <text x="605" y="105" class="text" text-anchor="middle">Δ</text>
+            
+            <rect x="620" y="80" width="30" height="40" class="cell"/>
+            <text x="635" y="105" class="text" text-anchor="middle">...</text>
+            
+            <text x="515" y="145" class="label" text-anchor="middle" font-size="11">(input string)</text>
+            <text x="590" y="145" class="label" text-anchor="middle" font-size="11">(blanks)</text>
+            
+            <rect x="650" y="80" width="30" height="40" class="delimiter"/>
+            <text x="665" y="105" class="text" text-anchor="middle">#</text>
+        </g>
+        
+        <!-- Head pointer at bottom pointing up -->
+        <path d="M 450 130 L 460 130 L 455 120 Z" fill="red"/>
+        <text x="445" y="145" class="label" text-anchor="middle" fill="red" font-size="11">read head</text>
+        
+        <!-- Explanatory notes -->
+        <g id="notes" transform="translate(0, 170)">
+            <text x="50" y="0" class="label" font-size="12">Components:</text>
+            <text x="70" y="20" class="label" font-size="11">• # = Start/End delimiter</text>
+            <text x="70" y="35" class="label" font-size="11">• abaabbab... = Encoded TM in CWL format</text>
+            <text x="70" y="50" class="label" font-size="11">• $ = Separator between TM encoding and data</text>
+            <text x="70" y="65" class="label" font-size="11">• babba = Input data string (a's and b's)</text>
+            <text x="400" y="20" class="label" font-size="11">• Δ = Blank symbols (infinite tape)</text>
+            <text x="400" y="35" class="label" font-size="11">• Red cell = Current position of simulated TM's head</text>
+            <text x="400" y="50" class="label" font-size="11">• ... = Tape continues infinitely</text>
+        </g>
+    </svg>
+    

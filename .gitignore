@@ -1,0 +1,9 @@
+# Ignore Jupyter Book build artifacts
+_build/
+
+# Ignore Jupyter notebook checkpoints
+*.ipynb_checkpoints
+
+# Ignore system files
+.DS_Store
+Thumbs.db
