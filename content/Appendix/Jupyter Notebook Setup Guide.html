@@ -1,0 +1,1381 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>17. Appendix: Getting Started with Jupyter Notebooks (JupyterLab and Google Colab) &#8212; Decode Computation:Hands-On Formal Languages and Algorithms</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/Appendix/Jupyter Notebook Setup Guide';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="16. NP-Completeness" href="../Part_4_Advanced_Topics/Chapter18_NP_Completeness.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Decode Computation:Hands-On Formal Languages and Algorithms - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Decode Computation:Hands-On Formal Languages and Algorithms - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Decode Computation︰ Hands-On Formal Languages and Algorithms
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Regular Languages</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Part_1_Regular_Languages/Chapter01_Languages.html">1. Languages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_1_Regular_Languages/Chapter02_Regular_Expressions.html">2. Regular Expressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_1_Regular_Languages/Chapter03_Finite_Automata.html">3. Finite Automata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_1_Regular_Languages/Chapter04_Nondeterministic_Finite_Automata.html">4. Nondeterministic Finite Automata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_1_Regular_Languages/Chapter05_Nonregular_Languages.html">5. Nonregular Languages</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Context Free Languages</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Part_2_Context_Free_Languages/Chapter_08/Chapter08_Fundamentals_of_CFG.html">6. Fundamentals of Context-Free Grammar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_2_Context_Free_Languages/Chapter_09/Chapter09_CFG_Normal_Forms_and_Transformations.html">7. Normal Forms and Transformations in Context-Free Grammars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_2_Context_Free_Languages/Chapter_10/Chapter10_PDA.html">8. Pushdown Automata (PDA)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_2_Context_Free_Languages/Chapter_11/Chapter11_Properties_of_Context_free%20Languages.html">9. Properties of Context-free Languages (CFL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_2_Context_Free_Languages/Chapter_12/Chapter12_Decidability_in_CFG.html">10. Decidability in Context-Free Grammars (CFGs)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Turing Machines</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Part_3_Turing_Machines/Chapter_13/Chapter13_Introduction_to_Turing_Machines.html">11. Introduction to Turing Machines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_3_Turing_Machines/Chapter_14/Chapter14_Turing_Machine_Languages.html">12. Turing Machine Languages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_3_Turing_Machines/Chapter_15/Chapter15_Turing_Machine_Encoding.html">13. Turing Machine Encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_3_Turing_Machines/Chapter_16/Chapter16_Universal_Turing_Machine.html">14. The Universal Turing Machine</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced Topics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Part_4_Advanced_Topics/Chapter17_P_and_NP_Problems.html">15. P and NP Problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_4_Advanced_Topics/Chapter18_NP_Completeness.html">16. NP-Completeness</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">17. Appendix: Getting Started with Jupyter Notebooks (JupyterLab and Google Colab)</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontent/Appendix/Jupyter Notebook Setup Guide.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/content/Appendix/Jupyter Notebook Setup Guide.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Appendix: Getting Started with Jupyter Notebooks (JupyterLab and Google Colab)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-jupyter-notebooks">1. Introduction to Jupyter Notebooks</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-features">1.1 Key Features:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#common-use-cases">1.2 Common Use Cases:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#examples">1.3 Examples</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-started-with-google-colab">2. Getting Started with Google Colab</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#advantages-of-google-colab">2.1 Advantages of Google Colab:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-started-with-colab">2.2 Getting Started with Colab:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-up-jupyterlab">3. Setting Up JupyterLab</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#installing-jupyterlab">3.1 Installing JupyterLab</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#launch-jupyterlab">3.2 Launch JupyterLab</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jupyterlab-features">3.3 JupyterLab Features</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jupyterlab-extensions">3.4 JupyterLab Extensions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#customizing-jupyterlab">3.5 Customizing JupyterLab</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#google-colab-vs-jupyterlab">4. Google Colab vs JupyterLab</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-google-colab-vs-jupyterlab">4.1 Comparing Google Colab vs JupyterLab</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#when-to-use-google-colab">4.2 When to Use Google Colab</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#when-to-use-jupyterlab">4.3 When to Use JupyterLab</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installing-and-managing-libraries">5. Installing and Managing Libraries</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-package-management-systems">5.1 Understanding Package Management Systems</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#installing-libraries-in-google-colab">5.2 Installing Libraries in Google Colab</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#checking-installed-libraries-in-google-colab">5.3 Checking Installed Libraries in Google Colab</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#installing-libraries-in-jupyterlab">5.4 Installing Libraries in JupyterLab</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#managing-virtual-environments">5.5 Managing Virtual Environments</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-operations-and-examples">6. Basic Operations and Examples</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#working-with-data">6.1 Working with Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-visualization">6.2 Data Visualization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#statistical-analysis">6.3 Statistical Analysis</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#working-with-external-data">6.4 Working with External Data</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="appendix-getting-started-with-jupyter-notebooks-jupyterlab-and-google-colab">
+<h1><span class="section-number">17. </span>Appendix: Getting Started with Jupyter Notebooks (JupyterLab and Google Colab)<a class="headerlink" href="#appendix-getting-started-with-jupyter-notebooks-jupyterlab-and-google-colab" title="Link to this heading">#</a></h1>
+<section id="introduction-to-jupyter-notebooks">
+<h2>1. Introduction to Jupyter Notebooks<a class="headerlink" href="#introduction-to-jupyter-notebooks" title="Link to this heading">#</a></h2>
+<p>Jupyter Notebooks are interactive computing environments that allow you to create and share documents containing live code, equations, visualizations, and narrative text. They have become the standard tool for data science, research, and educational purposes.</p>
+<section id="key-features">
+<h3>1.1 Key Features:<a class="headerlink" href="#key-features" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Interactive Computing: Execute code cells individually and see results immediately</p></li>
+<li><p>Rich Media Support: Include text, images, graphs, and mathematical equations</p></li>
+<li><p>Multiple Languages: Support for Python, R, Julia, Scala, and many others</p></li>
+<li><p>Shareable: Easy to share with colleagues and the broader community</p></li>
+<li><p>Reproducible: Others can run your notebooks and get the same results</p></li>
+</ul>
+</section>
+<section id="common-use-cases">
+<h3>1.2 Common Use Cases:<a class="headerlink" href="#common-use-cases" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Data analysis and visualization</p></li>
+<li><p>Machine learning experiments</p></li>
+<li><p>Educational materials and tutorials</p></li>
+<li><p>Rapid prototyping</p></li>
+<li><p>Scientific computing and research</p></li>
+</ul>
+</section>
+<section id="examples">
+<h3>1.3 Examples<a class="headerlink" href="#examples" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Let&#39;s start with a simple example</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Welcome to Jupyter Notebooks!&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;This is a Python code cell.&quot;</span><span class="p">)</span>
+
+<span class="c1"># You can execute mathematical operations</span>
+<span class="n">result</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;2 + 2 = </span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Welcome to Jupyter Notebooks!
+This is a Python code cell.
+2 + 2 = 4
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import common libraries used in data science</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="c1"># Create a simple dataset</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Generated </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="si">}</span><span class="s2"> random numbers&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mean: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Standard deviation: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">3</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Import common libraries used in data science</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="ne">----&gt; </span><span class="mi">3</span> <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="c1"># Create a simple dataset</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;pandas&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="getting-started-with-google-colab">
+<h2>2. Getting Started with Google Colab<a class="headerlink" href="#getting-started-with-google-colab" title="Link to this heading">#</a></h2>
+<p>Google Colab (Colaboratory) is a free cloud-based Jupyter notebook environment that requires no setup and runs entirely in the browser.</p>
+<section id="advantages-of-google-colab">
+<h3>2.1 Advantages of Google Colab:<a class="headerlink" href="#advantages-of-google-colab" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>No Installation Required: Runs in your web browser</p></li>
+<li><p>Free GPU/TPU Access: Hardware acceleration for machine learning</p></li>
+<li><p>Pre-installed Libraries: Most popular data science libraries are already installed</p></li>
+<li><p>Google Drive Integration: Easy file storage and sharing</p></li>
+<li><p>Collaboration Features: Real-time collaboration like Google Docs</p></li>
+</ul>
+</section>
+<section id="getting-started-with-colab">
+<h3>2.2 Getting Started with Colab:<a class="headerlink" href="#getting-started-with-colab" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Access Google Colab:</p>
+<ul class="simple">
+<li><p>Go to <a href="https://colab.research.google.com/" target="_blank">colab.research.google.com</a></p></li>
+<li><p>Sign in with your Google account</p></li>
+</ul>
+</li>
+<li><p>Create a New Notebook:</p>
+<ul class="simple">
+<li><p>Click “New notebook” or “File” → “New notebook”</p></li>
+<li><p>Your notebook will be automatically saved to Google Drive</p></li>
+</ul>
+</li>
+<li><p>Basic Operations: check if we’re running in Colab</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># This cell demonstrates basic Colab functionality</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Python version: </span><span class="si">{</span><span class="n">sys</span><span class="o">.</span><span class="n">version</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Check if we&#39;re running in Colab</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">google.colab</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Running in Google Colab&quot;</span><span class="p">)</span>
+    <span class="n">IN_COLAB</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Not running in Google Colab&quot;</span><span class="p">)</span>
+    <span class="n">IN_COLAB</span> <span class="o">=</span> <span class="kc">False</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Python version: 3.12.6 (tags/v3.12.6:a4a2d2b, Sep  6 2024, 20:11:23) [MSC v.1940 64 bit (AMD64)]
+Not running in Google Colab
+</pre></div>
+</div>
+</div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>Installing Additional Packages in Colab:</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install packages not included by default</span>
+<span class="c1"># Use ! to run shell commands</span>
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>seaborn<span class="w"> </span>plotly
+
+<span class="c1"># Import the newly installed packages</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">plotly.express</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">px</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Additional packages installed successfully!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Additional packages installed successfully!
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING: Ignoring invalid distribution ~upyterlab (C:\Python312\Lib\site-packages)
+WARNING: Ignoring invalid distribution ~upyterlab (C:\Python312\Lib\site-packages)
+WARNING: Ignoring invalid distribution ~upyterlab (C:\Python312\Lib\site-packages)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: seaborn in c:\python312\lib\site-packages (0.13.2)
+Requirement already satisfied: plotly in c:\python312\lib\site-packages (6.2.0)
+Requirement already satisfied: numpy!=1.24.0,&gt;=1.20 in c:\python312\lib\site-packages (from seaborn) (2.3.1)
+Requirement already satisfied: pandas&gt;=1.2 in c:\python312\lib\site-packages (from seaborn) (2.3.1)
+Requirement already satisfied: matplotlib!=3.6.1,&gt;=3.4 in c:\python312\lib\site-packages (from seaborn) (3.10.3)
+Requirement already satisfied: narwhals&gt;=1.15.1 in c:\python312\lib\site-packages (from plotly) (1.47.1)
+Requirement already satisfied: packaging in c:\python312\lib\site-packages (from plotly) (24.2)
+Requirement already satisfied: contourpy&gt;=1.0.1 in c:\python312\lib\site-packages (from matplotlib!=3.6.1,&gt;=3.4-&gt;seaborn) (1.3.2)
+Requirement already satisfied: cycler&gt;=0.10 in c:\python312\lib\site-packages (from matplotlib!=3.6.1,&gt;=3.4-&gt;seaborn) (0.12.1)
+Requirement already satisfied: fonttools&gt;=4.22.0 in c:\python312\lib\site-packages (from matplotlib!=3.6.1,&gt;=3.4-&gt;seaborn) (4.58.5)
+Requirement already satisfied: kiwisolver&gt;=1.3.1 in c:\python312\lib\site-packages (from matplotlib!=3.6.1,&gt;=3.4-&gt;seaborn) (1.4.8)
+Requirement already satisfied: pillow&gt;=8 in c:\python312\lib\site-packages (from matplotlib!=3.6.1,&gt;=3.4-&gt;seaborn) (11.3.0)
+Requirement already satisfied: pyparsing&gt;=2.3.1 in c:\python312\lib\site-packages (from matplotlib!=3.6.1,&gt;=3.4-&gt;seaborn) (3.2.3)
+Requirement already satisfied: python-dateutil&gt;=2.7 in c:\python312\lib\site-packages (from matplotlib!=3.6.1,&gt;=3.4-&gt;seaborn) (2.9.0.post0)
+Requirement already satisfied: pytz&gt;=2020.1 in c:\python312\lib\site-packages (from pandas&gt;=1.2-&gt;seaborn) (2025.2)
+Requirement already satisfied: tzdata&gt;=2022.7 in c:\python312\lib\site-packages (from pandas&gt;=1.2-&gt;seaborn) (2025.2)
+Requirement already satisfied: six&gt;=1.5 in c:\python312\lib\site-packages (from python-dateutil&gt;=2.7-&gt;matplotlib!=3.6.1,&gt;=3.4-&gt;seaborn) (1.17.0)
+</pre></div>
+</div>
+</div>
+</div>
+<ol class="arabic simple" start="5">
+<li><p>Mounting Google Drive in Colab:</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Mount Google Drive to access your files</span>
+<span class="k">if</span> <span class="n">IN_COLAB</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">google.colab</span><span class="w"> </span><span class="kn">import</span> <span class="n">drive</span>
+    <span class="n">drive</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s1">&#39;/content/drive&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Google Drive mounted successfully!&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># You can now access files in your Google Drive</span>
+    <span class="c1"># Files will be available at /content/drive/MyDrive/</span>
+    <span class="c1"># You may open a terminal and use it to display the list of folders and files in your Google Drive. </span>
+    <span class="c1"># This can help verify that your files are correctly uploaded and accessible from the environment.</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="setting-up-jupyterlab">
+<h2>3. Setting Up JupyterLab<a class="headerlink" href="#setting-up-jupyterlab" title="Link to this heading">#</a></h2>
+<p>JupyterLab is the next-generation web-based user interface for the Jupyter Project. It provides a more powerful and flexible environment than the classic Jupyter Notebook.</p>
+<section id="installing-jupyterlab">
+<h3>3.1 Installing JupyterLab<a class="headerlink" href="#installing-jupyterlab" title="Link to this heading">#</a></h3>
+<p>The preferred way to install JupyterLab is by using pip.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install JupyterLab using pip</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">jupyterlab</span>
+
+<span class="c1"># Launch JupyterLab</span>
+<span class="n">jupyter</span> <span class="n">lab</span>
+</pre></div>
+</div>
+</section>
+<section id="launch-jupyterlab">
+<h3>3.2 Launch JupyterLab<a class="headerlink" href="#launch-jupyterlab" title="Link to this heading">#</a></h3>
+<p>To launch JupyterLab, open a command prompt or terminal, navigate to your target folder, and enter the following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Launch JupyterLab</span>
+<span class="n">jupyter</span> <span class="n">lab</span>
+</pre></div>
+</div>
+</section>
+<section id="jupyterlab-features">
+<h3>3.3 JupyterLab Features<a class="headerlink" href="#jupyterlab-features" title="Link to this heading">#</a></h3>
+<p>JupyterLab provides enhanced features over classic Jupyter:</p>
+<ul class="simple">
+<li><p>Flexible user interface</p></li>
+<li><p>Multiple document support</p></li>
+<li><p>File browser integrationTerminal integration</p></li>
+<li><p>Extension system</p></li>
+<li><p>Drag and drop functionality</p></li>
+<li><p>Multiple kernels support</p></li>
+</ul>
+</section>
+<section id="jupyterlab-extensions">
+<h3>3.4 JupyterLab Extensions<a class="headerlink" href="#jupyterlab-extensions" title="Link to this heading">#</a></h3>
+<p>JupyterLab extensions can be installed via pip. Below are some popular JupyterLab extensions:</p>
+<ul class="simple">
+<li><p>Variable Inspector: Shows variables in the current namespace</p></li>
+<li><p>Table of Contents: Generates TOC of contents from notebook headers</p></li>
+<li><p>Git: Git integration for version control</p></li>
+<li><p>Plotly: Enhanced support for Plotly visualizations</p></li>
+<li><p>Spreadsheet: Provides Excel-like spreadsheet functionality</p></li>
+</ul>
+</section>
+<section id="customizing-jupyterlab">
+<h3>3.5 Customizing JupyterLab<a class="headerlink" href="#customizing-jupyterlab" title="Link to this heading">#</a></h3>
+<p>You can customize JupyterLab through the Settings menu or by editing configuration files directly. Common customizations include:</p>
+<ul class="simple">
+<li><p>Theme selection (dark/light)</p></li>
+<li><p>Keyboard shortcuts</p></li>
+<li><p>Extension management</p></li>
+<li><p>Notebook cell execution settings</p></li>
+<li><p>File browser preferences</p></li>
+</ul>
+<p>These settings allow users to tailor the JupyterLab environment to their workflow and preferences.</p>
+</section>
+</section>
+<section id="google-colab-vs-jupyterlab">
+<h2>4. Google Colab vs JupyterLab<a class="headerlink" href="#google-colab-vs-jupyterlab" title="Link to this heading">#</a></h2>
+<section id="comparing-google-colab-vs-jupyterlab">
+<h3>4.1 Comparing Google Colab vs JupyterLab<a class="headerlink" href="#comparing-google-colab-vs-jupyterlab" title="Link to this heading">#</a></h3>
+<p>Here’s a detailed comparison between Google Colab and JupyterLab across various dimensions:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Feature</p></th>
+<th class="head"><p>Google Colab</p></th>
+<th class="head"><p>JupyterLab</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Cost</strong></p></td>
+<td><p>Free (with usage limits)<br></p></td>
+<td><p>Free (self-hosted)<br>Only costs for hardware/cloud hosting</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Setup Required</strong></p></td>
+<td><p>None - runs in browser<br>Just need Google account</p></td>
+<td><p>Installation required<br>Python + JupyterLab installation</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Hardware Access</strong></p></td>
+<td><p>Free GPU/TPU access<br>High-end cloud hardware<br>Limited session time</p></td>
+<td><p>Local hardware only<br>Performance depends on your machine<br>No session time limits</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Storage</strong></p></td>
+<td><p>Google Drive integration<br>15GB free storage<br>Automatic cloud backup</p></td>
+<td><p>Local file system<br>Unlimited local storage<br>Manual backup required</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Collaboration</strong></p></td>
+<td><p>Real-time collaboration<br>Easy sharing via links<br>Comment and suggestion features</p></td>
+<td><p>Limited collaboration<br>Share via file export<br>Version control with Git</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Offline Access</strong></p></td>
+<td><p>No - requires internet connection<br>Cannot work offline</p></td>
+<td><p>Yes - fully offline capable<br>No internet required for work</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Customization</strong></p></td>
+<td><p>Limited theme options<br>Basic settings only<br>Cannot install extensions</p></td>
+<td><p>Highly customizable<br>Extensive themes and extensions<br>Full UI customization</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Library Management</strong></p></td>
+<td><p>Pre-installed common libraries<br>Easy pip install with !pip<br>Limited to available packages</p></td>
+<td><p>Full control over environment<br>Any Python package<br>Virtual environments supported</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Performance</strong></p></td>
+<td><p>High-performance cloud hardware<br>Fast for ML workloads<br>Shared resources</p></td>
+<td><p>Depends on local hardware<br>Dedicated resources<br>Can be optimized for specific tasks</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Data Privacy</strong></p></td>
+<td><p>Data stored on Google servers<br>Subject to Google’s privacy policy<br>Not ideal for sensitive data</p></td>
+<td><p>Full control over data<br>Data stays on your machine<br>Complete privacy control</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Session Persistence</strong></p></td>
+<td><p>Sessions timeout (12-24 hours)<br>Runtime disconnections<br>Variables lost on timeout</p></td>
+<td><p>Persistent sessions<br>No automatic timeouts<br>Variables retained until restart</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>File Management</strong></p></td>
+<td><p>Google Drive interface<br>Limited file operations<br>Cloud-based file system</p></td>
+<td><p>Full file system access<br>Advanced file operations<br>Integration with OS</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Debugging Tools</strong></p></td>
+<td><p>Basic debugging features<br>Limited debugging options<br>Browser-based tools only</p></td>
+<td><p>Advanced debugging<br>Full IDE features<br>Integration with debugging tools</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Version Control</strong></p></td>
+<td><p>Basic Git support<br>Manual version management<br>Limited Git integration</p></td>
+<td><p>Full Git integration<br>Advanced version control<br>Branch management</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Multi-language Support</strong></p></td>
+<td><p>Python focus<br>Limited other language support<br>R and Swift available</p></td>
+<td><p>Python, R, Julia, Scala<br>Multiple kernels supported<br>Language-specific features</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="when-to-use-google-colab">
+<h3>4.2 When to Use Google Colab<a class="headerlink" href="#when-to-use-google-colab" title="Link to this heading">#</a></h3>
+<p>Choose Google Colab when:</p>
+<ul class="simple">
+<li><p>Getting started with data science or machine learning</p></li>
+<li><p>You need free GPU or TPU access</p></li>
+<li><p>You are working on small to medium projects</p></li>
+<li><p>Collaboration is important</p></li>
+<li><p>You don’t want to manage a local environment</p></li>
+<li><p>You use it occasionally or for learning purposes</p></li>
+<li><p>You need to share your work easily</p></li>
+</ul>
+</section>
+<section id="when-to-use-jupyterlab">
+<h3>4.3 When to Use JupyterLab<a class="headerlink" href="#when-to-use-jupyterlab" title="Link to this heading">#</a></h3>
+<p>Choose JupyterLab when:</p>
+<ul class="simple">
+<li><p>You are working with sensitive or proprietary data</p></li>
+<li><p>You need offline access</p></li>
+<li><p>You require specific software versions</p></li>
+<li><p>You are working with large datasets</p></li>
+<li><p>You need extensive customization</p></li>
+<li><p>You are in a professional or enterprise environment</p></li>
+<li><p>You want full control over the environment</p></li>
+<li><p>You are working with multiple programming languages</p></li>
+</ul>
+</section>
+</section>
+<section id="installing-and-managing-libraries">
+<h2>5. Installing and Managing Libraries<a class="headerlink" href="#installing-and-managing-libraries" title="Link to this heading">#</a></h2>
+<p>One of the most important aspects of working with Jupyter notebooks is managing libraries and packages. The approach differs between Google Colab and JupyterLab.</p>
+<section id="understanding-package-management-systems">
+<h3>5.1 Understanding Package Management Systems<a class="headerlink" href="#understanding-package-management-systems" title="Link to this heading">#</a></h3>
+<p>First, let’s understand the different package managers:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Python version: </span><span class="si">{</span><span class="n">sys</span><span class="o">.</span><span class="n">version</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Python executable: </span><span class="si">{</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Check which package managers are available</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">check_package_manager</span><span class="p">(</span><span class="n">command</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="n">command</span><span class="p">,</span> <span class="s1">&#39;--version&#39;</span><span class="p">],</span> 
+                              <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span><span class="o">.</span><span class="n">returncode</span> <span class="o">==</span> <span class="mi">0</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+<span class="n">managers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;pip&#39;</span><span class="p">:</span> <span class="n">check_package_manager</span><span class="p">(</span><span class="s1">&#39;pip&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;conda&#39;</span><span class="p">:</span> <span class="n">check_package_manager</span><span class="p">(</span><span class="s1">&#39;conda&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;mamba&#39;</span><span class="p">:</span> <span class="n">check_package_manager</span><span class="p">(</span><span class="s1">&#39;mamba&#39;</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Available package managers:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">manager</span><span class="p">,</span> <span class="n">available</span> <span class="ow">in</span> <span class="n">managers</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;✓ Available&quot;</span> <span class="k">if</span> <span class="n">available</span> <span class="k">else</span> <span class="s2">&quot;✗ Not available&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">manager</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">status</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Python version: 3.12.6 (tags/v3.12.6:a4a2d2b, Sep  6 2024, 20:11:23) [MSC v.1940 64 bit (AMD64)]
+Python executable: C:\Python312\python.exe
+
+Available package managers:
+  pip: ✓ Available
+  conda: ✗ Not available
+  mamba: ✗ Not available
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="installing-libraries-in-google-colab">
+<h3>5.2 Installing Libraries in Google Colab<a class="headerlink" href="#installing-libraries-in-google-colab" title="Link to this heading">#</a></h3>
+<p>This code demonstrates six common ways to install Python libraries in a Google Colab environment using <code class="docutils literal notranslate"><span class="pre">pip</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Method 1: Using pip (most common in Colab)</span>
+<span class="c1"># The ! prefix runs shell commands</span>
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>seaborn<span class="w"> </span>plotly<span class="w"> </span>scikit-learn
+
+<span class="c1"># Method 2: Installing specific versions</span>
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span><span class="nv">pandas</span><span class="o">==</span><span class="m">1</span>.5.3<span class="w"> </span>numpy&gt;<span class="o">=</span><span class="m">1</span>.20.0
+
+<span class="c1"># Method 3: Installing from requirements file</span>
+<span class="c1"># First, create a requirements.txt file</span>
+<span class="n">requirements_content</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">matplotlib&gt;=3.5.0</span>
+<span class="s2">seaborn&gt;=0.11.0</span>
+<span class="s2">plotly&gt;=5.0.0</span>
+<span class="s2">scikit-learn&gt;=1.0.0</span>
+<span class="s2">requests&gt;=2.25.0</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="c1"># Write to file (in Colab)</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;requirements.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">requirements_content</span><span class="p">)</span>
+
+<span class="c1"># Install from requirements file</span>
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Libraries installed successfully in Colab!&quot;</span><span class="p">)</span>
+
+<span class="c1"># Method 4: Installing from GitHub repositories</span>
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/user/repository.git
+
+<span class="c1"># Method 5: Installing with specific options</span>
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>tensorflow<span class="w">  </span>#<span class="w"> </span>Upgrade<span class="w"> </span>existing<span class="w"> </span>package
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>--no-cache-dir<span class="w"> </span>torch<span class="w">   </span>#<span class="w"> </span>Install<span class="w"> </span>without<span class="w"> </span>using<span class="w"> </span>cache
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>--user<span class="w"> </span>package_name<span class="w">    </span>#<span class="w"> </span>Install<span class="w"> </span><span class="k">for</span><span class="w"> </span>current<span class="w"> </span>user<span class="w"> </span>only
+
+<span class="c1"># Method 6: Installing development versions</span>
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>--pre<span class="w"> </span>scikit-learn<span class="w">  </span>#<span class="w"> </span>Install<span class="w"> </span>pre-release<span class="w"> </span>version
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="checking-installed-libraries-in-google-colab">
+<h3>5.3 Checking Installed Libraries in Google Colab<a class="headerlink" href="#checking-installed-libraries-in-google-colab" title="Link to this heading">#</a></h3>
+<p>This code demonstrates different ways to check the installation status of Python packages in a Google Colab environment:</p>
+<ul class="simple">
+<li><p>Using pip list with grep: Filters and displays installed packages matching pandas, numpy, or matplotlib.</p></li>
+<li><p>Using pip show: Retrieves detailed metadata (version, location, dependencies) for the pandas package.</p></li>
+<li><p>Programmatic Check: Defines a function to check if a given package is installed using <strong>import</strong>. It then loops through a list of common libraries (pandas, numpy, matplotlib, seaborn, plotly) and prints whether each is installed.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Checking installed packages in Colab</span>
+<span class="o">!</span>pip<span class="w"> </span>list<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s2">&quot;(pandas|numpy|matplotlib)&quot;</span>
+
+<span class="c1"># Get detailed information about a package</span>
+<span class="o">!</span>pip<span class="w"> </span>show<span class="w"> </span>pandas
+
+<span class="c1"># Check if a package is installed programmatically</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">check_package_installed</span><span class="p">(</span><span class="n">package_name</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="nb">__import__</span><span class="p">(</span><span class="n">package_name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+<span class="n">packages_to_check</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;pandas&#39;</span><span class="p">,</span> <span class="s1">&#39;numpy&#39;</span><span class="p">,</span> <span class="s1">&#39;matplotlib&#39;</span><span class="p">,</span> <span class="s1">&#39;seaborn&#39;</span><span class="p">,</span> <span class="s1">&#39;plotly&#39;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Package installation status:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">package</span> <span class="ow">in</span> <span class="n">packages_to_check</span><span class="p">:</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;✓ Installed&quot;</span> <span class="k">if</span> <span class="n">check_package_installed</span><span class="p">(</span><span class="n">package</span><span class="p">)</span> <span class="k">else</span> <span class="s2">&quot;✗ Not installed&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">package</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">status</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="installing-libraries-in-jupyterlab">
+<h3>5.4 Installing Libraries in JupyterLab<a class="headerlink" href="#installing-libraries-in-jupyterlab" title="Link to this heading">#</a></h3>
+<p>This code outlines multiple methods for installing Python packages in a JupyterLab environment, with a focus on ensuring the packages are installed into the correct Python environment:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Method 1: Using pip from within notebook</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="o">!{</span>sys.executable<span class="o">}</span><span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>seaborn<span class="w"> </span>plotly<span class="w"> </span>scikit-learn
+
+<span class="c1"># This ensures pip installs to the same Python environment as the notebook</span>
+
+<span class="c1"># Method 2: Using conda (if available)</span>
+<span class="c1"># Note: This works if JupyterLab is running in a conda environment</span>
+<span class="o">!</span>conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>seaborn<span class="w"> </span>plotly<span class="w"> </span>scikit-learn<span class="w"> </span>-y
+
+<span class="c1"># Method 3: Using mamba (faster conda alternative)</span>
+<span class="o">!</span>mamba<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>seaborn<span class="w"> </span>plotly<span class="w"> </span>scikit-learn<span class="w"> </span>-y
+
+<span class="c1"># Method 4: Installing in the correct environment</span>
+<span class="c1"># This is crucial when you have multiple Python environments</span>
+
+<span class="c1"># Check current environment</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Current Python executable: </span><span class="si">{</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Current working directory: </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Install to current environment</span>
+<span class="o">!{</span>sys.executable<span class="o">}</span><span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--user<span class="w"> </span>package_name
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="managing-virtual-environments">
+<h3>5.5 Managing Virtual Environments<a class="headerlink" href="#managing-virtual-environments" title="Link to this heading">#</a></h3>
+<p>a virtual environment is an isolated Python workspace that allows you to install and manage packages separately from the system-wide Python installation. Using a virtual environment ensures that:</p>
+<ul class="simple">
+<li><p>Projects do not interfere with each other’s dependencies.</p></li>
+<li><p>You can safely test or upgrade packages without breaking other work.</p></li>
+<li><p>Your Jupyter Notebook or Colab environment remains clean and reproducible.</p></li>
+</ul>
+<p>This code introduces virtual environment best practices and demonstrates how to create and inspect a requirements.txt file in a Python or Jupyter environment:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Understanding virtual environments</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Virtual Environment Best Practices:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;1. Create separate environments for different projects&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;2. Use requirements.txt to track dependencies&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;3. Activate the correct environment before starting Jupyter&quot;</span><span class="p">)</span>
+
+<span class="c1"># Example of creating a requirements.txt from current environment</span>
+<span class="o">!</span>pip<span class="w"> </span>freeze<span class="w"> </span>&gt;<span class="w"> </span>requirements.txt
+
+<span class="c1"># Read and display the requirements</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;requirements.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">requirements</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Current environment requirements:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">requirements</span><span class="p">[:</span><span class="mi">500</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;...&quot;</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">requirements</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">500</span> <span class="k">else</span> <span class="n">requirements</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No requirements.txt file found&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Virtual Environment Best Practices:
+1. Create separate environments for different projects
+2. Use requirements.txt to track dependencies
+3. Activate the correct environment before starting Jupyter
+
+Current environment requirements:
+annotated-types==0.7.0
+anyio==3.7.1
+argon2-cffi==23.1.0
+argon2-cffi-bindings==21.2.0
+arrow==1.3.0
+asttokens==3.0.0
+async-lru==2.0.4
+attrs==24.3.0
+babel==2.16.0
+beautifulsoup4==4.12.3
+bleach==6.2.0
+blinker==1.8.2
+certifi==2024.12.14
+cffi==1.17.1
+charset-normalizer==3.4.0
+click==8.1.7
+colorama==0.4.6
+comm==0.2.2
+contourpy==1.3.2
+cycler==0.12.1
+debugpy==1.8.11
+decorator==5.1.1
+defusedxml==0.7.1
+executing==2.1.0
+fastapi==0.104.1
+fastjsonschema==2.21.1
+Flask==2.3.3
+Flask-Cors==4.0.0
+fonttools==4.58.5...
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING: Ignoring invalid distribution ~upyterlab (C:\Python312\Lib\site-packages)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="basic-operations-and-examples">
+<h2>6. Basic Operations and Examples<a class="headerlink" href="#basic-operations-and-examples" title="Link to this heading">#</a></h2>
+<p>Let’s explore basic operations that work in both environments:</p>
+<section id="working-with-data">
+<h3>6.1 Working with Data<a class="headerlink" href="#working-with-data" title="Link to this heading">#</a></h3>
+<p>This code generates and displays a sample time-series dataset using NumPy and pandas, commonly used for data analysis or visualization practice.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create sample data</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="c1"># Generate sample dataset</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">dates</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s1">&#39;2023-01-01&#39;</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s1">&#39;D&#39;</span><span class="p">)</span>
+<span class="n">values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span> <span class="o">+</span> <span class="mi">100</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;date&#39;</span><span class="p">:</span> <span class="n">dates</span><span class="p">,</span>
+    <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="n">values</span><span class="p">,</span>
+    <span class="s1">&#39;category&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">],</span> <span class="mi">100</span><span class="p">)</span>
+<span class="p">})</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sample Dataset:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Dataset shape: </span><span class="si">{</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample Dataset:
+        date       value category
+0 2023-01-01  100.496714        A
+1 2023-01-02  100.358450        B
+2 2023-01-03  101.006138        A
+3 2023-01-04  102.529168        A
+4 2023-01-05  102.295015        C
+
+Dataset shape: (100, 3)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="data-visualization">
+<h3>6.2 Data Visualization<a class="headerlink" href="#data-visualization" title="Link to this heading">#</a></h3>
+<p>This code generates two side-by-side visualizations using matplotlib to explore a sample dataset (df), providing insights into time series trends and categorical distribution.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create visualizations</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="c1"># Time series plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Time Series Data&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Date&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Value&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+
+<span class="c1"># Category distribution</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;category&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Category Distribution&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Category&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Count&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/76641caea6882a79d7a94cd77cfc09e9601c8a2fdb593d48e6f9cb4e6c8c7621.png" src="../../_images/76641caea6882a79d7a94cd77cfc09e9601c8a2fdb593d48e6f9cb4e6c8c7621.png" />
+</div>
+</div>
+</section>
+<section id="statistical-analysis">
+<h3>6.3 Statistical Analysis<a class="headerlink" href="#statistical-analysis" title="Link to this heading">#</a></h3>
+<p>This code performs basic statistical analysis on the df DataFrame, summarizing the numerical column ‘value’ and exploring category-based differences.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Basic statistical analysis</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Statistical Summary:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
+
+<span class="c1"># Convert dates to numeric format for correlation</span>
+<span class="n">date_numeric</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="o">.</span><span class="n">toordinal</span><span class="p">)</span>
+<span class="n">correlation</span> <span class="o">=</span> <span class="n">date_numeric</span><span class="o">.</span><span class="n">corr</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Correlation between date and value: </span><span class="si">{</span><span class="n">correlation</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Group by category</span>
+<span class="n">category_stats</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">)[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="s1">&#39;std&#39;</span><span class="p">,</span> <span class="s1">&#39;count&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Statistics by Category:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">category_stats</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Statistical Summary:
+count    100.000000
+mean      93.594818
+std        4.643998
+min       87.753344
+25%       90.132492
+50%       91.727866
+75%       95.940029
+max      104.480611
+Name: value, dtype: float64
+
+Correlation between date and value: -0.800
+
+Statistics by Category:
+               mean       std  count
+category                            
+A         93.933355  5.040641     34
+B         94.168522  4.683877     30
+C         92.797001  4.221481     36
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="working-with-external-data">
+<h3>6.4 Working with External Data<a class="headerlink" href="#working-with-external-data" title="Link to this heading">#</a></h3>
+<p>This code explains common methods to load external data into a Python environment (JupyterLab or Google Colab) and demonstrates loading a sample dataset from a public URL.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example of reading data from different sources</span>
+<span class="c1"># Note: This would work differently in Colab vs JupyterLab</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Methods to load external data:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;1. Local files (JupyterLab): pd.read_csv(&#39;local_file.csv&#39;)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;2. Google Drive (Colab): pd.read_csv(&#39;/content/drive/MyDrive/file.csv&#39;)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;3. URLs (both): pd.read_csv(&#39;https://example.com/data.csv&#39;)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;4. APIs (both): Using requests library&quot;</span><span class="p">)</span>
+
+<span class="c1"># Example with a public dataset</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="c1"># This URL provides sample data</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv&quot;</span>
+    <span class="n">iris_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Loaded Iris dataset: </span><span class="si">{</span><span class="n">iris_df</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">iris_df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not load external data: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Methods to load external data:
+1. Local files (JupyterLab): pd.read_csv(&#39;local_file.csv&#39;)
+2. Google Drive (Colab): pd.read_csv(&#39;/content/drive/MyDrive/file.csv&#39;)
+3. URLs (both): pd.read_csv(&#39;https://example.com/data.csv&#39;)
+4. APIs (both): Using requests library
+
+Loaded Iris dataset: (150, 5)
+   sepal_length  sepal_width  petal_length  petal_width species
+0           5.1          3.5           1.4          0.2  setosa
+1           4.9          3.0           1.4          0.2  setosa
+2           4.7          3.2           1.3          0.2  setosa
+3           4.6          3.1           1.5          0.2  setosa
+4           5.0          3.6           1.4          0.2  setosa
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content\Appendix"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../Part_4_Advanced_Topics/Chapter18_NP_Completeness.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">16. </span>NP-Completeness</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-jupyter-notebooks">1. Introduction to Jupyter Notebooks</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-features">1.1 Key Features:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#common-use-cases">1.2 Common Use Cases:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#examples">1.3 Examples</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-started-with-google-colab">2. Getting Started with Google Colab</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#advantages-of-google-colab">2.1 Advantages of Google Colab:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-started-with-colab">2.2 Getting Started with Colab:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-up-jupyterlab">3. Setting Up JupyterLab</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#installing-jupyterlab">3.1 Installing JupyterLab</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#launch-jupyterlab">3.2 Launch JupyterLab</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jupyterlab-features">3.3 JupyterLab Features</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jupyterlab-extensions">3.4 JupyterLab Extensions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#customizing-jupyterlab">3.5 Customizing JupyterLab</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#google-colab-vs-jupyterlab">4. Google Colab vs JupyterLab</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-google-colab-vs-jupyterlab">4.1 Comparing Google Colab vs JupyterLab</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#when-to-use-google-colab">4.2 When to Use Google Colab</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#when-to-use-jupyterlab">4.3 When to Use JupyterLab</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installing-and-managing-libraries">5. Installing and Managing Libraries</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-package-management-systems">5.1 Understanding Package Management Systems</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#installing-libraries-in-google-colab">5.2 Installing Libraries in Google Colab</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#checking-installed-libraries-in-google-colab">5.3 Checking Installed Libraries in Google Colab</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#installing-libraries-in-jupyterlab">5.4 Installing Libraries in JupyterLab</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#managing-virtual-environments">5.5 Managing Virtual Environments</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-operations-and-examples">6. Basic Operations and Examples</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#working-with-data">6.1 Working with Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-visualization">6.2 Data Visualization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#statistical-analysis">6.3 Statistical Analysis</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#working-with-external-data">6.4 Working with External Data</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Yong Zhang, Dylan Zwick
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
