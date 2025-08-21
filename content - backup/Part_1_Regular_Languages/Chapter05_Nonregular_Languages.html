@@ -1,0 +1,621 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Nonregular Languages &#8212; Decode Computation:Hands-On Formal Languages and Algorithms</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content - backup/Part_1_Regular_Languages/Chapter05_Nonregular_Languages';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Decode Computation:Hands-On Formal Languages and Algorithms - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Decode Computation:Hands-On Formal Languages and Algorithms - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Decode Computation︰ Hands-On Formal Languages and Algorithms
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Regular Languages</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../content/Part_1_Regular_Languages/Chapter01_Languages.html">1. Languages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../content/Part_1_Regular_Languages/Chapter02_Regular_Expressions.html">2. Regular Expressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../content/Part_1_Regular_Languages/Chapter03_Finite_Automata.html">3. Finite Automata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../content/Part_1_Regular_Languages/Chapter04_Nondeterministic_Finite_Automata.html">4. Nondeterministic Finite Automata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../content/Part_1_Regular_Languages/Chapter05_Nonregular_Languages.html">5. Nonregular Languages</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Context Free Languages</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../content/Part_2_Context_Free_Languages/Chapter_08/Chapter08_Fundamentals_of_CFG.html">6. Fundamentals of Context-Free Grammar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../content/Part_2_Context_Free_Languages/Chapter_09/Chapter09_CFG_Normal_Forms_and_Transformations.html">7. Normal Forms and Transformations in Context-Free Grammars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../content/Part_2_Context_Free_Languages/Chapter_10/Chapter10_PDA.html">8. Pushdown Automata (PDA)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../content/Part_2_Context_Free_Languages/Chapter_11/Chapter11_Properties_of_Context_free%20Languages.html">9. Properties of Context-free Languages (CFL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../content/Part_2_Context_Free_Languages/Chapter_12/Chapter12_Decidability_in_CFG.html">10. Decidability in Context-Free Grammars (CFGs)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Turing Machines</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../content/Part_3_Turing_Machines/Chapter_13/Chapter13_Introduction_to_Turing_Machines.html">11. Introduction to Turing Machines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../content/Part_3_Turing_Machines/Chapter_14/Chapter14_Turing_Machine_Languages.html">12. Turing Machine Languages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../content/Part_3_Turing_Machines/Chapter_15/Chapter15_Turing_Machine_Encoding.html">13. Turing Machine Encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../content/Part_3_Turing_Machines/Chapter_16/Chapter16_Universal_Turing_Machine.html">14. The Universal Turing Machine</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced Topics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../content/Part_4_Advanced_Topics/Chapter17_P_and_NP_Problems.html">15. P and NP Problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../content/Part_4_Advanced_Topics/Chapter18_NP_Completeness.html">16. NP-Completeness</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontent - backup/Part_1_Regular_Languages/Chapter05_Nonregular_Languages.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/content - backup/Part_1_Regular_Languages/Chapter05_Nonregular_Languages.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Nonregular Languages</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#not-all-languages-are-regular">1. Not All Languages Are Regular</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-pigeonhole-principle">2. The Pigeonhole Principle</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-pumping-lemma">3. The Pumping Lemma</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#proof-that-l-a-n-b-n-n-geq-0-is-not-regular">4. Proof that <span class="math notranslate nohighlight">\(L = \{a^{n}b^{n} | n \geq 0\}\)</span> is not regular.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-exercises">5. Practice Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">6. Further Reading</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="nonregular-languages">
+<h1>Nonregular Languages<a class="headerlink" href="#nonregular-languages" title="Link to this heading">#</a></h1>
+<section id="learning-objectives">
+<h2>Learning Objectives<a class="headerlink" href="#learning-objectives" title="Link to this heading">#</a></h2>
+<p>After completing this chapter, you will be able to:</p>
+<ul class="simple">
+<li><p>Understand the intuition behind why nonregular languages exist and what properties they require.</p></li>
+<li><p>Understand and use the pigeonhole principle.</p></li>
+<li><p>Prove certain languages are nonregular by applying the pumping lemma.</p></li>
+</ul>
+</section>
+<section id="not-all-languages-are-regular">
+<h2>1. Not All Languages Are Regular<a class="headerlink" href="#not-all-languages-are-regular" title="Link to this heading">#</a></h2>
+<p>The regular languages are languages that can be recognized by finite automata. A critical idea with finite automata is they are, well, <em>finite</em>, which means they have a finite number of states and can be viewed as only able to remember a finite number of things.</p>
+<p>If we wanted a finite automata that recognized the language consisting of the single word <span class="math notranslate nohighlight">\(ab\)</span> that would be easy enough to diagram.</p>
+<p>STATE DIAGRAM GOES HERE</p>
+<p>If we wanted a finite automata that recognized the two words <span class="math notranslate nohighlight">\(ab\)</span> or <span class="math notranslate nohighlight">\(aabb\)</span> we could do that too.</p>
+<p>STATE DIAGRAM GOES HERE</p>
+<p>In fact, for any finite <span class="math notranslate nohighlight">\(k\)</span>, if we wanted a finite automata that recognized all words of the form <span class="math notranslate nohighlight">\(a^{n}b^{n}\)</span> with <span class="math notranslate nohighlight">\(n \leq k\)</span> that would be possible.</p>
+<p>STATE DIAGRAM GOES HERE</p>
+<p>For any of these, the machine needs to “remember” the number of <span class="math notranslate nohighlight">\(a\)</span>’s it has read in order to make sure it then reads the same number of <span class="math notranslate nohighlight">\(b\)</span>’s, but only up to a finite number of <span class="math notranslate nohighlight">\(a\)</span>’s. So, the amount of memory it needs in order to remember the number of <span class="math notranslate nohighlight">\(a\)</span>’s is bounded - in other words, it’s <em>finite</em>.</p>
+<p>However, suppose we wanted to build a finite automata that recognized all words of the form <span class="math notranslate nohighlight">\(a^{n}b^{n}\)</span> for <em>any</em> possible value of <span class="math notranslate nohighlight">\(n\)</span>. Well, in this case there would be no bound on the number of <span class="math notranslate nohighlight">\(a\)</span>’s the machine might need to remember, and so there would be no bound on the amount of “memory” the machine would need to have. This, it turns out, is an insurmountable problem, and it’s not possible to build a finite automaton that recognizes that language. In other words, the language</p>
+<center>
+  $L = \{a^{n}b^{n} | n \geq 0\}$
+</center>
+<p>is <em>not</em> a regular language, and therefore nonregular languages exist. Now, the explanation given here is meant to be intuitive, and not a formal proof. We’ll return and give a formal proof later in this section.</p>
+</section>
+<section id="the-pigeonhole-principle">
+<h2>2. The Pigeonhole Principle<a class="headerlink" href="#the-pigeonhole-principle" title="Link to this heading">#</a></h2>
+<p>The proof that our language <span class="math notranslate nohighlight">\(L = \{a^{n}b^{n} | n \geq 0\}\)</span> is nonregular will rely on something called <em>the pumping lemma</em>, which fundamentally relies upon <em>the pigeonhole principle</em> - one of the fundamentally straightforward ideas in mathematics, that nevertheless is at the heart of many deep and nonobvious results.</p>
+<p>The pigeonhole principle states that if you have more items than categories to put them in, at least one category must contain more than one item. The reason it’s called the “pigeonhole principle” is that if you’ve got a set of pigeons (your items), and you must put them all into holes (your categories), then if you’ve got more pigeons than holes at least one hole must have more than one pigeon. It’s a particular case of the general property.</p>
+<center>
+  <img src="https://drive.google.com/uc?export=view&id=1j0uBNrTor53gR0HvmWPjplPt_lZiM-Ap" height = "400" alt="Pigeons in Holes">
+</center>
+<p>As another example, suppose you’re at the grocery store and you’ve got three fruits and two bags, and you need to put the fruits into the bags. At least one of those bags will have more than one fruit in it. I’m sure you can pretty easily come up with other examples.</p>
+</section>
+<section id="the-pumping-lemma">
+<h2>3. The Pumping Lemma<a class="headerlink" href="#the-pumping-lemma" title="Link to this heading">#</a></h2>
+<p>Suppose we have a finite automaton with <span class="math notranslate nohighlight">\(5\)</span> states, and we provide it with the input string <span class="math notranslate nohighlight">\(aaaaa\)</span>. Suppose it starts in state <span class="math notranslate nohighlight">\(s_{0}\)</span>, transitions to state <span class="math notranslate nohighlight">\(s_{2}\)</span> after reading the first <span class="math notranslate nohighlight">\(a\)</span>, transitions to <span class="math notranslate nohighlight">\(s_{4}\)</span> after reading the second <span class="math notranslate nohighlight">\(a\)</span>, transitions to <span class="math notranslate nohighlight">\(s_{3}\)</span> after reading the third  <span class="math notranslate nohighlight">\(a\)</span>, and then transitions to <span class="math notranslate nohighlight">\(s_{1}\)</span> after reading the fourth <span class="math notranslate nohighlight">\(a\)</span>.</p>
+<p>DIAGRAM HERE</p>
+<p>It has now been in each of its possible states, and when it reads the fifth <span class="math notranslate nohighlight">\(a\)</span> it has no choice but to return to a state in which it’s already been.</p>
+<p>Generalizing, suppose we have a finite automaton with <span class="math notranslate nohighlight">\(N\)</span> states, and we provide it an input string <span class="math notranslate nohighlight">\(c\)</span> with <span class="math notranslate nohighlight">\(N\)</span> or more characters. As it reads each character from the input, the finite automaton transitions accordingly. After reading <span class="math notranslate nohighlight">\(k\)</span> characters the finite automaton has been in at most <span class="math notranslate nohighlight">\(k+1\)</span> distinct states (remember it begins in the start state before reading any characters), and after it reads <span class="math notranslate nohighlight">\(N\)</span> characters it must, by the pigeonhole principle, have been in at least one state more than one time.</p>
+<p>In other words, while reading <span class="math notranslate nohighlight">\(N\)</span> input characters, the finite automaton must at some point <em>loop back</em> to a previous state. We can illustrate this with a dgrawing like the one below, where each circle in the drawing represents a state of the finite automaton as it reads its input, and each arrow represents a transition after reading an input character:</p>
+<p>There is a sequence of transitions before it reaches the loop, and then a sequence of transitions as it goes around the loop, and then a sequence of transitions after the loop. Each of these transitions corresponds with a character read from the input string, and we can similarly break the input string into three sections:</p>
+<center>
+  $c = \underbrace{c_{1}c_{2} \cdots c_{k-1}}_{\text{Before the loop}}\underbrace{c_{k}c_{k+1} \cdots c_{l-1}}_{\text{The loop}}\underbrace{c_{c_{l}}c_{l+1} \cdots c_{N}}_{\text{After the loop}}$.
+</center>
+<p>Now, if we were to change the input string by inserting another loop sequence after the first it would loop like:</p>
+<center>
+  $c' = \underbrace{c_{1}c_{2} \cdots c_{k-1}}_{\text{Before the loop}}\underbrace{c_{k}c_{k+1} \cdots c_{l-1}}_{\text{Loop 1}}\underbrace{c_{k}c_{k+1} \cdots c_{l-1}}_{\text{Loop 2}}\underbrace{c_{c_{l}}c_{l+1} \cdots c_{N}}_{\text{After the loop}}$,
+</center>
+<p>and if this were given to the finite automaton as input it would go around the state loop twice but end up at exactly the same final state after reading the entire string.</p>
+<p>DIAGRAM HERE</p>
+<p>If the final state after reading <span class="math notranslate nohighlight">\(c\)</span> were an accepting state, then the final state would be that same accepting state after reading <span class="math notranslate nohighlight">\(c'\)</span>. If the final state after reading <span class="math notranslate nohighlight">\(c\)</span> were not an accepting state, then the final state would be that same non-accepting state after reading <span class="math notranslate nohighlight">\(c'\)</span>. In other words, <span class="math notranslate nohighlight">\(c'\)</span> is a word in the language recognized by our finite automaton if and only if <span class="math notranslate nohighlight">\(c\)</span> is. This is the fundamental idea behind the <em>pumping lemma</em>.</p>
+<hr class="docutils" />
+<p><strong>The Pumping Lemma</strong> - If a finite automaton has <span class="math notranslate nohighlight">\(N\)</span> states and <span class="math notranslate nohighlight">\(w\)</span> is a word in the language recognized by the finite automaton with <span class="math notranslate nohighlight">\(len(w) \geq N\)</span>, then <span class="math notranslate nohighlight">\(w\)</span> can be written as</p>
+<center>
+  $w = xyz$
+</center>
+<p>where <span class="math notranslate nohighlight">\(x,y,z\)</span> are substrings of <span class="math notranslate nohighlight">\(w\)</span>, <span class="math notranslate nohighlight">\(len(xy) &lt; N\)</span>, <span class="math notranslate nohighlight">\(len(y) &gt; 0\)</span>, and every string of the form</p>
+<center>
+  $xy^{n}z$
+</center>
+<p>is <em>also</em> a word in the language recognized by the finite automaton.</p>
+<hr class="docutils" />
+<p>The pumping lemma is a powerful tool for proving a language is not regular.</p>
+</section>
+<section id="proof-that-l-a-n-b-n-n-geq-0-is-not-regular">
+<h2>4. Proof that <span class="math notranslate nohighlight">\(L = \{a^{n}b^{n} | n \geq 0\}\)</span> is not regular.<a class="headerlink" href="#proof-that-l-a-n-b-n-n-geq-0-is-not-regular" title="Link to this heading">#</a></h2>
+<p>We’ll now use the pumping lemma to prove the language <span class="math notranslate nohighlight">\(L = \{a^{n}b^{n} | n \geq 0\}\)</span> introduced in Section 1.5.1 is not regular.</p>
+<p>Suppose <span class="math notranslate nohighlight">\(L\)</span> were regular. Then there would be some finite automaton that recognized it, and this finite automaton would have some finite number of states. Suppose this finite number of states is <span class="math notranslate nohighlight">\(N\)</span>.</p>
+<p>Take the string <span class="math notranslate nohighlight">\(w = a^{N+1}b^{N+1}\)</span>. This is a word in <span class="math notranslate nohighlight">\(L\)</span>, and by the pumping lemma we can write <span class="math notranslate nohighlight">\(w\)</span> as <span class="math notranslate nohighlight">\(a^{j}a^{k}a^{l}b^{N+1}\)</span>, where <span class="math notranslate nohighlight">\(j + k + l = N+1\)</span>, <span class="math notranslate nohighlight">\(k &gt; 0\)</span>, <span class="math notranslate nohighlight">\(a^{j}\)</span> corresponds with <span class="math notranslate nohighlight">\(x\)</span> from the pumping lemma, <span class="math notranslate nohighlight">\(a^{k}\)</span> corresponds with <span class="math notranslate nohighlight">\(y\)</span>, and <span class="math notranslate nohighlight">\(a^{l}b^{N+1}\)</span> corresponds with <span class="math notranslate nohighlight">\(z\)</span>. In this case by the pumping lemma the string <span class="math notranslate nohighlight">\(a^{j}(a^{k})^{2}a^{l}b^{N+1} = a^{N+1+k}b^{N+1}\)</span> must also be a word in <span class="math notranslate nohighlight">\(L\)</span>. However, as <span class="math notranslate nohighlight">\(k &gt; 0\)</span> this doesn’t have the right form to be a word in <span class="math notranslate nohighlight">\(L\)</span>, and thus we have a contradiction. Because we have a contradiction, our original assumption - that <span class="math notranslate nohighlight">\(L\)</span> is a regular language - must be false.</p>
+</section>
+<section id="practice-exercises">
+<h2>5. Practice Exercises<a class="headerlink" href="#practice-exercises" title="Link to this heading">#</a></h2>
+<p><strong>Exercise 1</strong>: Prove that the language <span class="math notranslate nohighlight">\(L = \{a^{n}b^{n+1} | n \geq 0\}\)</span> is not regular.</p>
+<p><strong>Exercise 2</strong>: Prove that the language <span class="math notranslate nohighlight">\(L = \{a^{n}b^{2n} | n \geq 0\}\)</span> is not regular.</p>
+<p><strong>Exercise 3</strong>: Prove that the language <span class="math notranslate nohighlight">\(L = \{a^{n}b^{n}a^{m} | n,m \geq 0\}\)</span> is not regular.</p>
+</section>
+<section id="further-reading">
+<h2>6. Further Reading<a class="headerlink" href="#further-reading" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>“Introduction to the Theory of Computation” (Third Edition) by Michael Sipser: <em>Section 1.4 - Nonregular Languages</em></p></li>
+<li><p>“Automata Theory, Languages, and Computation” (Third Edition) by John. E Hopcraft, Rajeev Matwani, and Jeffrey D. Ullman: <em>Section 4.1 - Proving Languages Not to Be Regular</em></p></li>
+<li><p>“Introduction to Computer Theory” (Second Edition) by Daniel I.A. Cohen: <em>Chapter 10 - Nonregular Language</em></p></li>
+<li><p><a class="reference external" href="https://youtu.be/qtnNyUlO6vU?si=lv7g5JMLkWvzz-OX">What is the Pumping Lemma</a> Video from Lydia on Youtube</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content - backup\Part_1_Regular_Languages"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#not-all-languages-are-regular">1. Not All Languages Are Regular</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-pigeonhole-principle">2. The Pigeonhole Principle</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-pumping-lemma">3. The Pumping Lemma</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#proof-that-l-a-n-b-n-n-geq-0-is-not-regular">4. Proof that <span class="math notranslate nohighlight">\(L = \{a^{n}b^{n} | n \geq 0\}\)</span> is not regular.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-exercises">5. Practice Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">6. Further Reading</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Yong Zhang, Dylan Zwick
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

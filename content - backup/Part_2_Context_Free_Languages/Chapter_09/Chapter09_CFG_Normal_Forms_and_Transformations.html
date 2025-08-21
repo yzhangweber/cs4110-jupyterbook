@@ -1,0 +1,1693 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Normal Forms and Transformations in Context-Free Grammars &#8212; Decode Computation:Hands-On Formal Languages and Algorithms</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs"></script>
+    <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+    <script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";
+window.addEventListener("load", () => mermaid.run());
+</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content - backup/Part_2_Context_Free_Languages/Chapter_09/Chapter09_CFG_Normal_Forms_and_Transformations';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/logo.png" class="logo__image only-light" alt="Decode Computation:Hands-On Formal Languages and Algorithms - Home"/>
+    <script>document.write(`<img src="../../../_static/logo.png" class="logo__image only-dark" alt="Decode Computation:Hands-On Formal Languages and Algorithms - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../intro.html">
+                    Decode Computation︰ Hands-On Formal Languages and Algorithms
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Regular Languages</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../content/Part_1_Regular_Languages/Chapter01_Languages.html">1. Languages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../content/Part_1_Regular_Languages/Chapter02_Regular_Expressions.html">2. Regular Expressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../content/Part_1_Regular_Languages/Chapter03_Finite_Automata.html">3. Finite Automata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../content/Part_1_Regular_Languages/Chapter04_Nondeterministic_Finite_Automata.html">4. Nondeterministic Finite Automata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../content/Part_1_Regular_Languages/Chapter05_Nonregular_Languages.html">5. Nonregular Languages</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Context Free Languages</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../content/Part_2_Context_Free_Languages/Chapter_08/Chapter08_Fundamentals_of_CFG.html">6. Fundamentals of Context-Free Grammar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../content/Part_2_Context_Free_Languages/Chapter_09/Chapter09_CFG_Normal_Forms_and_Transformations.html">7. Normal Forms and Transformations in Context-Free Grammars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../content/Part_2_Context_Free_Languages/Chapter_10/Chapter10_PDA.html">8. Pushdown Automata (PDA)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../content/Part_2_Context_Free_Languages/Chapter_11/Chapter11_Properties_of_Context_free%20Languages.html">9. Properties of Context-free Languages (CFL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../content/Part_2_Context_Free_Languages/Chapter_12/Chapter12_Decidability_in_CFG.html">10. Decidability in Context-Free Grammars (CFGs)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Turing Machines</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../content/Part_3_Turing_Machines/Chapter_13/Chapter13_Introduction_to_Turing_Machines.html">11. Introduction to Turing Machines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../content/Part_3_Turing_Machines/Chapter_14/Chapter14_Turing_Machine_Languages.html">12. Turing Machine Languages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../content/Part_3_Turing_Machines/Chapter_15/Chapter15_Turing_Machine_Encoding.html">13. Turing Machine Encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../content/Part_3_Turing_Machines/Chapter_16/Chapter16_Universal_Turing_Machine.html">14. The Universal Turing Machine</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced Topics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../content/Part_4_Advanced_Topics/Chapter17_P_and_NP_Problems.html">15. P and NP Problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../content/Part_4_Advanced_Topics/Chapter18_NP_Completeness.html">16. NP-Completeness</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontent - backup/Part_2_Context_Free_Languages/Chapter_09/Chapter09_CFG_Normal_Forms_and_Transformations.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/content - backup/Part_2_Context_Free_Languages/Chapter_09/Chapter09_CFG_Normal_Forms_and_Transformations.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Normal Forms and Transformations in Context-Free Grammars</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regular-grammar">1. Regular Grammar</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regular-grammar-definition">1.1 Regular Grammar Definition:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regular-grammar-examples">1.2 Regular Grammar Examples:</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1-regular-grammar">Example 1: Regular Grammar</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-2-regular-grammar">Example 2: Regular Grammar</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regular-grammar-to-regular-expression">1.3 Regular Grammar to Regular Expression:</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-3-regular-grammar-to-regular-expression">Example 3: Regular Grammar to Regular Expression</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-4-regular-grammar-to-regular-expression">Example 4: Regular Grammar to Regular Expression</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#finite-automata-to-regular-grammar">1.4 Finite Automata to Regular Grammar:</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-5-finite-automaton-to-regular-grammar">Example 5: Finite Automaton to Regular Grammar</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-6-finite-automaton-to-regular-grammar">Example 6: Finite Automaton to Regular Grammar</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-7-finite-automaton-to-regular-grammar">Example 7: Finite Automaton to Regular Grammar</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-python-implementation">1.5 Example Python Implementation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#removing-null-productions">2. Removing Null Productions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-are-null-productions">2.1 What Are Null Productions?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-remove-null-productions">2.2 Why Remove Null Productions?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#important-properties">2.3 Important Properties</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#steps-to-remove-null-productions">2.4 Steps to Remove Null Productions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#examples-to-remove-null-productions">2.5 Examples to Remove Null Productions</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1-grammar-with-one-nullable-non-terminal">Example 1: Grammar with One Nullable Non-terminal</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-2-grammar-with-multiple-nullable-non-terminals">Example 2: Grammar with Multiple Nullable Non-terminals</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-3-complex-grammar-with-chain-of-nullable-non-terminals">Example 3: Complex Grammar with Chain of Nullable Non-terminals</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">2.6 Example Python Implementation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#removing-unit-productions">3. Removing Unit Productions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-are-unit-productions">3.1 What Are Unit Productions?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-remove-unit-productions">3.2 Why Remove Unit Productions?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-remove-unit-productions">3.3 How to Remove Unit Productions</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#unit-pairs-and-transitive-closure">3.3.1 Unit Pairs and Transitive Closure</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#steps-to-remove-unit-productions">3.3.2 Steps to Remove Unit Productions</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#examples-to-remove-unit-productions">3.4 Examples to Remove Unit Productions</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1-remove-unit-productions-from-the-given-grammar">Example 1: Remove unit productions from the given grammar</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-2-remove-unit-productions-from-the-given-grammar">Example 2: Remove unit productions from the given grammar</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">3.5 Example Python Implementation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#chomsky-normal-form">4. Chomsky Normal Form</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-chomsky-normal-form">4.1 What is Chomsky Normal Form?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-makes-cnf-valuable">4.2 What Makes CNF Valuable?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#converting-a-cfg-to-cnf">4.3 Converting a CFG to CNF</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1-converting-a-cfg-to-cnf">Example 1: Converting a CFG to CNF</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-2-converting-a-cfg-to-cnf">Example 2: Converting a CFG to CNF</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">4.4 Example Python Implementation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-exercises">5. Practice Exercises</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1-regular-grammar-conversion">5.1 Exercise 1: Regular Grammar Conversion</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2-null-production-elimination">5.2 Exercise 2: Null Production Elimination</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-3-unit-production-elimination">5.3 Exercise 3: Unit Production Elimination</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-4-cfg-to-cnf-conversion">5.4 Exercise 4: CFG to CNF Conversion</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">6. Further Reading</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="normal-forms-and-transformations-in-context-free-grammars">
+<h1>Normal Forms and Transformations in Context-Free Grammars<a class="headerlink" href="#normal-forms-and-transformations-in-context-free-grammars" title="Link to this heading">#</a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">#</a></h2>
+<p>This chapter explores various normal forms and transformations in context-free grammars (CFGs). We will discuss algorithms to convert grammars into different normal forms and demonstrate their properties through examples.</p>
+</section>
+<section id="regular-grammar">
+<h2>1. Regular Grammar<a class="headerlink" href="#regular-grammar" title="Link to this heading">#</a></h2>
+<section id="regular-grammar-definition">
+<h3>1.1 Regular Grammar Definition:<a class="headerlink" href="#regular-grammar-definition" title="Link to this heading">#</a></h3>
+<p>A regular grammar is a special type of context-free grammar where production rules follow specific patterns. In a regular grammar, all productions must be in one of these forms:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(A → xB\)</span> (where A, B are single non-terminals and x is a string of terminals, x can be empty)</p></li>
+<li><p><span class="math notranslate nohighlight">\(A → x\)</span> (where A is a single non-terminal and x is a string of terminals, x can be empty)</p></li>
+</ul>
+</section>
+<section id="regular-grammar-examples">
+<h3>1.2 Regular Grammar Examples:<a class="headerlink" href="#regular-grammar-examples" title="Link to this heading">#</a></h3>
+<section id="example-1-regular-grammar">
+<h4>Example 1: Regular Grammar<a class="headerlink" href="#example-1-regular-grammar" title="Link to this heading">#</a></h4>
+<p>Given this Grammar:</p>
+<ul class="simple">
+<li><p>V: {S, A}</p></li>
+<li><p><span class="math notranslate nohighlight">\(\Sigma\)</span>: {a, b}</p></li>
+<li><p>R: <span class="math notranslate nohighlight">\(\{S → aA | bB | a; A → aA | bA | ∧\}\)</span></p></li>
+</ul>
+<p>This is a regular grammar because each production follows the specific patterns outlined for a regular grammar.</p>
+</section>
+<section id="example-2-regular-grammar">
+<h4>Example 2: Regular Grammar<a class="headerlink" href="#example-2-regular-grammar" title="Link to this heading">#</a></h4>
+<p>Given this Grammar:</p>
+<ul class="simple">
+<li><p>V: {S, A, B}</p></li>
+<li><p><span class="math notranslate nohighlight">\(\Sigma\)</span>: {a, b}</p></li>
+<li><p>R: <span class="math notranslate nohighlight">\(\{S → A | ∧; A → aB; B → aA | bB | b\}\)</span></p></li>
+</ul>
+<p>This is a regular grammar because each production follows the specific patterns outlined for a regular grammar.</p>
+</section>
+</section>
+<section id="regular-grammar-to-regular-expression">
+<h3>1.3 Regular Grammar to Regular Expression:<a class="headerlink" href="#regular-grammar-to-regular-expression" title="Link to this heading">#</a></h3>
+<p>Regular grammars are equivalent in power to regular expressions. Any language that can be described by a regular expression can also be described by a regular grammar, and vice versa.</p>
+<section id="example-3-regular-grammar-to-regular-expression">
+<h4>Example 3: Regular Grammar to Regular Expression<a class="headerlink" href="#example-3-regular-grammar-to-regular-expression" title="Link to this heading">#</a></h4>
+<p>Given the regular grammar:</p>
+<ul class="simple">
+<li><p>V: {S}</p></li>
+<li><p><span class="math notranslate nohighlight">\(\Sigma\)</span>: {a, b}</p></li>
+<li><p>R: <span class="math notranslate nohighlight">\(\{S → aS | b\}\)</span></p></li>
+</ul>
+<p>This CFG corresponds to the regular expression <strong>aa*b</strong>, because the <strong>aa*</strong> means one or more occurrences of ‘a’ and is followed by ‘b’.</p>
+</section>
+<section id="example-4-regular-grammar-to-regular-expression">
+<h4>Example 4: Regular Grammar to Regular Expression<a class="headerlink" href="#example-4-regular-grammar-to-regular-expression" title="Link to this heading">#</a></h4>
+<p>Given the regular grammar:</p>
+<ul class="simple">
+<li><p>V: {S}</p></li>
+<li><p><span class="math notranslate nohighlight">\(\Sigma\)</span>: {a, b}</p></li>
+<li><p>R: <span class="math notranslate nohighlight">\(\{S → abS | baS | ∧\}\)</span></p></li>
+</ul>
+<p>This is a regular grammar because each production follows the specific patterns outlined for a regular grammar. We can observe that every string generated by this grammar will consist of any number of occurrences of the substrings “ab” and “ba” concatenated in some order, and the production S → ∧ allows us to stop the derivation and terminate with the empty string. The language generated by this grammar consists of strings that can be a finite sequence of the substrings “ab” and “ba” (the strings consist of any number of “ab”s and “ba”s in any order). Thus, it can be expressed by the regular expression: <strong>(ab + ba)*</strong>.</p>
+</section>
+</section>
+<section id="finite-automata-to-regular-grammar">
+<h3>1.4 Finite Automata to Regular Grammar:<a class="headerlink" href="#finite-automata-to-regular-grammar" title="Link to this heading">#</a></h3>
+<p>Regular grammars have a direct correspondence with finite automata. In a regular grammar, non-terminals correspond to states in the automaton, productions correspond to transitions, terminal productions correspond to accepting states, and the start symbol corresponds to the initial state. Let’s look at some examples of converting between finite automata and regular grammars:</p>
+<section id="example-5-finite-automaton-to-regular-grammar">
+<h4>Example 5: Finite Automaton to Regular Grammar<a class="headerlink" href="#example-5-finite-automaton-to-regular-grammar" title="Link to this heading">#</a></h4>
+<p>Given this FA:</p>
+<pre  class="mermaid">
+        stateDiagram-v2
+    accTitle: Example 5: Finite Automaton to Regular Grammar
+    accDescr: a diagram representing a Finite Automaton
+    direction LR
+    [*] --&gt; S
+    S --&gt; S : 0
+    S --&gt; A : 1
+    A --&gt; S : 1
+    A --&gt; F : 0
+    F --&gt; S : 1
+    F --&gt; F : 0
+    
+    note right of F: Accept State
+    </pre><p>From the given finite automaton (FA), we follow this approach to convert it to a regular grammar:</p>
+<ul class="simple">
+<li><p>Ceate a non-terminal symbol for each state in the FA. In this example, we have V: {S, A, F}</p></li>
+<li><p>Create a terminal symbol for each transition label in the FA. In this example, we have <span class="math notranslate nohighlight">\(\Sigma\)</span>: {0, 1}</p></li>
+<li><p>For each transition <strong><span class="math notranslate nohighlight">\(\delta\)</span>(q, a) = p</strong> in the FA, where <strong>q</strong> is the current state, <strong>a</strong> is the input symbol, and <strong>p</strong> is the next state,</p>
+<ul>
+<li><p>if <strong>p</strong> is an accept state, add productions: Q → aP | a;</p></li>
+<li><p>if <strong>p</strong> is not an accept state, add production: Q → aP<br />
+In this example, we add productions: S → 0S | 1A; A → 1S | 0F; F → 0F | 1S. Because F is an accept state, we rewrite the productions as follows:
+S → 0S | 1A; A → 1S | 0F | 0; F → 0F | 1S | 0</p></li>
+</ul>
+</li>
+<li><p>The start symbol of the grammar is the non-terminal corresponding to the initial state.</p></li>
+</ul>
+</section>
+<section id="example-6-finite-automaton-to-regular-grammar">
+<h4>Example 6: Finite Automaton to Regular Grammar<a class="headerlink" href="#example-6-finite-automaton-to-regular-grammar" title="Link to this heading">#</a></h4>
+<p>Given this FA:</p>
+<pre  class="mermaid">
+        stateDiagram-v2
+    accTitle: Example 6: Finite Automaton to Regular Grammar
+    accDescr: a diagram representing a Finite Automaton
+    direction LR
+    [*] --&gt; E
+    E --&gt; E : 0
+    E --&gt; F : 1
+    F --&gt; F : 0
+    F --&gt; E : 1
+    
+    note right of F: Accept State
+    </pre><p>From the given finite automaton (FA), we follow the approach discussed in the previous example to convert it to a regular grammar:</p>
+<ul class="simple">
+<li><p>V: {S, E, F}</p></li>
+<li><p><span class="math notranslate nohighlight">\(\Sigma\)</span>: {0, 1}</p></li>
+<li><p>R: {S → E; E → 0E | 1F | 1;  F → 0F | 1E | 0}</p></li>
+</ul>
+</section>
+<section id="example-7-finite-automaton-to-regular-grammar">
+<h4>Example 7: Finite Automaton to Regular Grammar<a class="headerlink" href="#example-7-finite-automaton-to-regular-grammar" title="Link to this heading">#</a></h4>
+<p>Given this FA:</p>
+<pre  class="mermaid">
+        stateDiagram-v2
+    accTitle: Example 7: Finite Automaton to Regular Grammar
+    accDescr: a diagram representing a Finite Automaton
+    direction LR
+    [*] --&gt; S
+    S --&gt; S : b
+    S --&gt; A : a
+    A --&gt; A : a
+    A --&gt; B : b
+    B --&gt; S : a
+    B --&gt; F : b
+    F --&gt; S : b
+    F --&gt; A : a
+    
+    note right of F: Accept State
+    </pre><p>From the given finite automaton (FA), we follow the approach discussed in the previous example to convert it to a regular grammar:</p>
+<ul class="simple">
+<li><p>V: {S, A, B, F}</p></li>
+<li><p><span class="math notranslate nohighlight">\(\Sigma\)</span>: {a, b}</p></li>
+<li><p>R: {S → bS | aA; A → aA | bB; B → aS | bF | b; F → bS | aA}</p></li>
+</ul>
+</section>
+</section>
+<section id="example-python-implementation">
+<h3>1.5 Example Python Implementation<a class="headerlink" href="#example-python-implementation" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># code to define context-free grammar and productions necessary for the following sections</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Production</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">left</span>  <span class="c1"># Left-hand side (non-terminal)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">right</span>  <span class="c1"># Right-hand side (string of terminals and non-terminals)</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">left</span><span class="si">}</span><span class="s2"> → </span><span class="si">{</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">right</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Grammar</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">productions</span><span class="p">,</span> <span class="n">start_symbol</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">productions</span> <span class="o">=</span> <span class="n">productions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start_symbol</span> <span class="o">=</span> <span class="n">start_symbol</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">terminals</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_find_terminals</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">non_terminals</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_find_non_terminals</span><span class="p">()</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">_find_terminals</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">terminals</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">prod</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">productions</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">symbol</span> <span class="ow">in</span> <span class="n">prod</span><span class="o">.</span><span class="n">right</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">symbol</span><span class="o">.</span><span class="n">islower</span><span class="p">()</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">symbol</span><span class="o">.</span><span class="n">isalpha</span><span class="p">():</span>
+                    <span class="n">terminals</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">terminals</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">_find_non_terminals</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">non_terminals</span> <span class="o">=</span> <span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">start_symbol</span><span class="p">}</span>
+        <span class="k">for</span> <span class="n">prod</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">productions</span><span class="p">:</span>
+            <span class="n">non_terminals</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">prod</span><span class="o">.</span><span class="n">left</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">symbol</span> <span class="ow">in</span> <span class="n">prod</span><span class="o">.</span><span class="n">right</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">symbol</span><span class="o">.</span><span class="n">isupper</span><span class="p">():</span>
+                    <span class="n">non_terminals</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">non_terminals</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">prod</span><span class="p">)</span> <span class="k">for</span> <span class="n">prod</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">productions</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="removing-null-productions">
+<h2>2. Removing Null Productions<a class="headerlink" href="#removing-null-productions" title="Link to this heading">#</a></h2>
+<section id="what-are-null-productions">
+<h3>2.1 What Are Null Productions?<a class="headerlink" href="#what-are-null-productions" title="Link to this heading">#</a></h3>
+<p>A null production (also called ∧-production) is a production of the form: A → ∧, where A is a non-terminal, and ∧ represents the empty string.</p>
+</section>
+<section id="why-remove-null-productions">
+<h3>2.2 Why Remove Null Productions?<a class="headerlink" href="#why-remove-null-productions" title="Link to this heading">#</a></h3>
+<p>While these productions can be convenient for describing certain language features, removing them can simplify grammar analysis and parsing.</p>
+<ul class="simple">
+<li><p>Simplified Parsing: Many parsing algorithms (like CYK) work better without null productions</p></li>
+<li><p>Easier Analysis: Grammar properties become easier to analyze without null productions</p></li>
+<li><p>Prerequisite for Normal Forms: Converting to Chomsky Normal Form or Greibach Normal Form requires eliminating null productions</p></li>
+</ul>
+</section>
+<section id="important-properties">
+<h3>2.3 Important Properties<a class="headerlink" href="#important-properties" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Removing null productions preserves the language defined by the grammar. The only exception is if the original language includes the empty string as a valid word; in that case, the empty string will be omitted from the new grammar, and we can handle this special case separately.</p></li>
+<li><p>The process of removing null productions may increase the number of productions in the grammar</p></li>
+<li><p>The resulting grammar generates exactly the same non-empty strings as the original grammar</p></li>
+</ul>
+</section>
+<section id="steps-to-remove-null-productions">
+<h3>2.4 Steps to Remove Null Productions<a class="headerlink" href="#steps-to-remove-null-productions" title="Link to this heading">#</a></h3>
+<p>Follow these steps to remove null productions from a context-free grammar (CFG):</p>
+<ol class="arabic simple">
+<li><p>Find Nullable Non-terminals:</p>
+<ul class="simple">
+<li><p>Mark all non-terminals A’s with direct productions A → ∧</p></li>
+<li><p>Iteratively mark any non-terminal A whose right-hand side consists entirely of nullable symbols, such non-terminal has indirect null productions</p></li>
+<li><p>Continue until no more non-terminals can be marked nullable</p></li>
+</ul>
+</li>
+<li><p>Generate New Productions:</p>
+<ul class="simple">
+<li><p>For each production A → X₁X₂…Xₙ</p></li>
+<li><p>Create new productions by omitting nullable symbols in all possible combinations</p></li>
+<li><p>Exclude any original and resulting null productions</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="examples-to-remove-null-productions">
+<h3>2.5 Examples to Remove Null Productions<a class="headerlink" href="#examples-to-remove-null-productions" title="Link to this heading">#</a></h3>
+<p>These following examples demonstrate various scenarios you might encounter when removing null productions, from simple cases to more complex ones involving multiple nullable symbols and nested dependencies.</p>
+<section id="example-1-grammar-with-one-nullable-non-terminal">
+<h4>Example 1: Grammar with One Nullable Non-terminal<a class="headerlink" href="#example-1-grammar-with-one-nullable-non-terminal" title="Link to this heading">#</a></h4>
+<p>Consider this grammar:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>S → AB
+A → aA | ∧
+B → b
+</pre></div>
+</div>
+<p>Step 1: Find nullable non-terminals:</p>
+<ul class="simple">
+<li><p>A → ∧ directly, so A is nullable.</p></li>
+<li><p>No other nullable symbols found.</p></li>
+</ul>
+<p>Step 2: Generate new productions: From S → AB, since A is nullable, generate the following new productions:</p>
+<ul class="simple">
+<li><p>S → B (removing A from AB since A is nullable)</p></li>
+<li><p>A → a (removing A from aA since A is nullable)
+Keep all other non-null productions.</p></li>
+</ul>
+<p>Final grammar:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>S → AB | B
+A → aA | a
+B → b
+</pre></div>
+</div>
+</section>
+<section id="example-2-grammar-with-multiple-nullable-non-terminals">
+<h4>Example 2: Grammar with Multiple Nullable Non-terminals<a class="headerlink" href="#example-2-grammar-with-multiple-nullable-non-terminals" title="Link to this heading">#</a></h4>
+<p>Consider this grammar:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>S → ABC
+A → aA | ∧
+B → bB | ∧
+C → c
+</pre></div>
+</div>
+<p>Step 1: Find nullable non-terminals:</p>
+<ul class="simple">
+<li><p>A → ∧ directly, so A is nullable.</p></li>
+<li><p>B → ∧ directly, so B is nullable.</p></li>
+</ul>
+<p>Step 2: Generate new productions:</p>
+<ul class="simple">
+<li><p>From S → ABC, generate all combinations with nullable A and B:</p>
+<ul>
+<li><p>S → BC (removing A from ABC since A is nullable)</p></li>
+<li><p>S → AC (removing B from ABC since B is nullable)</p></li>
+<li><p>S → C (removing both A and B from ABC since A and B are nullable)</p></li>
+</ul>
+</li>
+<li><p>From A → aA | ∧, generate all combinations with nullable A:</p>
+<ul>
+<li><p>A → a (removing A from aA since A is nullable)</p></li>
+</ul>
+</li>
+<li><p>From B → bB | ∧, generate all combinations with nullable B:</p>
+<ul>
+<li><p>B → b (removing B from bB since B is nullable)</p></li>
+</ul>
+</li>
+<li><p>Keep all other non-null productions.</p></li>
+</ul>
+<p>Final grammar:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>S → ABC | BC | AC | C
+A → aA | a
+B → bB | b
+C → c
+</pre></div>
+</div>
+</section>
+<section id="example-3-complex-grammar-with-chain-of-nullable-non-terminals">
+<h4>Example 3: Complex Grammar with Chain of Nullable Non-terminals<a class="headerlink" href="#example-3-complex-grammar-with-chain-of-nullable-non-terminals" title="Link to this heading">#</a></h4>
+<p>Consider this grammar:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>S → AB
+A → CD
+B → b
+C → c | ∧
+D → d | ∧
+</pre></div>
+</div>
+<p>Step 1: Find nullable non-terminals:</p>
+<ul class="simple">
+<li><p>C → ∧ directly, so C is nullable.</p></li>
+<li><p>D → ∧ directly, so D is nullable.</p></li>
+<li><p>Check combinations: since CD can be null, confirming A is nullable, in other words, A can indirectly produce an empty string</p></li>
+</ul>
+<p>Step 2: Generate new productions:</p>
+<ul class="simple">
+<li><p>From A → CD, generate all combinations with nullable C and D:</p>
+<ul>
+<li><p>A → C (removing D from CD since D is nullable)</p></li>
+<li><p>A → D (removing C from CD since C is nullable)</p></li>
+</ul>
+</li>
+<li><p>From S → AB, generate all combinations with nullable A:</p>
+<ul>
+<li><p>S → B (removing A from AB since A is nullable)</p></li>
+</ul>
+</li>
+<li><p>Keep all other non-null productions.</p></li>
+</ul>
+<p>Final grammar:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>S → AB | B
+A → CD | C | D
+B → b
+C → c
+D → d
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id1">
+<h3>2.6 Example Python Implementation<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Sample implementation of removing null productions</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">find_nullable_symbols</span><span class="p">(</span><span class="n">grammar</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Find all nullable non-terminals in the grammar.&quot;&quot;&quot;</span>
+    <span class="n">nullable</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">changed</span> <span class="o">=</span> <span class="kc">True</span>
+    
+    <span class="c1"># Keep iterating until no new nullable symbols are found</span>
+    <span class="k">while</span> <span class="n">changed</span><span class="p">:</span>
+        <span class="n">changed</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">prod</span> <span class="ow">in</span> <span class="n">grammar</span><span class="o">.</span><span class="n">productions</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">prod</span><span class="o">.</span><span class="n">left</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">nullable</span><span class="p">:</span>
+                <span class="c1"># Direct null production</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">prod</span><span class="o">.</span><span class="n">right</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">prod</span><span class="o">.</span><span class="n">right</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;∧&#39;</span><span class="p">:</span>
+                    <span class="n">nullable</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">prod</span><span class="o">.</span><span class="n">left</span><span class="p">)</span>
+                    <span class="n">changed</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="c1"># Production with all nullable symbols</span>
+                <span class="k">elif</span> <span class="nb">all</span><span class="p">(</span><span class="n">symbol</span> <span class="ow">in</span> <span class="n">nullable</span> <span class="k">for</span> <span class="n">symbol</span> <span class="ow">in</span> <span class="n">prod</span><span class="o">.</span><span class="n">right</span><span class="p">):</span>
+                    <span class="n">nullable</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">prod</span><span class="o">.</span><span class="n">left</span><span class="p">)</span>
+                    <span class="n">changed</span> <span class="o">=</span> <span class="kc">True</span>
+    
+    <span class="k">return</span> <span class="n">nullable</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">remove_null_productions</span><span class="p">(</span><span class="n">grammar</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Remove null productions from a grammar while preserving the language.&quot;&quot;&quot;</span>
+    <span class="c1"># Step 1: Find all nullable symbols</span>
+    <span class="n">nullable</span> <span class="o">=</span> <span class="n">find_nullable_symbols</span><span class="p">(</span><span class="n">grammar</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Nullable symbols: </span><span class="si">{</span><span class="n">nullable</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Step 2: Generate new productions</span>
+    <span class="n">new_productions</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">prod</span> <span class="ow">in</span> <span class="n">grammar</span><span class="o">.</span><span class="n">productions</span><span class="p">:</span>
+        <span class="c1"># Skip direct null productions (we&#39;ll handle start symbol separately)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">prod</span><span class="o">.</span><span class="n">right</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">prod</span><span class="o">.</span><span class="n">right</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;∧&#39;</span><span class="p">:</span>
+            <span class="k">continue</span>
+        
+        <span class="c1"># Generate all possible combinations of nullable symbols</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">itertools</span><span class="w"> </span><span class="kn">import</span> <span class="n">combinations</span>
+        <span class="n">right</span> <span class="o">=</span> <span class="n">prod</span><span class="o">.</span><span class="n">right</span>
+        <span class="n">nullable_positions</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">symbol</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">right</span><span class="p">)</span> <span class="k">if</span> <span class="n">symbol</span> <span class="ow">in</span> <span class="n">nullable</span><span class="p">]</span>
+        
+        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nullable_positions</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">pos_to_remove</span> <span class="ow">in</span> <span class="n">combinations</span><span class="p">(</span><span class="n">nullable_positions</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
+                <span class="n">new_right</span> <span class="o">=</span> <span class="p">[</span><span class="n">sym</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">sym</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">right</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">pos_to_remove</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">new_right</span><span class="p">:</span>  <span class="c1"># Don&#39;t add empty productions unless it&#39;s for start symbol</span>
+                    <span class="n">new_productions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Production</span><span class="p">(</span><span class="n">prod</span><span class="o">.</span><span class="n">left</span><span class="p">,</span> <span class="n">new_right</span><span class="p">))</span>
+    
+    <span class="c1"># Step 3: Handle empty string if start symbol is nullable</span>
+    <span class="k">if</span> <span class="n">grammar</span><span class="o">.</span><span class="n">start_symbol</span> <span class="ow">in</span> <span class="n">nullable</span><span class="p">:</span>
+        <span class="n">new_start</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">grammar</span><span class="o">.</span><span class="n">start_symbol</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+        <span class="n">new_productions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Production</span><span class="p">(</span><span class="n">new_start</span><span class="p">,</span> <span class="p">[</span><span class="n">grammar</span><span class="o">.</span><span class="n">start_symbol</span><span class="p">]))</span>
+        <span class="n">new_productions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Production</span><span class="p">(</span><span class="n">new_start</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;∧&#39;</span><span class="p">]))</span>
+        <span class="k">return</span> <span class="n">Grammar</span><span class="p">(</span><span class="n">new_productions</span><span class="p">,</span> <span class="n">new_start</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">Grammar</span><span class="p">(</span><span class="n">new_productions</span><span class="p">,</span> <span class="n">grammar</span><span class="o">.</span><span class="n">start_symbol</span><span class="p">)</span>
+
+
+<span class="c1"># Helper function to analyze the impact of null production removal</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">analyze_grammar_transformation</span><span class="p">(</span><span class="n">original</span><span class="p">,</span> <span class="n">transformed</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Analyze the changes made during null production removal.&quot;&quot;&quot;</span>
+    <span class="n">original_prods</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">original</span><span class="o">.</span><span class="n">productions</span><span class="p">)</span>
+    <span class="n">transformed_prods</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">transformed</span><span class="o">.</span><span class="n">productions</span><span class="p">)</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of productions: </span><span class="si">{</span><span class="n">original_prods</span><span class="si">}</span><span class="s2"> → </span><span class="si">{</span><span class="n">transformed_prods</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Production increase factor: </span><span class="si">{</span><span class="n">transformed_prods</span><span class="o">/</span><span class="n">original_prods</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">x&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Analyze which non-terminals were affected</span>
+    <span class="n">original_nt</span> <span class="o">=</span> <span class="p">{</span><span class="n">prod</span><span class="o">.</span><span class="n">left</span> <span class="k">for</span> <span class="n">prod</span> <span class="ow">in</span> <span class="n">original</span><span class="o">.</span><span class="n">productions</span><span class="p">}</span>
+    <span class="n">transformed_nt</span> <span class="o">=</span> <span class="p">{</span><span class="n">prod</span><span class="o">.</span><span class="n">left</span> <span class="k">for</span> <span class="n">prod</span> <span class="ow">in</span> <span class="n">transformed</span><span class="o">.</span><span class="n">productions</span><span class="p">}</span>
+    
+    <span class="n">new_nt</span> <span class="o">=</span> <span class="n">transformed_nt</span> <span class="o">-</span> <span class="n">original_nt</span>
+    <span class="k">if</span> <span class="n">new_nt</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;New non-terminals added: </span><span class="si">{</span><span class="n">new_nt</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Check for preservation of terminals</span>
+    <span class="n">original_terms</span> <span class="o">=</span> <span class="n">original</span><span class="o">.</span><span class="n">terminals</span>
+    <span class="n">transformed_terms</span> <span class="o">=</span> <span class="n">transformed</span><span class="o">.</span><span class="n">terminals</span>
+    
+    <span class="k">if</span> <span class="n">original_terms</span> <span class="o">!=</span> <span class="n">transformed_terms</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Warning: Terminal symbols changed during transformation!&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Original terminals: </span><span class="si">{</span><span class="n">original_terms</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;New terminals: </span><span class="si">{</span><span class="n">transformed_terms</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Example 1: Simple grammar with null productions</span>
+<span class="n">simple_grammar</span> <span class="o">=</span> <span class="n">Grammar</span><span class="p">([</span>
+    <span class="n">Production</span><span class="p">(</span><span class="s1">&#39;S&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">]),</span>
+    <span class="n">Production</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">]),</span>
+    <span class="n">Production</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;∧&#39;</span><span class="p">]),</span>
+    <span class="n">Production</span><span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]),</span>
+<span class="p">],</span> <span class="s1">&#39;S&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Example 1: Simple grammar with nullable A&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Original grammar:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">simple_grammar</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">After removing null productions:&quot;</span><span class="p">)</span>
+<span class="n">transformed</span> <span class="o">=</span> <span class="n">remove_null_productions</span><span class="p">(</span><span class="n">simple_grammar</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">transformed</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Analysis of transformation:&quot;</span><span class="p">)</span>
+<span class="n">analyze_grammar_transformation</span><span class="p">(</span><span class="n">simple_grammar</span><span class="p">,</span> <span class="n">transformed</span><span class="p">)</span>
+
+<span class="c1"># Example 2: More complex grammar with multiple nullable symbols</span>
+<span class="n">complex_grammar</span> <span class="o">=</span> <span class="n">Grammar</span><span class="p">([</span>
+    <span class="n">Production</span><span class="p">(</span><span class="s1">&#39;S&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">]),</span>
+    <span class="n">Production</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">]),</span>
+    <span class="n">Production</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;∧&#39;</span><span class="p">]),</span>
+    <span class="n">Production</span><span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">]),</span>
+    <span class="n">Production</span><span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;∧&#39;</span><span class="p">]),</span>
+    <span class="n">Production</span><span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;c&#39;</span><span class="p">]),</span>
+<span class="p">],</span> <span class="s1">&#39;S&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Example 2: Complex grammar with multiple nullable symbols&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Original grammar:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">complex_grammar</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">After removing null productions:&quot;</span><span class="p">)</span>
+<span class="n">transformed</span> <span class="o">=</span> <span class="n">remove_null_productions</span><span class="p">(</span><span class="n">complex_grammar</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">transformed</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Analysis of transformation:&quot;</span><span class="p">)</span>
+<span class="n">analyze_grammar_transformation</span><span class="p">(</span><span class="n">complex_grammar</span><span class="p">,</span> <span class="n">transformed</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Example 1: Simple grammar with nullable A
+Original grammar:
+S → AB
+A → aA
+A → ∧
+B → b
+
+After removing null productions:
+Nullable symbols: {&#39;A&#39;}
+S → AB
+S → B
+A → aA
+A → a
+B → b
+
+Analysis of transformation:
+Number of productions: 4 → 5
+Production increase factor: 1.25x
+Warning: Terminal symbols changed during transformation!
+Original terminals: {&#39;b&#39;, &#39;a&#39;, &#39;∧&#39;}
+New terminals: {&#39;b&#39;, &#39;a&#39;}
+
+Example 2: Complex grammar with multiple nullable symbols
+Original grammar:
+S → ABC
+A → aA
+A → ∧
+B → bB
+B → ∧
+C → c
+
+After removing null productions:
+Nullable symbols: {&#39;A&#39;, &#39;B&#39;}
+S → ABC
+S → BC
+S → AC
+S → C
+A → aA
+A → a
+B → bB
+B → b
+C → c
+
+Analysis of transformation:
+Number of productions: 6 → 9
+Production increase factor: 1.50x
+Warning: Terminal symbols changed during transformation!
+Original terminals: {&#39;b&#39;, &#39;a&#39;, &#39;c&#39;, &#39;∧&#39;}
+New terminals: {&#39;b&#39;, &#39;a&#39;, &#39;c&#39;}
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="removing-unit-productions">
+<h2>3. Removing Unit Productions<a class="headerlink" href="#removing-unit-productions" title="Link to this heading">#</a></h2>
+<section id="what-are-unit-productions">
+<h3>3.1 What Are Unit Productions?<a class="headerlink" href="#what-are-unit-productions" title="Link to this heading">#</a></h3>
+<p>Unit productions (also called chain productions) are productions of the form A → B where both A and B are non-terminals. While these productions can make grammars more readable and intuitive, they do not add any meaningful structure to the derivation process and can make parsing less efficient.</p>
+</section>
+<section id="why-remove-unit-productions">
+<h3>3.2 Why Remove Unit Productions?<a class="headerlink" href="#why-remove-unit-productions" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Parsing Efficiency: unit productions can lead to unnecessary steps in parsing, creating longer derivation chains than needed.</p></li>
+<li><p>Grammar Analysis: many algorithms (like CYK parsing) require grammars without unit productions.</p></li>
+<li><p>Grammar Simplification: removing unit productions simplifies the grammar while preserving its language.</p></li>
+</ol>
+<p>As an example, consider this grammar for arithmetic expressions:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>E → T
+T → F
+F → var
+F → num
+F → (E)
+</pre></div>
+</div>
+<p>While this grammar is readable, it requires three steps (E → T → F → var) to derive a simple variable. After removing unit productions, we get:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>E → var
+E → num
+E → (E)
+</pre></div>
+</div>
+<p>This transformed grammar requires a single step (E → var) to derive a simple variable.</p>
+</section>
+<section id="how-to-remove-unit-productions">
+<h3>3.3 How to Remove Unit Productions<a class="headerlink" href="#how-to-remove-unit-productions" title="Link to this heading">#</a></h3>
+<section id="unit-pairs-and-transitive-closure">
+<h4>3.3.1 Unit Pairs and Transitive Closure<a class="headerlink" href="#unit-pairs-and-transitive-closure" title="Link to this heading">#</a></h4>
+<p>Before removing unit productions, we need to understand unit pairs and transitive closure. A unit pair (A,B) in a context-free grammar means that A can derive B through one or more (a sequence of) unit productions. The transitive closure of unit productions ensures that if there is a sequence of unit productions leading from one non-terminal to another, we establish a direct connection between them. For example, in the grammar:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>S → A
+A → B
+B → C
+C → a
+</pre></div>
+</div>
+<p>Here are the steps to find all the unit pairs:</p>
+<ul class="simple">
+<li><p>Start with direct unit pairs: S → A, A → B, and B → C are direct unit pairs, so we add (S,A), (A,B), (B,C) to the unit pair set.</p></li>
+<li><p>Extend the pairs transitively: If (S,A) and (A,B) exist, it means S → B exists, then add (S,B) to the unit pair set. We repeat until no new pairs can be added. By extending the pairs transitively this way, We add more pairs (S,C), (A,C).</p></li>
+</ul>
+<p>So the unit pairs are (S,A), (S,B), (S,C), (A,B), (A,C), (B,C).</p>
+<p>We can visualize unit pairs as a directed graph: solid arrows represent direct unit productions, and dashed arrows represent derived unit pairs.</p>
+<div class="highlight-mermaid notranslate"><div class="highlight"><pre><span></span>graph TD
+    accTitle: unit pairs as a directed graph
+    accDescr: a diagram representing unit pairs as a directed graph
+    S[S] --&gt; A[A]
+    A --&gt; B[B]
+    S -.-&gt; B[B]
+    
+    style S fill:#f9f,stroke:#333
+    style A fill:#ff9,stroke:#333
+    style B fill:#9f9,stroke:#333
+</pre></div>
+</div>
+</section>
+<section id="steps-to-remove-unit-productions">
+<h4>3.3.2 Steps to Remove Unit Productions<a class="headerlink" href="#steps-to-remove-unit-productions" title="Link to this heading">#</a></h4>
+<p>The process of removing unit productions involves three main steps. Let’s examine each step in detail with examples.</p>
+<ul class="simple">
+<li><p>Step 1. Find all unit pairs</p></li>
+<li><p>Step 2. Create new productions based on all unit pairs: for each unit pair (A,B), look at all non-unit productions with B on the left side, create new productions by replacing B with A</p></li>
+<li><p>Step 3. Remove original unit productions: identify all unit productions and remove them from the grammar; keep all new productions created in Step 2</p></li>
+</ul>
+</section>
+</section>
+<section id="examples-to-remove-unit-productions">
+<h3>3.4 Examples to Remove Unit Productions<a class="headerlink" href="#examples-to-remove-unit-productions" title="Link to this heading">#</a></h3>
+<section id="example-1-remove-unit-productions-from-the-given-grammar">
+<h4>Example 1: Remove unit productions from the given grammar<a class="headerlink" href="#example-1-remove-unit-productions-from-the-given-grammar" title="Link to this heading">#</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>S → A
+A → B
+B → aB | b
+</pre></div>
+</div>
+<p>Step 1: find all unit pairs: (S,A), (A,B), (S,B)
+Step 2: create new productions:</p>
+<ul class="simple">
+<li><p>for (S,A), we do not find any non-unit productions with A on the left side</p></li>
+<li><p>for (A,B), we find two non-unit productions with B on the left side: B → aB | b</p>
+<ul>
+<li><p>from B → aB, add new production A → aB</p></li>
+<li><p>from B → b, add new production A → b</p></li>
+</ul>
+</li>
+<li><p>for (S,B), we find two non-unit productions with B on the left side: B → aB | b</p>
+<ul>
+<li><p>from B → aB, add new production S → aB</p></li>
+<li><p>from B → b, add new production S → b
+Step 3: remove all original unit productions: S → A and A → B should be removed.</p></li>
+</ul>
+</li>
+</ul>
+<p>After removing unit productions, the grammar is transformed to:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>S → aB | b
+A → aB | b
+B → aB | b
+</pre></div>
+</div>
+</section>
+<section id="example-2-remove-unit-productions-from-the-given-grammar">
+<h4>Example 2: Remove unit productions from the given grammar<a class="headerlink" href="#example-2-remove-unit-productions-from-the-given-grammar" title="Link to this heading">#</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>E → E + T | T
+T → T * F | F
+F → v | (E)
+</pre></div>
+</div>
+<p>Step 1: find all unit pairs: (E,T), (T,F), (E,F)
+Step 2: create new productions:</p>
+<ul class="simple">
+<li><p>for (E,T), we find non-unit productions with T on the left side: T → T * F</p>
+<ul>
+<li><p>add new production E → T * F</p></li>
+</ul>
+</li>
+<li><p>for (T,F), we find non-unit productions with F on the left side: F → v | (E)</p>
+<ul>
+<li><p>from F → v, add new production T → v</p></li>
+<li><p>from F → (E), add new production T → (E)</p></li>
+</ul>
+</li>
+<li><p>for (E,F), we find non-unit productions with F on the left side: F → v | (E)</p>
+<ul>
+<li><p>from F → v, add new production E → v</p></li>
+<li><p>from F → (E), add new production E → (E)
+Step 3: remove all original unit productions: E → T and T → F should be removed.</p></li>
+</ul>
+</li>
+</ul>
+<p>After removing unit productions, the grammar is transformed to:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>E → E + T | T * F | v | (E)
+T → T * F | v | (E)
+F → v | (E)
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id2">
+<h3>3.5 Example Python Implementation<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Sample implementation of removing unit productions</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">remove_unit_productions</span><span class="p">(</span><span class="n">grammar</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Remove unit productions from a grammar.&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">find_unit_pairs</span><span class="p">():</span>
+        <span class="n">pairs</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="c1"># Initial pairs (A, A) for all non-terminals</span>
+        <span class="k">for</span> <span class="n">A</span> <span class="ow">in</span> <span class="n">grammar</span><span class="o">.</span><span class="n">non_terminals</span><span class="p">:</span>
+            <span class="n">pairs</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">A</span><span class="p">,</span> <span class="n">A</span><span class="p">))</span>
+        
+        <span class="n">changed</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">while</span> <span class="n">changed</span><span class="p">:</span>
+            <span class="n">changed</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">for</span> <span class="n">prod</span> <span class="ow">in</span> <span class="n">grammar</span><span class="o">.</span><span class="n">productions</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">prod</span><span class="o">.</span><span class="n">right</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">prod</span><span class="o">.</span><span class="n">right</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">grammar</span><span class="o">.</span><span class="n">non_terminals</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">pairs</span><span class="p">):</span>
+                        <span class="k">if</span> <span class="n">B</span> <span class="o">==</span> <span class="n">prod</span><span class="o">.</span><span class="n">right</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">and</span> <span class="p">(</span><span class="n">prod</span><span class="o">.</span><span class="n">left</span><span class="p">,</span> <span class="n">C</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">pairs</span><span class="p">:</span>
+                            <span class="n">pairs</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">prod</span><span class="o">.</span><span class="n">left</span><span class="p">,</span> <span class="n">C</span><span class="p">))</span>
+                            <span class="n">changed</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="n">pairs</span>
+
+    <span class="c1"># Find all unit pairs</span>
+    <span class="n">unit_pairs</span> <span class="o">=</span> <span class="n">find_unit_pairs</span><span class="p">()</span>
+    
+    <span class="c1"># Create new productions</span>
+    <span class="n">new_productions</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">prod</span> <span class="ow">in</span> <span class="n">grammar</span><span class="o">.</span><span class="n">productions</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">prod</span><span class="o">.</span><span class="n">right</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">prod</span><span class="o">.</span><span class="n">right</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">grammar</span><span class="o">.</span><span class="n">non_terminals</span><span class="p">:</span>
+            <span class="k">continue</span>  <span class="c1"># Skip unit productions</span>
+        
+        <span class="k">for</span> <span class="n">A</span><span class="p">,</span> <span class="n">B</span> <span class="ow">in</span> <span class="n">unit_pairs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">B</span> <span class="o">==</span> <span class="n">prod</span><span class="o">.</span><span class="n">left</span><span class="p">:</span>
+                <span class="n">new_productions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Production</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">prod</span><span class="o">.</span><span class="n">right</span><span class="p">))</span>
+    
+    <span class="k">return</span> <span class="n">Grammar</span><span class="p">(</span><span class="n">new_productions</span><span class="p">,</span> <span class="n">grammar</span><span class="o">.</span><span class="n">start_symbol</span><span class="p">)</span>
+
+<span class="c1"># Example usage</span>
+<span class="n">grammar_with_unit</span> <span class="o">=</span> <span class="n">Grammar</span><span class="p">([</span>
+    <span class="n">Production</span><span class="p">(</span><span class="s1">&#39;S&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]),</span>
+    <span class="n">Production</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">]),</span>
+    <span class="n">Production</span><span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">]),</span>
+    <span class="n">Production</span><span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]),</span>
+<span class="p">],</span> <span class="s1">&#39;S&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Original grammar:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">grammar_with_unit</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Grammar after removing unit productions:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">remove_unit_productions</span><span class="p">(</span><span class="n">grammar_with_unit</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Original grammar:
+S → A
+A → B
+B → aB
+B → b
+
+Grammar after removing unit productions:
+S → aB
+B → aB
+A → aB
+S → b
+B → b
+A → b
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="chomsky-normal-form">
+<h2>4. Chomsky Normal Form<a class="headerlink" href="#chomsky-normal-form" title="Link to this heading">#</a></h2>
+<section id="what-is-chomsky-normal-form">
+<h3>4.1 What is Chomsky Normal Form?<a class="headerlink" href="#what-is-chomsky-normal-form" title="Link to this heading">#</a></h3>
+<p>Chomsky Normal Form (CNF) is a simplified form of context-free grammars where all productions follow specific patterns. A grammar is in CNF if and only if all productions are of the form:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>A → BC (where A, B, and C are non-terminals)
+A → a (where A is a non-terminal and a is a terminal)
+</pre></div>
+</div>
+</section>
+<section id="what-makes-cnf-valuable">
+<h3>4.2 What Makes CNF Valuable?<a class="headerlink" href="#what-makes-cnf-valuable" title="Link to this heading">#</a></h3>
+<p>Chomsky Normal Form is particularly important for several reasons:</p>
+<ul class="simple">
+<li><p>It simplifies parsing algorithms (especially the CYK algorithm for membership testing)</p></li>
+<li><p>It makes certain proofs about context-free grammars easier, such as the Pumping Lemma for Context-free Languages</p></li>
+<li><p>It provides a standardized way to represent any context-free grammar</p></li>
+<li><p>It eliminates complex productions while preserving the generated language</p></li>
+<li><p>It is widely used in compiler design and natural language processing (NLP) for efficient parsing techniques.</p></li>
+</ul>
+</section>
+<section id="converting-a-cfg-to-cnf">
+<h3>4.3 Converting a CFG to CNF<a class="headerlink" href="#converting-a-cfg-to-cnf" title="Link to this heading">#</a></h3>
+<p>To convert a given CFG into CNF, follow these steps:</p>
+<ul class="simple">
+<li><p>Step 1: Remove all Null Productions (previously covered in earlier sections)</p></li>
+<li><p>Step 2: Remove all Unit Productions (previously covered in earlier sections)</p></li>
+<li><p>Step 3: Convert Remaining Productions to CNF</p>
+<ul>
+<li><p>Step 3a: Convert long right-hand sides into CNF: replace any production with three or more non-terminals on the right-hand size with new non-terminals, and repeat until all right-hand sides have exactly two non-terminals.</p></li>
+<li><p>Step 3b: Convert terminals in mixed productions: replace  terminals in rules like A → aB  with a new non-terminal</p></li>
+</ul>
+</li>
+</ul>
+<section id="example-1-converting-a-cfg-to-cnf">
+<h4>Example 1: Converting a CFG to CNF<a class="headerlink" href="#example-1-converting-a-cfg-to-cnf" title="Link to this heading">#</a></h4>
+<p>Conver the given CFG to CNF:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>S → AB ∣ BCA ∣ aB
+A → AB | a
+B → b
+C → c
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Step 1: No null productions</p></li>
+<li><p>Step 2: No unit productions</p></li>
+<li><p>Step 3a: the production S → BCA has three non-terminals on the right-hand side:</p>
+<ul>
+<li><p>Introduce a new variable X such that: X → CA</p></li>
+<li><p>Replace S → BCA with S → BX</p></li>
+</ul>
+</li>
+<li><p>Step 3b: the production S → aB contains both a terminal (a) and a non-terminal (B).</p>
+<ul>
+<li><p>introduce a new non-terminal with a new production: Y → a</p></li>
+<li><p>replace S → aB with S → YB</p></li>
+</ul>
+</li>
+</ul>
+<p>Final CNF grammar:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>S → AB ∣ BX ∣ YB
+A → AB | a
+B → b
+C → c
+X → CA
+Y → a
+</pre></div>
+</div>
+<p>You may wonder, in step 3b, we introduced a new non-terminal Y with the production Y → a, instead of using the existing production A → a for the conversion. Here is why:</p>
+<ul class="simple">
+<li><p>If we had used A instead of Y, we would have replaced S → aB with S → AB. However, in the original grammar, A is already defined with its own role: A → AB | a, using A instead of Y could change the structure of the grammar, possibly affecting the language it generates. In this example, it could have introduced a new production S → ABB, which is not present in the original grammar.</p></li>
+<li><p>If we directly substituted A for a, it might create ambiguity in how non-terminals are structured. By introducing Y → a, we ensure that every production strictly adheres to CNF without modifying existing non-terminals.</p></li>
+</ul>
+<p>Introducing Y ensures that the structure and meaning of the original CFG remain intact while following CNF’s strict format. This is a standard transformation technique when converting CFGs to CNF.</p>
+</section>
+<section id="example-2-converting-a-cfg-to-cnf">
+<h4>Example 2: Converting a CFG to CNF<a class="headerlink" href="#example-2-converting-a-cfg-to-cnf" title="Link to this heading">#</a></h4>
+<p>Conver the given CFG to CNF:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>S → aSb | bSa | SS | A
+A → aAb | bAa | ∧
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Step 1: Remove all Null Productions</p>
+<ul>
+<li><p>identify nullable non-terminals: A, S</p></li>
+<li><p>from A → aAb | bAa, generate all combinations with nullable A: A → ab | ba</p></li>
+<li><p>from S → aSb | bSa, generate all combinations with nullable S: S → ab | ba</p></li>
+</ul>
+</li>
+</ul>
+<p>Grammar becomes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>S → aSb | bSa | SS | A | ab | ba
+A → aAb | bAa | ab | ba
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Step 2: Remove all unit productions:</p>
+<ul>
+<li><p>Step 1. Find all unit pairs: (S,A)</p></li>
+<li><p>Step 2. Create new productions for (S,A), look at all non-unit productions with A on the left side, create new productions by replacing A with S: S → aAb | bAa | ab | ba</p></li>
+<li><p>Step 3. Remove original unit productions: keep all new productions created in Step 2</p></li>
+</ul>
+</li>
+</ul>
+<p>Grammar becomes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>S → aSb | bSa | SS | aAb | bAa | ab | ba
+A → aAb | bAa | ab | ba
+</pre></div>
+</div>
+<ul>
+<li><p>Step 3: Convert Remaining Productions to CNF</p>
+<ul>
+<li><p>Introduce two new non-terminals X and Y such that: X → a, Y → b</p></li>
+<li><p>Grammar becomes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>S → XSY | YSX | SS | XAY | YAX | XY | YX
+A → XAY | YAX | XY | YX
+X → a
+Y → b
+</pre></div>
+</div>
+</li>
+<li><p>Introduce two new non-terminals B, C, D, E such that: B → XS, C → YS, D → XA, E → YA</p></li>
+<li><p>A long production such as S → XSY becomes S → BY, all other long productions can be converted to CNF</p></li>
+</ul>
+</li>
+</ul>
+<p>Final grammar becomes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>S → BY | CX | SS | DY | EX | XY | YX
+A → DY | EX | XY | YX
+X → a
+Y → b
+B → XS
+C → YS
+D → XA
+E → YA
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id3">
+<h3>4.4 Example Python Implementation<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">to_chomsky_normal_form</span><span class="p">(</span><span class="n">grammar</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert a grammar to Chomsky Normal Form.&quot;&quot;&quot;</span>
+    <span class="c1"># Step 1: Remove unit productions</span>
+    <span class="n">grammar</span> <span class="o">=</span> <span class="n">remove_unit_productions</span><span class="p">(</span><span class="n">grammar</span><span class="p">)</span>
+    
+    <span class="c1"># Step 2: Remove null productions</span>
+    <span class="n">grammar</span> <span class="o">=</span> <span class="n">remove_null_productions</span><span class="p">(</span><span class="n">grammar</span><span class="p">)</span>
+    
+    <span class="c1"># Step 3: Replace terminals in complex productions</span>
+    <span class="n">new_productions</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">terminal_rules</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># Maps terminals to their corresponding non-terminals</span>
+    
+    <span class="k">for</span> <span class="n">prod</span> <span class="ow">in</span> <span class="n">grammar</span><span class="o">.</span><span class="n">productions</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">prod</span><span class="o">.</span><span class="n">right</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">prod</span><span class="o">.</span><span class="n">right</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">grammar</span><span class="o">.</span><span class="n">terminals</span><span class="p">:</span>
+            <span class="n">new_productions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prod</span><span class="p">)</span>
+            <span class="k">continue</span>
+            
+        <span class="n">new_right</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">symbol</span> <span class="ow">in</span> <span class="n">prod</span><span class="o">.</span><span class="n">right</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">symbol</span> <span class="ow">in</span> <span class="n">grammar</span><span class="o">.</span><span class="n">terminals</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">symbol</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">terminal_rules</span><span class="p">:</span>
+                    <span class="n">new_non_terminal</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;T_</span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="n">terminal_rules</span><span class="p">[</span><span class="n">symbol</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_non_terminal</span>
+                    <span class="n">new_productions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Production</span><span class="p">(</span><span class="n">new_non_terminal</span><span class="p">,</span> <span class="p">[</span><span class="n">symbol</span><span class="p">]))</span>
+                <span class="n">new_right</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">terminal_rules</span><span class="p">[</span><span class="n">symbol</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">new_right</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
+        
+        <span class="c1"># Step 4: Break long productions</span>
+        <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_right</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">new_non_terminal</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;X_</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">new_productions</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">new_productions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Production</span><span class="p">(</span><span class="n">new_non_terminal</span><span class="p">,</span> <span class="n">new_right</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]))</span>
+            <span class="n">new_right</span> <span class="o">=</span> <span class="n">new_right</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">new_non_terminal</span><span class="p">]</span>
+        
+        <span class="n">new_productions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Production</span><span class="p">(</span><span class="n">prod</span><span class="o">.</span><span class="n">left</span><span class="p">,</span> <span class="n">new_right</span><span class="p">))</span>
+    
+    <span class="k">return</span> <span class="n">Grammar</span><span class="p">(</span><span class="n">new_productions</span><span class="p">,</span> <span class="n">grammar</span><span class="o">.</span><span class="n">start_symbol</span><span class="p">)</span>
+
+<span class="c1"># Example usage</span>
+<span class="n">non_cnf_grammar</span> <span class="o">=</span> <span class="n">Grammar</span><span class="p">([</span>
+    <span class="n">Production</span><span class="p">(</span><span class="s1">&#39;S&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">]),</span>
+    <span class="n">Production</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">]),</span>
+    <span class="n">Production</span><span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]),</span>
+    <span class="n">Production</span><span class="p">(</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">]),</span>
+<span class="p">],</span> <span class="s1">&#39;S&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Original grammar:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">non_cnf_grammar</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Grammar in Chomsky Normal Form:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">to_chomsky_normal_form</span><span class="p">(</span><span class="n">non_cnf_grammar</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Original grammar:
+S → ABC
+A → aA
+B → b
+C → cAB
+
+Grammar in Chomsky Normal Form:
+Nullable symbols: set()
+X_0 → BC
+S → AX_0
+T_a → a
+A → T_aA
+B → b
+T_c → c
+X_6 → AB
+C → T_cX_6
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="practice-exercises">
+<h2>5. Practice Exercises<a class="headerlink" href="#practice-exercises" title="Link to this heading">#</a></h2>
+<section id="exercise-1-regular-grammar-conversion">
+<h3>5.1 Exercise 1: Regular Grammar Conversion<a class="headerlink" href="#exercise-1-regular-grammar-conversion" title="Link to this heading">#</a></h3>
+<p>Convert the following finite automaton to a regular grammar:</p>
+<div class="highlight-mermaid notranslate"><div class="highlight"><pre><span></span>stateDiagram-v2
+    accTitle: Exercise 1: Regular Grammar Conversion
+    accDescr: a diagram representing a Finite Automaton
+    direction LR
+    [*] --&gt; Q0
+    Q0 --&gt; Q1 : a
+    Q0 --&gt; Q0 : b
+    Q1 --&gt; Q2 : b
+    Q1 --&gt; Q1 : a
+    Q2 --&gt; Q0 : a
+    Q2 --&gt; Q2 : b
+    
+    note right of Q2: Accept State
+</pre></div>
+</div>
+</section>
+<section id="exercise-2-null-production-elimination">
+<h3>5.2 Exercise 2: Null Production Elimination<a class="headerlink" href="#exercise-2-null-production-elimination" title="Link to this heading">#</a></h3>
+<p>Convert the following grammar to an equivalent one without null productions:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>S → AB | CD
+A → aA | ∧
+B → bB | ∧
+C → cC | ∧
+D → d
+</pre></div>
+</div>
+</section>
+<section id="exercise-3-unit-production-elimination">
+<h3>5.3 Exercise 3: Unit Production Elimination<a class="headerlink" href="#exercise-3-unit-production-elimination" title="Link to this heading">#</a></h3>
+<p>Eliminate all unit productions from this grammar:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>E → E&#39; | T
+E&#39; → E + T
+T → T&#39; | F
+T&#39; → T * F
+F → v | (E)
+</pre></div>
+</div>
+</section>
+<section id="exercise-4-cfg-to-cnf-conversion">
+<h3>5.4 Exercise 4: CFG to CNF Conversion<a class="headerlink" href="#exercise-4-cfg-to-cnf-conversion" title="Link to this heading">#</a></h3>
+<p>Convert the following grammar to Chomsky Normal Form:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>S → ASB | ∧
+A → aAS | a
+B → SbS | A | bb
+</pre></div>
+</div>
+</section>
+</section>
+<section id="further-reading">
+<h2>6. Further Reading<a class="headerlink" href="#further-reading" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>“Introduction to the Theory of Computation” by Michael Sipser, Section 2.1 - Context-Free Grammars</p></li>
+<li><p>“Introduction to Computer Theory” by Daniel I.A. Cohen, Chapter 13 - Grammatical Format</p></li>
+<li><p>“Automata Theory, Languages, and Computation” by Hopcroft, Motwani, and Ullman, Chapter 5 - Context-Free Grammars</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content - backup\Part_2_Context_Free_Languages\Chapter_09"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regular-grammar">1. Regular Grammar</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regular-grammar-definition">1.1 Regular Grammar Definition:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regular-grammar-examples">1.2 Regular Grammar Examples:</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1-regular-grammar">Example 1: Regular Grammar</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-2-regular-grammar">Example 2: Regular Grammar</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regular-grammar-to-regular-expression">1.3 Regular Grammar to Regular Expression:</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-3-regular-grammar-to-regular-expression">Example 3: Regular Grammar to Regular Expression</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-4-regular-grammar-to-regular-expression">Example 4: Regular Grammar to Regular Expression</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#finite-automata-to-regular-grammar">1.4 Finite Automata to Regular Grammar:</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-5-finite-automaton-to-regular-grammar">Example 5: Finite Automaton to Regular Grammar</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-6-finite-automaton-to-regular-grammar">Example 6: Finite Automaton to Regular Grammar</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-7-finite-automaton-to-regular-grammar">Example 7: Finite Automaton to Regular Grammar</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-python-implementation">1.5 Example Python Implementation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#removing-null-productions">2. Removing Null Productions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-are-null-productions">2.1 What Are Null Productions?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-remove-null-productions">2.2 Why Remove Null Productions?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#important-properties">2.3 Important Properties</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#steps-to-remove-null-productions">2.4 Steps to Remove Null Productions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#examples-to-remove-null-productions">2.5 Examples to Remove Null Productions</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1-grammar-with-one-nullable-non-terminal">Example 1: Grammar with One Nullable Non-terminal</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-2-grammar-with-multiple-nullable-non-terminals">Example 2: Grammar with Multiple Nullable Non-terminals</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-3-complex-grammar-with-chain-of-nullable-non-terminals">Example 3: Complex Grammar with Chain of Nullable Non-terminals</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">2.6 Example Python Implementation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#removing-unit-productions">3. Removing Unit Productions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-are-unit-productions">3.1 What Are Unit Productions?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-remove-unit-productions">3.2 Why Remove Unit Productions?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-remove-unit-productions">3.3 How to Remove Unit Productions</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#unit-pairs-and-transitive-closure">3.3.1 Unit Pairs and Transitive Closure</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#steps-to-remove-unit-productions">3.3.2 Steps to Remove Unit Productions</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#examples-to-remove-unit-productions">3.4 Examples to Remove Unit Productions</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1-remove-unit-productions-from-the-given-grammar">Example 1: Remove unit productions from the given grammar</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-2-remove-unit-productions-from-the-given-grammar">Example 2: Remove unit productions from the given grammar</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">3.5 Example Python Implementation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#chomsky-normal-form">4. Chomsky Normal Form</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-chomsky-normal-form">4.1 What is Chomsky Normal Form?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-makes-cnf-valuable">4.2 What Makes CNF Valuable?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#converting-a-cfg-to-cnf">4.3 Converting a CFG to CNF</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1-converting-a-cfg-to-cnf">Example 1: Converting a CFG to CNF</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-2-converting-a-cfg-to-cnf">Example 2: Converting a CFG to CNF</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">4.4 Example Python Implementation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-exercises">5. Practice Exercises</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1-regular-grammar-conversion">5.1 Exercise 1: Regular Grammar Conversion</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2-null-production-elimination">5.2 Exercise 2: Null Production Elimination</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-3-unit-production-elimination">5.3 Exercise 3: Unit Production Elimination</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-4-cfg-to-cnf-conversion">5.4 Exercise 4: CFG to CNF Conversion</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">6. Further Reading</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Yong Zhang, Dylan Zwick
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

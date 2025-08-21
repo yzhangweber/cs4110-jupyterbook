@@ -1,0 +1,818 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>1. Languages &#8212; Decode Computation:Hands-On Formal Languages and Algorithms</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/Part_1_Regular_Languages/Chapter01_Languages';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="2. Regular Expressions" href="Chapter02_Regular_Expressions.html" />
+    <link rel="prev" title="Decode Computation︰ Hands-On Formal Languages and Algorithms" href="../../intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Decode Computation:Hands-On Formal Languages and Algorithms - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Decode Computation:Hands-On Formal Languages and Algorithms - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Decode Computation︰ Hands-On Formal Languages and Algorithms
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Regular Languages</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">1. Languages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter02_Regular_Expressions.html">2. Regular Expressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter03_Finite_Automata.html">3. Finite Automata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter04_Nondeterministic_Finite_Automata.html">4. Nondeterministic Finite Automata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter05_Nonregular_Languages.html">5. Nonregular Languages</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Context Free Languages</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Part_2_Context_Free_Languages/Chapter_08/Chapter08_Fundamentals_of_CFG.html">6. Fundamentals of Context-Free Grammar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_2_Context_Free_Languages/Chapter_09/Chapter09_CFG_Normal_Forms_and_Transformations.html">7. Normal Forms and Transformations in Context-Free Grammars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_2_Context_Free_Languages/Chapter_10/Chapter10_PDA.html">8. Pushdown Automata (PDA)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_2_Context_Free_Languages/Chapter_11/Chapter11_Properties_of_Context_free%20Languages.html">9. Properties of Context-free Languages (CFL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_2_Context_Free_Languages/Chapter_12/Chapter12_Decidability_in_CFG.html">10. Decidability in Context-Free Grammars (CFGs)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Turing Machines</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Part_3_Turing_Machines/Chapter_13/Chapter13_Introduction_to_Turing_Machines.html">11. Introduction to Turing Machines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_3_Turing_Machines/Chapter_14/Chapter14_Turing_Machine_Languages.html">12. Turing Machine Languages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_3_Turing_Machines/Chapter_15/Chapter15_Turing_Machine_Encoding.html">13. Turing Machine Encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_3_Turing_Machines/Chapter_16/Chapter16_Universal_Turing_Machine.html">14. The Universal Turing Machine</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced Topics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Part_4_Advanced_Topics/Chapter17_P_and_NP_Problems.html">15. P and NP Problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_4_Advanced_Topics/Chapter18_NP_Completeness.html">16. NP-Completeness</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontent/Part_1_Regular_Languages/Chapter01_Languages.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/content/Part_1_Regular_Languages/Chapter01_Languages.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Languages</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#formal-languages">1. Formal Languages</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#alphabets-and-words">2. Alphabets and Words</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#grammers">3. Grammers</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Example</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kleene-closure">4. Kleene Closure</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Example</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recursive-definitions">5. Recursive Definitions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-exercises">6. Practice Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references-and-further-reading">7. References and Further Reading</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="languages">
+<h1><span class="section-number">1. </span>Languages<a class="headerlink" href="#languages" title="Link to this heading">#</a></h1>
+<section id="learning-objectives">
+<h2>Learning Objectives<a class="headerlink" href="#learning-objectives" title="Link to this heading">#</a></h2>
+<p>After completing this chapter, you will be able to:</p>
+<ul class="simple">
+<li><p>Define an alphabet, a word, a language, and a grammar.</p></li>
+<li><p>Understand some different ways in which a language can be defined, in particular recursively.</p></li>
+<li><p>Understand the concept of Kleene closure.</p></li>
+</ul>
+</section>
+<section id="formal-languages">
+<h2>1. Formal Languages<a class="headerlink" href="#formal-languages" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p>“Colorless green ideas sleep furiously.”</p>
+</div></blockquote>
+<p>That sentence makes no sense. It’s contradictory, and it applies verbs to objects that can’t perform them. However, right now you’re probably parsing that sentence and trying to understand what it means, because it seems like it <em>should</em> mean something. But why? Why is this fundamentally different than, say, the five words:</p>
+<blockquote>
+<div><p>“Person woman man camera TV”</p>
+</div></blockquote>
+<p>Well, it’s because the grammar - the <em>form</em> - of the first sequence aligns with how we structure sentences in the English language. The second does not. This is the fundamental idea behind a <em>formal language</em>. It’s a language where our primary concern is the structure of the letters or the words within it, and not their deeper conceptual meaning.</p>
+<p>This idea has major applications in computer programming. Specifically, when you write a computer program, there’s a certain form it has to have in order for it to make sense to the computer. This is what a compiler does - it takes the program you’ve written, and translates it into instructions the computer can execute. If the program compiles, that means its form is correct. It makes sense to the computer. Now, the deeper meaning behind your program - specifically whether the program you’ve written actually does what you want it to do - is a different question altogether.</p>
+<p>In this section we’ll discuss the building blocks of formal languages and some of the basic ideas.</p>
+</section>
+<section id="alphabets-and-words">
+<h2>2. Alphabets and Words<a class="headerlink" href="#alphabets-and-words" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p>“Words, words, words…”</p>
+<ul class="simple">
+<li><p>William Shakespeare, <em>Hamlet</em>, Act II, Scene ii</p></li>
+</ul>
+</div></blockquote>
+<p>A language begins with a finite set of symbols called an <em>alphabet</em>. I trust you’re familiar, perhaps from kindergarten, with the idea. Typically we denote an alphabet with the symbol <span class="math notranslate nohighlight">\(\Sigma\)</span>. We can form finite sequences of symbols from an alphabet, and a <em>language</em> is a specified subset of these sequences. We call the sequences that are in a language the <em>words</em> of the language. Please note that we allow the concept of a word with no letters, called the <em>empty string</em>, and denote it by <span class="math notranslate nohighlight">\(\lambda\)</span>. We also allow the concept of a language with no words, and denote it by <span class="math notranslate nohighlight">\(\emptyset\)</span>, the symbol used to represent the empty set.</p>
+<p>###Example</p>
+<hr class="docutils" />
+<p>We could use the standard English alphabet, along with the apostrophe and hyphen</p>
+<center>
+    $\displaystyle \Sigma = \{a, b, c, d, e, \ldots z, ', -\}$
+</center>
+<p>as an alphabet, and the language could be the set of words from a standard English dictionary.</p>
+<hr class="docutils" />
+<p>This is a perfectly acceptable way to define an alphabet and language, and this can work if the set of words is finite. However, let’s suppose we wanted to expand our scope a bit, and instead define our alphabet as the entire set of words in the English language, and our “words” as the set of English sentences. Well, in this case the method wouldn’t work. We can imagine a dictionary that covers every English word, but that won’t be possible for every English sentence. There would be an infitine number of sentences, and the book would never end! Take, for example:</p>
+<ol class="arabic simple">
+<li><p>“I saw one ship a sailing in.”,</p></li>
+<li><p>“I saw two ships a sailing in.”,</p></li>
+<li><p>“I saw three ships a sailing in.”,</p></li>
+</ol>
+<p>etc…</p>
+<p>These are all sentences in the English language, and the list goes on forever.</p>
+</section>
+<section id="grammers">
+<h2>3. Grammers<a class="headerlink" href="#grammers" title="Link to this heading">#</a></h2>
+<p>So what do we do if our language has an infinite number of words? Instead of listing out every one, which would be impossible, we need some way to check whether a sequence of letters matches an acceptable <em>form</em>. This form is what we call a <em>grammar</em>. If we were dealing with a natural language, we’d also need to make sure that a sentence with proper grammar actually made sense. We probably wouldn’t say the example we saw at the beginning of these notes, “Colorless green ideas dream furiously.”, makes sense, but this concern takes us out of the realm of formal languages. So, we’ll only care if a word adheres to the rules of our grammar, and not to whether the word “makes sense” from a broader perspective.</p>
+<section id="example">
+<h3>Example<a class="headerlink" href="#example" title="Link to this heading">#</a></h3>
+<hr class="docutils" />
+<p>We could define an alphabet with only one letter, say <span class="math notranslate nohighlight">\(\Sigma = \{x\}\)</span>, and one language over that alphabet could be any finite, nonempty string of characters. So, <span class="math notranslate nohighlight">\(L = \{x, xx, xxx, \ldots\}\)</span>.</p>
+<hr class="docutils" />
+<p>We define the <em>length</em> of a word in a language as the number of characters (symbols from the alphabet) it has. So, for example, in our language right above <span class="math notranslate nohighlight">\(length(xxx) = 3\)</span>. The concatenation of two words <span class="math notranslate nohighlight">\(w_{1}, w_{2}\)</span>, typically written as <span class="math notranslate nohighlight">\(w_{1}*w_{2}\)</span> or just <span class="math notranslate nohighlight">\(w_{1}w_{2}\)</span>, combines them into one sequence of symbols. So, if <span class="math notranslate nohighlight">\(w_{1}\)</span> = “Weber” and <span class="math notranslate nohighlight">\(w_{2}\)</span> = “State”, then <span class="math notranslate nohighlight">\(w_{1}w_{2}\)</span> = “WeberState”. The notation <span class="math notranslate nohighlight">\(w^{n}\)</span> means the word <span class="math notranslate nohighlight">\(w\)</span> concatenated with itself <span class="math notranslate nohighlight">\(n\)</span> times. So, if <span class="math notranslate nohighlight">\(w\)</span> = “great” then <span class="math notranslate nohighlight">\(w^{3}\)</span> = “greatgreatgreat”.</p>
+</section>
+<section id="id1">
+<h3>Example<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<hr class="docutils" />
+<p>We could define an alphabet consisting of the ten digit characters <span class="math notranslate nohighlight">\(\Sigma = \{0, 1, 2, 3, 4, 5, 6, 7, 8, 9\}\)</span>, and a language over this alphabet as any finite sequence of these characters that does not start with <span class="math notranslate nohighlight">\(0\)</span> if its length is greater than <span class="math notranslate nohighlight">\(1\)</span>. This would correspond with the set of natural (counting) numbers <span class="math notranslate nohighlight">\(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, \ldots\)</span>.</p>
+<hr class="docutils" />
+<p>We define the <em>reverse</em> of a word to be its sequence of symbols in the opposite order. For example, <span class="math notranslate nohighlight">\(reverse(abc) = cba\)</span>. A word that’s equal to its reverse is a <em>palindrome</em>. For example, the word “racecar” would be a palindrome.</p>
+</section>
+</section>
+<section id="kleene-closure">
+<h2>4. Kleene Closure<a class="headerlink" href="#kleene-closure" title="Link to this heading">#</a></h2>
+<p>Given an alphabet <span class="math notranslate nohighlight">\(\Sigma\)</span>, the closure of the alphabet is the language in which any string of letters from <span class="math notranslate nohighlight">\(\Sigma\)</span> is a word, including the empty string <span class="math notranslate nohighlight">\(\lambda\)</span>. We call this the <em>closure</em> or <em>Kleene closure</em> of the alphabet, and denote it with the <em>Kleene star</em> <span class="math notranslate nohighlight">\(\Sigma^{*}\)</span>.</p>
+<p>###Example</p>
+<hr class="docutils" />
+<p>If <span class="math notranslate nohighlight">\(\Sigma = \{a, b\}\)</span> then <span class="math notranslate nohighlight">\(\Sigma^{*} = \{\lambda, a, b, aa, ab, bb, aaa, aab, \ldots\}\)</span>.</p>
+<hr class="docutils" />
+<p>Note that If <span class="math notranslate nohighlight">\(\Sigma = \emptyset\)</span> then <span class="math notranslate nohighlight">\(\Sigma^{*} = \{\lambda\}\)</span>. For any nonempty alphabet, the closure is an infinite set of words.</p>
+<p>The set <span class="math notranslate nohighlight">\(\Sigma^{+}\)</span> is defined as everything in the closure of the alphabet <span class="math notranslate nohighlight">\(\Sigma\)</span>  <em>except</em> for the empty string <span class="math notranslate nohighlight">\(\lambda\)</span>.</p>
+<p>If <span class="math notranslate nohighlight">\(S\)</span> is any set of words, then by <span class="math notranslate nohighlight">\(S^{*}\)</span> we mean the set of all finite strings formed by concatenating words from <span class="math notranslate nohighlight">\(S\)</span>, where any word can be used as often as we like, and where the null string is also included. The set <span class="math notranslate nohighlight">\(S^{+}\)</span> is all finite positive concatenations of strings from <span class="math notranslate nohighlight">\(S\)</span>. It does not contain <span class="math notranslate nohighlight">\(\lambda\)</span> unless <span class="math notranslate nohighlight">\(S\)</span> does as well.</p>
+<p>The notation <span class="math notranslate nohighlight">\(S^{**}\)</span> means the closure of the closure of <span class="math notranslate nohighlight">\(S\)</span>, so <span class="math notranslate nohighlight">\((S^{*})^{*}\)</span>. Similarly, <span class="math notranslate nohighlight">\(S^{***}\)</span> means the closure of the closure of the closure of <span class="math notranslate nohighlight">\(S\)</span>, and so on.</p>
+<section id="id2">
+<h3>Example<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<hr class="docutils" />
+<p>For any set of strings <span class="math notranslate nohighlight">\(S\)</span> we have <span class="math notranslate nohighlight">\(S^{*} = S^{**}\)</span>. We can prove this by noting that for any string <span class="math notranslate nohighlight">\(s \in S^{*}\)</span>, we must have <span class="math notranslate nohighlight">\(s \in S^{**}\)</span>, because <span class="math notranslate nohighlight">\(S^{**}\)</span> is the set of strings formed by concatenating any finite number of strings from <span class="math notranslate nohighlight">\(S^{*}\)</span>, and as <span class="math notranslate nohighlight">\(1\)</span> is a finite number, this must include <span class="math notranslate nohighlight">\(s\)</span>. On the other hand, if we have a string <span class="math notranslate nohighlight">\(s \in S^{**}\)</span> it must be a finite concatenation of strings from <span class="math notranslate nohighlight">\(S^{*}\)</span>, so:</p>
+<center>
+  $s = s_{1}s_{2} \ldots s_{k}$
+</center>
+<p>for some finite number <span class="math notranslate nohighlight">\(k\)</span>, where each <span class="math notranslate nohighlight">\(s_{i} \in S^{*}\)</span>. Now, each <span class="math notranslate nohighlight">\(s_{i} \in S^{*}\)</span>, which means each <span class="math notranslate nohighlight">\(s_{i}\)</span> is a concatenation of a finite number of strings from <span class="math notranslate nohighlight">\(S\)</span>:</p>
+<center>
+  $s_{i} = s_{i,1}s_{i,2} \ldots s_{i,l_{i}}$
+</center>
+<p>for some finite number <span class="math notranslate nohighlight">\(l_{i}\)</span>, where each <span class="math notranslate nohighlight">\(s_{i,j} \in S\)</span>. Combining these, we get:</p>
+<center>
+  $s = s_{1,1}s_{1,2} \ldots s_{1,l_{1}} s_{2,1} s_{2,2} \ldots s_{2,l_{2}} \ldots s_{k,1}s_{k,2} \ldots s_{k,l_{k}}$.
+</center>
+<p>This whole thing is just a finite concatenation of strings from <span class="math notranslate nohighlight">\(S\)</span>, which means <span class="math notranslate nohighlight">\(s \in S^{*}\)</span>. Done!</p>
+<hr class="docutils" />
+<p>An alphabet is a set of symbols, and so it would make sense to represent an alphabet using a <em>set</em> data structure in Python. For example, we could create an alphabet consisting of only the vowel characters:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">vowels</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;e&#39;</span><span class="p">,</span><span class="s1">&#39;i&#39;</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="s1">&#39;u&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The Kleene closure of this alphabet would then be all the strings consisting of just vowels.</p>
+<p>We could write a Python function that checks whether a given string is in the closure of a set of characters. First, we’ll want a helper function that will check whether an object is an alphabet (a set of characters).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">is_alphabet</span><span class="p">(</span><span class="n">alpha</span><span class="p">):</span>
+  <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="nb">set</span><span class="p">):</span>
+    <span class="k">return</span> <span class="kc">False</span>
+  <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">alpha</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+      <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+      <span class="k">return</span> <span class="kc">False</span>
+  <span class="k">return</span> <span class="kc">True</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Then, we can use this to check whether a string is in the closure of an alphabet:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">in_closure</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">alpha</span><span class="p">):</span>
+  <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">return</span> <span class="kc">False</span>
+  <span class="k">if</span> <span class="ow">not</span> <span class="n">is_alphabet</span><span class="p">(</span><span class="n">alpha</span><span class="p">):</span>
+    <span class="k">return</span> <span class="kc">False</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)):</span>
+    <span class="k">if</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">alpha</span><span class="p">:</span>
+      <span class="k">return</span> <span class="kc">False</span>
+  <span class="k">return</span> <span class="kc">True</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We could use this function to check whether the string ‘eau’ is in the alphabet of vowels:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">in_closure</span><span class="p">(</span><span class="s1">&#39;eau&#39;</span><span class="p">,</span> <span class="n">vowels</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+<p>The function says it is, which is correct. However, the word ‘slartybartfast’ has more than just vowels, and so would not be:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">in_closure</span><span class="p">(</span><span class="s1">&#39;slartybartfast&#39;</span><span class="p">,</span> <span class="n">vowels</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>False
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Note</strong> - We’ve been very careful to put checks into this code to make sure, for example, that an alphabet is a set of characters or that the object given to the first argument of the <em>in_closure</em> function is indeed a string. We won’t necessarily be so concerned with guardrails in the future.</p>
+</section>
+</section>
+<section id="recursive-definitions">
+<h2>5. Recursive Definitions<a class="headerlink" href="#recursive-definitions" title="Link to this heading">#</a></h2>
+<p>A common and powerful way of providing the grammar for a language is recursively. A recursive grammar begins by defining a basic set of words within the language, and then a set of rules for generating additional words. The language is the set of all words this process can generate. It’s called recursive because determining whether a word is in the language, if it’s not part of the basic set, involves referencing other words that we’ve already determined to be in the language.</p>
+<p>###Example</p>
+<hr class="docutils" />
+<p>We could define a language as:</p>
+<ul class="simple">
+<li><p><strong>Rule 1</strong> - <span class="math notranslate nohighlight">\(\lambda\)</span> is in <span class="math notranslate nohighlight">\(L\)</span>.</p></li>
+<li><p><strong>Rule 2</strong> - If <span class="math notranslate nohighlight">\(w\)</span> is any word in <span class="math notranslate nohighlight">\(L\)</span>, then <span class="math notranslate nohighlight">\(xw\)</span> is also in <span class="math notranslate nohighlight">\(L\)</span>.</p></li>
+</ul>
+<p>This recursive definition would define the language:</p>
+<center>
+  $L = \{\lambda, x, x^{2}, x^{3}, \ldots\}$.
+</center>
+<hr class="docutils" />
+<p>We could write a Python function for determining if a string is in <span class="math notranslate nohighlight">\(L\)</span> using recursion:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">in_L</span><span class="p">(</span><span class="n">word</span><span class="p">):</span>
+  <span class="k">if</span> <span class="n">word</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+    <span class="k">return</span> <span class="kc">True</span>
+  <span class="k">if</span> <span class="n">word</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;x&#39;</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">in_L</span><span class="p">(</span><span class="n">word</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+  <span class="k">return</span> <span class="kc">False</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">in_L</span><span class="p">(</span><span class="s1">&#39;xxxx&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">in_L</span><span class="p">(</span><span class="s1">&#39;xxyx&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>False
+</pre></div>
+</div>
+</div>
+</div>
+<p>We could have actually defined the Kleene closure of a language recursively as:</p>
+<ul class="simple">
+<li><p><strong>Rule 1</strong> - If <span class="math notranslate nohighlight">\(S\)</span> is a language, then all the words of <span class="math notranslate nohighlight">\(S\)</span> are is <span class="math notranslate nohighlight">\(S^{*}\)</span>.</p></li>
+<li><p><strong>Rule 2</strong> - <span class="math notranslate nohighlight">\(\lambda\)</span> is in <span class="math notranslate nohighlight">\(S^{*}\)</span>.</p></li>
+<li><p><strong>Rule 3</strong> - If <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> are in <span class="math notranslate nohighlight">\(S^{*}\)</span>, then so is their concatenation <span class="math notranslate nohighlight">\(xy\)</span>.</p></li>
+</ul>
+<p>###Example</p>
+<hr class="docutils" />
+<p>We could define the positive even numbers recursively as:</p>
+<ul class="simple">
+<li><p><strong>Rule 1</strong> - The number <span class="math notranslate nohighlight">\(2\)</span> is in <span class="math notranslate nohighlight">\(EVEN\)</span>.</p></li>
+<li><p><strong>Rule 2</strong> - If <span class="math notranslate nohighlight">\(n\)</span> is in <span class="math notranslate nohighlight">\(EVEN\)</span>, so is <span class="math notranslate nohighlight">\(n+2\)</span>.</p></li>
+</ul>
+<p>We can prove the number <span class="math notranslate nohighlight">\(8\)</span> is in <span class="math notranslate nohighlight">\(EVEN\)</span> using this recursive definition. Specifically, we know that <span class="math notranslate nohighlight">\(2\)</span> is in <span class="math notranslate nohighlight">\(EVEN\)</span> by Rule 1, and using this and Rule 2 we get that <span class="math notranslate nohighlight">\(2 + 2 = 4\)</span> is in <span class="math notranslate nohighlight">\(EVEN\)</span>. Using this and Rule 2 again, we know that <span class="math notranslate nohighlight">\(4 + 2 = 6\)</span> is in <span class="math notranslate nohighlight">\(EVEN\)</span>. Using this and Rule 2 one more time, we know that <span class="math notranslate nohighlight">\(6 + 2 = 8\)</span> is in <span class="math notranslate nohighlight">\(EVEN\)</span>.</p>
+</section>
+<hr class="docutils" />
+<section id="practice-exercises">
+<h2>6. Practice Exercises<a class="headerlink" href="#practice-exercises" title="Link to this heading">#</a></h2>
+<p><strong>Exercise 1</strong> - Consider the language <span class="math notranslate nohighlight">\(S^{*}\)</span>, when <span class="math notranslate nohighlight">\(S = \{a,b\}\)</span>. How many words does this language have of length 2? Of length 3? Of length <span class="math notranslate nohighlight">\(n\)</span>?</p>
+<p><strong>Exercise 2</strong> - A student suggested the following algorithm to test a string of <span class="math notranslate nohighlight">\(a\)</span>’s and <span class="math notranslate nohighlight">\(b\)</span>’s to see if it is a word is <span class="math notranslate nohighlight">\(S^{*}\)</span>, where <span class="math notranslate nohighlight">\(S = \{aa, ba, aba, abaab\}\)</span>. Step 1, cross off the longest set of characters from the front of the string that is a word in <span class="math notranslate nohighlight">\(S\)</span>. Step 2, repeat step 1 until it is no longer possible. If what remains is the string <span class="math notranslate nohighlight">\(\lambda\)</span> (the empty string), the original string was a word in <span class="math notranslate nohighlight">\(S^{*}\)</span>. If what remains is not <span class="math notranslate nohighlight">\(\lambda\)</span> (this means some letters are left, but we cannot find a word in <span class="math notranslate nohighlight">\(S\)</span> at the beginning), the original string was not a word in <span class="math notranslate nohighlight">\(S^{*}\)</span>. Find a string that disproves this algorithm.</p>
+<p><strong>Exercise 3</strong> - For a set of words <span class="math notranslate nohighlight">\(S\)</span>, is the set <span class="math notranslate nohighlight">\(S^{***}\)</span> different than the set <span class="math notranslate nohighlight">\(S^{**}\)</span>?</p>
+<p><strong>Exercise 4</strong> - Provide another recursive definition of the set EVEN.</p>
+<p><strong>Exercise 5</strong> - Write a recursive Python function that determines whether a positive integer is even.</p>
+</section>
+<section id="references-and-further-reading">
+<h2>7. References and Further Reading<a class="headerlink" href="#references-and-further-reading" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>“Introduction to Computer Theory” by Daniel I.A. Cohen <em>Chapter 2 - Languages, Chapter 3 - Recursive Definitions</em></p></li>
+<li><p>“Automata Theory, Languages, and Computation” by Hopcroft, Motwani, and Ullman <em>Section 1.5 - The Central Concepts of Automata Theory</em></p></li>
+<li><p><a class="reference external" href="https://www.folger.edu/explore/shakespeares-works/hamlet/read/">Hamlet</a> by William Shakespeare</p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Colorless_green_ideas_sleep_furiously">Colorless green ideas sleep furiously</a></p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content\Part_1_Regular_Languages"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../../intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Decode Computation︰ Hands-On Formal Languages and Algorithms</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Chapter02_Regular_Expressions.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">2. </span>Regular Expressions</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#formal-languages">1. Formal Languages</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#alphabets-and-words">2. Alphabets and Words</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#grammers">3. Grammers</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Example</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kleene-closure">4. Kleene Closure</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Example</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recursive-definitions">5. Recursive Definitions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-exercises">6. Practice Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references-and-further-reading">7. References and Further Reading</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Yong Zhang, Dylan Zwick
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

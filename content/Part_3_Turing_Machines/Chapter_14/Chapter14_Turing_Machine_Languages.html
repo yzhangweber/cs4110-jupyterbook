@@ -1,0 +1,1317 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>12. Turing Machine Languages &#8212; Decode Computation:Hands-On Formal Languages and Algorithms</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs"></script>
+    <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+    <script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";
+window.addEventListener("load", () => mermaid.run());
+</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/Part_3_Turing_Machines/Chapter_14/Chapter14_Turing_Machine_Languages';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="13. Turing Machine Encoding" href="../Chapter_15/Chapter15_Turing_Machine_Encoding.html" />
+    <link rel="prev" title="11. Introduction to Turing Machines" href="../Chapter_13/Chapter13_Introduction_to_Turing_Machines.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/logo.png" class="logo__image only-light" alt="Decode Computation:Hands-On Formal Languages and Algorithms - Home"/>
+    <script>document.write(`<img src="../../../_static/logo.png" class="logo__image only-dark" alt="Decode Computation:Hands-On Formal Languages and Algorithms - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../intro.html">
+                    Decode Computation︰ Hands-On Formal Languages and Algorithms
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Regular Languages</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Part_1_Regular_Languages/Chapter01_Languages.html">1. Languages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Part_1_Regular_Languages/Chapter02_Regular_Expressions.html">2. Regular Expressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Part_1_Regular_Languages/Chapter03_Finite_Automata.html">3. Finite Automata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Part_1_Regular_Languages/Chapter04_Nondeterministic_Finite_Automata.html">4. Nondeterministic Finite Automata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Part_1_Regular_Languages/Chapter05_Nonregular_Languages.html">5. Nonregular Languages</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Context Free Languages</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Part_2_Context_Free_Languages/Chapter_08/Chapter08_Fundamentals_of_CFG.html">6. Fundamentals of Context-Free Grammar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Part_2_Context_Free_Languages/Chapter_09/Chapter09_CFG_Normal_Forms_and_Transformations.html">7. Normal Forms and Transformations in Context-Free Grammars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Part_2_Context_Free_Languages/Chapter_10/Chapter10_PDA.html">8. Pushdown Automata (PDA)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Part_2_Context_Free_Languages/Chapter_11/Chapter11_Properties_of_Context_free%20Languages.html">9. Properties of Context-free Languages (CFL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Part_2_Context_Free_Languages/Chapter_12/Chapter12_Decidability_in_CFG.html">10. Decidability in Context-Free Grammars (CFGs)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Turing Machines</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Chapter_13/Chapter13_Introduction_to_Turing_Machines.html">11. Introduction to Turing Machines</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">12. Turing Machine Languages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Chapter_15/Chapter15_Turing_Machine_Encoding.html">13. Turing Machine Encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Chapter_16/Chapter16_Universal_Turing_Machine.html">14. The Universal Turing Machine</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced Topics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Part_4_Advanced_Topics/Chapter17_P_and_NP_Problems.html">15. P and NP Problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Part_4_Advanced_Topics/Chapter18_NP_Completeness.html">16. NP-Completeness</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontent/Part_3_Turing_Machines/Chapter_14/Chapter14_Turing_Machine_Languages.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/content/Part_3_Turing_Machines/Chapter_14/Chapter14_Turing_Machine_Languages.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Turing Machine Languages</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recursively-enumerable-languages">1. Recursively Enumerable Languages</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#defintion">1.1 Defintion</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#examples">1.2 Examples</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1">1.2.1 Example 1</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-2">1.2.2 Example 2</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recursive-language">2. Recursive Language</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">2.1 Defintion</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2.2 Examples</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-python-implementation">2.3 Example Python Implementation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-makes-a-language-decidable-or-recognizable">3. What Makes a Language Decidable or Recognizable?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-properties-and-features">4. Key Properties and Features</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dovetailing-construction">4.1 Dovetailing Construction</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-dovetailing">4.1.1 What is Dovetailing</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#how-does-it-work">4.1.2 How does it work</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#union-of-recursively-enumerable-languages">4.2 Union of Recursively Enumerable Languages</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#complement-of-recursively-enumerable-languages">4.3 Complement of Recursively Enumerable Languages</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#complement-of-recursive-languages">4.4 Complement of Recursive Languages</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recursively-enumerable-complement-implies-recursiveness">4.5 Recursively Enumerable Complement Implies Recursiveness</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intersection-of-recursively-enumerable-languages">4.6 Intersection of Recursively Enumerable Languages</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-exercises">5. Practice Exercises</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1">5.1 Exercise 1:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2">5.2 Exercise 2:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-3">5.3 Exercise 3:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">6. Further Reading</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="turing-machine-languages">
+<h1><span class="section-number">12. </span>Turing Machine Languages<a class="headerlink" href="#turing-machine-languages" title="Link to this heading">#</a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">#</a></h2>
+<p>This section explores the theoretical foundations of Turing machine languages, including recursively enumerable languages, and properties of these languages.</p>
+<p>The following are example Python implementations of a Turing Machine, provided as starter code for use in other Python code examples.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Simple representation of a Turing Machine configuration</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">TuringMachine</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">states</span><span class="p">,</span> <span class="n">alphabet</span><span class="p">,</span> <span class="n">tape_alphabet</span><span class="p">,</span> <span class="n">transition_function</span><span class="p">,</span> <span class="n">start_state</span><span class="p">,</span> <span class="n">accept_state</span><span class="p">,</span> <span class="n">reject_state</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">states</span> <span class="o">=</span> <span class="n">states</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alphabet</span> <span class="o">=</span> <span class="n">alphabet</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tape_alphabet</span> <span class="o">=</span> <span class="n">tape_alphabet</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transition_function</span> <span class="o">=</span> <span class="n">transition_function</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start_state</span> <span class="o">=</span> <span class="n">start_state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">accept_state</span> <span class="o">=</span> <span class="n">accept_state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reject_state</span> <span class="o">=</span> <span class="n">reject_state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tape</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">head_position</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_state</span> <span class="o">=</span> <span class="n">start_state</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_state</span> <span class="ow">in</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">accept_state</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">reject_state</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="kc">False</span>  <span class="c1"># Machine has halted</span>
+        
+        <span class="n">current_symbol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tape</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">head_position</span><span class="p">]</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">head_position</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tape</span><span class="p">)</span> <span class="k">else</span> <span class="s1">&#39;△&#39;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_state</span><span class="p">,</span> <span class="n">current_symbol</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">transition_function</span><span class="p">:</span>
+            <span class="n">new_state</span><span class="p">,</span> <span class="n">write_symbol</span><span class="p">,</span> <span class="n">direction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transition_function</span><span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_state</span><span class="p">,</span> <span class="n">current_symbol</span><span class="p">)]</span>
+            
+            <span class="c1"># Write symbol</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">head_position</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tape</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tape</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">head_position</span><span class="p">]</span> <span class="o">=</span> <span class="n">write_symbol</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tape</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">write_symbol</span><span class="p">)</span>
+            
+            <span class="c1"># Move head</span>
+            <span class="k">if</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">&#39;R&#39;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">head_position</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">&#39;L&#39;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">head_position</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">head_position</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+            
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_state</span> <span class="o">=</span> <span class="n">new_state</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reject_state</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_string</span><span class="p">,</span> <span class="n">max_steps</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Run the Turing machine on the given input string.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">        - &#39;accept&#39; if the machine reaches the accept state</span>
+<span class="sd">        - &#39;reject&#39; if the machine reaches the reject state</span>
+<span class="sd">        - &#39;loop&#39; if the machine exceeds max_steps (likely in a loop)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Initialize the tape with the input string</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tape</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">input_string</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">head_position</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_state</span>
+        
+        <span class="n">steps</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">steps</span> <span class="o">&lt;</span> <span class="n">max_steps</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_state</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">accept_state</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s1">&#39;accept&#39;</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_state</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">reject_state</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s1">&#39;reject&#39;</span>
+            
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">step</span><span class="p">():</span>
+                <span class="k">break</span>
+            <span class="n">steps</span> <span class="o">+=</span> <span class="mi">1</span>
+        
+        <span class="k">if</span> <span class="n">steps</span> <span class="o">&gt;=</span> <span class="n">max_steps</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;loop&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;reject&#39;</span>  <span class="c1"># Halted without reaching accept state</span>
+
+            
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="recursively-enumerable-languages">
+<h2>1. Recursively Enumerable Languages<a class="headerlink" href="#recursively-enumerable-languages" title="Link to this heading">#</a></h2>
+<section id="defintion">
+<h3>1.1 Defintion<a class="headerlink" href="#defintion" title="Link to this heading">#</a></h3>
+<p>A language <span class="math notranslate nohighlight">\(L\)</span> is recursively enumerable if there exists a Turing machine <span class="math notranslate nohighlight">\(T\)</span> such that:</p>
+<ul class="simple">
+<li><p>For every string <span class="math notranslate nohighlight">\(w \in L\)</span>, <span class="math notranslate nohighlight">\(T\)</span> halts and accepts <span class="math notranslate nohighlight">\(w\)</span></p></li>
+<li><p>For every string <span class="math notranslate nohighlight">\(s \notin L\)</span>, <span class="math notranslate nohighlight">\(T\)</span> either rejects <span class="math notranslate nohighlight">\(s\)</span> or loops forever</p></li>
+</ul>
+<p>We say a recursively enumerable language <span class="math notranslate nohighlight">\(L\)</span> is Turing-recognizable since there exists a Turing machine that accepts every string in <span class="math notranslate nohighlight">\(L\)</span>. In other words, the machine will eventually halt and accept any input that belongs to the language. Another way to describe this is that there’s a Turing machine that can enumerate all the strings in <span class="math notranslate nohighlight">\(L\)</span>, one by one. If a string is in <span class="math notranslate nohighlight">\(L\)</span>, the machine will eventually recognize it and accept it. Later in this section, we’ll introduce Turing-decidable languages, which are quite different from Turing-recognizable ones.</p>
+</section>
+<section id="examples">
+<h3>1.2 Examples<a class="headerlink" href="#examples" title="Link to this heading">#</a></h3>
+<section id="example-1">
+<h4>1.2.1 Example 1<a class="headerlink" href="#example-1" title="Link to this heading">#</a></h4>
+<p>The following Turing machine has three states:</p>
+<ul class="simple">
+<li><p>State 1 (START state)</p></li>
+<li><p>State 2 (intermediate state)</p></li>
+<li><p>State 3 (HALT state)</p></li>
+</ul>
+<p>The transitions are:</p>
+<ul class="simple">
+<li><p>From state 1 to state 2: On reading ‘a’, write ‘a’, move Right (a, a, R)</p></li>
+<li><p>From state 2 to state 3 (HALT): On reading ‘a’, write ‘a’, move Right (a, a, R)</p></li>
+<li><p>From state 2 to state 1: On reading ‘b’, write ‘b’, move Right (b, b, R)</p></li>
+<li><p>From state 1 to state 1: On reading ‘b’, write ‘b’, move Right (b, b, R)</p></li>
+<li><p>From state 1 to state 1: On reading blank (Δ), write blank, move Right (Δ, Δ, R)</p></li>
+</ul>
+<pre  class="mermaid">
+        flowchart LR
+    accTitle: A Example TM
+    accDescr: a diagram representing a TM that has three states
+    start((1 START))
+    state2((2))
+    halt[HALT 3]
+    
+    %% Self loop on start state
+    start --&gt;|&quot;(b, b, R)/(Δ, Δ, R)&quot;| start
+    
+    %% Transition from start to state2
+    start --&gt;|&quot;(a, a, R)&quot;| state2
+    
+    %% Transition from state2 to halt
+    state2 --&gt;|&quot;(a, a, R)&quot;| halt
+    
+    %% Transition from state2 back to start
+    state2 --&gt;|&quot;(b, b, R)&quot;| start
+    
+    %% Style to match the image
+    classDef default fill:#fff,stroke:#333,stroke-width:1px
+    classDef halt fill:#fff,stroke:#333,stroke-width:1px,rx:15,ry:15
+    
+    class halt halt
+    </pre><p><strong>Accept Class</strong>: Based on the transitions, the machine accepts if and only if it reads <span class="math notranslate nohighlight">\(aa\)</span> somewhere in the input string. More precisely, it accepts an input string if it finds an <span class="math notranslate nohighlight">\(a\)</span> followed immediately by another <span class="math notranslate nohighlight">\(a\)</span>. Examples of strings in the accept class include <span class="math notranslate nohighlight">\(aab\)</span>, <span class="math notranslate nohighlight">\(baa\)</span>, <span class="math notranslate nohighlight">\(baaba\)</span>.</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(ACCEPT(T)\)</span>: any strings with double <span class="math notranslate nohighlight">\(a\)</span>.</p></li>
+</ul>
+<p><strong>Reject Class</strong>: This machine doesn’t have an explicit reject state, but it can implicitly reject if it reaches a configuration where no transition is defined. For a string ending in <span class="math notranslate nohighlight">\(a\)</span> but without <span class="math notranslate nohighlight">\(aa\)</span>, the machine will process the string and never encounter two consecutive <span class="math notranslate nohighlight">\(a\)</span>’s. When it reaches the final <span class="math notranslate nohighlight">\(a\)</span>, it will transition from state 1 to state 2. Since there are no more characters, it will not move to state 3, but it also has no transition defined for state 2 with blank input. This causes the machine to reject the string (by halting without reaching the accept state). Examples of rejected strings include <span class="math notranslate nohighlight">\(ba\)</span>, <span class="math notranslate nohighlight">\(baba\)</span>, <span class="math notranslate nohighlight">\(bbba\)</span>.</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(REJECT(T)\)</span>: any strings without double <span class="math notranslate nohighlight">\(a\)</span> and end in <span class="math notranslate nohighlight">\(a\)</span>.</p></li>
+</ul>
+<p><strong>Loop Class</strong>: By analyzing the two loop transitions at state 1, we see that the loop class contains all strings that do not contain the substring <span class="math notranslate nohighlight">\(aa\)</span> and end in <span class="math notranslate nohighlight">\(b\)</span>. For such strings, the machine will process each symbol without ever encountering two consecutive <span class="math notranslate nohighlight">\(a\)</span>’s. When it reaches the final <span class="math notranslate nohighlight">\(b\)</span>,  it either remains in state 1 or transitions from state 2 back to state 1. With no further input to process, the machine enters an infinite loop in state 1, causing the machine to loop forever. Examples of strings causing loops include <span class="math notranslate nohighlight">\(b\)</span>, <span class="math notranslate nohighlight">\(ab\)</span>, <span class="math notranslate nohighlight">\(bab\)</span>.</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(LOOP(T)\)</span>: any strings without double <span class="math notranslate nohighlight">\(a\)</span> and end in <span class="math notranslate nohighlight">\(b\)</span>.</p></li>
+</ul>
+<p>Example Python Implementation:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Sample Turing machine implementation</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_aa_substring_tm</span><span class="p">():</span>
+    <span class="c1"># Define the components</span>
+    <span class="n">states</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">}</span>
+    <span class="n">alphabet</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">}</span>
+    <span class="n">tape_alphabet</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;△&#39;</span><span class="p">}</span>
+    
+    <span class="c1"># Define the transition function based on the diagram</span>
+    <span class="n">transition_function</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="c1"># From state 1</span>
+        <span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">):</span> <span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">),</span>  <span class="c1"># If in state 1 and read &#39;a&#39;, go to state 2</span>
+        <span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">):</span> <span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">),</span>  <span class="c1"># If in state 1 and read &#39;b&#39;, stay in state 1</span>
+        <span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;△&#39;</span><span class="p">):</span> <span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;△&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">),</span>  <span class="c1"># If in state 1 and read blank, stay in state 1</span>
+        
+        <span class="c1"># From state 2</span>
+        <span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">):</span> <span class="p">(</span><span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">),</span>  <span class="c1"># If in state 2 and read &#39;a&#39;, go to state 3 (HALT/accept)</span>
+        <span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">):</span> <span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">),</span>  <span class="c1"># If in state 2 and read &#39;b&#39;, go back to state 1</span>
+        <span class="c1"># Note: No transition for (2, &#39;△&#39;) - this will cause rejection if we encounter a blank in state 2</span>
+    <span class="p">}</span>
+    
+    <span class="c1"># Starting and accepting states</span>
+    <span class="n">start_state</span> <span class="o">=</span> <span class="s1">&#39;1&#39;</span>
+    <span class="n">accept_state</span> <span class="o">=</span> <span class="s1">&#39;3&#39;</span>  <span class="c1"># HALT state</span>
+    <span class="n">reject_state</span> <span class="o">=</span> <span class="s1">&#39;reject&#39;</span>  <span class="c1"># Not explicitly shown in the diagram, but needed for our implementation</span>
+    
+    <span class="k">return</span> <span class="n">TuringMachine</span><span class="p">(</span><span class="n">states</span><span class="p">,</span> <span class="n">alphabet</span><span class="p">,</span> <span class="n">tape_alphabet</span><span class="p">,</span> <span class="n">transition_function</span><span class="p">,</span> 
+                         <span class="n">start_state</span><span class="p">,</span> <span class="n">accept_state</span><span class="p">,</span> <span class="n">reject_state</span><span class="p">)</span>
+
+<span class="c1"># Function to test if a string contains &#39;aa&#39;</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">contains_aa</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check if the string contains the substring &#39;aa&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="s1">&#39;aa&#39;</span> <span class="ow">in</span> <span class="n">string</span>
+
+<span class="c1"># Function to check if a string is in the reject class</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">is_reject_class</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check if the string is in the reject class:</span>
+<span class="sd">    - Does not contain &#39;aa&#39;</span>
+<span class="sd">    - Ends with &#39;a&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="ow">not</span> <span class="n">contains_aa</span><span class="p">(</span><span class="n">string</span><span class="p">)</span> <span class="ow">and</span> <span class="n">string</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+
+<span class="c1"># Function to check if a string is in the loop class</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">is_loop_class</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check if the string is in the loop class:</span>
+<span class="sd">    - Does not contain &#39;aa&#39;</span>
+<span class="sd">    - Does not end with &#39;a&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="ow">not</span> <span class="n">contains_aa</span><span class="p">(</span><span class="n">string</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">string</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+
+<span class="c1"># Test the Turing machine</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_tm</span><span class="p">():</span>
+    <span class="n">tm</span> <span class="o">=</span> <span class="n">create_aa_substring_tm</span><span class="p">()</span>
+    
+    <span class="c1"># Test cases for accept class</span>
+    <span class="n">accept_tests</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;aa&quot;</span><span class="p">,</span> <span class="s2">&quot;aab&quot;</span><span class="p">,</span> <span class="s2">&quot;baa&quot;</span><span class="p">,</span> <span class="s2">&quot;baab&quot;</span><span class="p">,</span> <span class="s2">&quot;ababaa&quot;</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ACCEPT CLASS TESTS (should all be &#39;accept&#39;):&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">test</span> <span class="ow">in</span> <span class="n">accept_tests</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">tm</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="s2">&quot;accept&quot;</span> <span class="k">if</span> <span class="n">contains_aa</span><span class="p">(</span><span class="n">test</span><span class="p">)</span> <span class="k">else</span> <span class="s2">&quot;not accept&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;String: &#39;</span><span class="si">{</span><span class="n">test</span><span class="si">}</span><span class="s2">&#39;, Result: </span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="s2">, Expected: </span><span class="si">{</span><span class="n">expected</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Test cases for reject class</span>
+    <span class="n">reject_tests</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;ba&quot;</span><span class="p">,</span> <span class="s2">&quot;baba&quot;</span><span class="p">,</span> <span class="s2">&quot;bbba&quot;</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">REJECT CLASS TESTS (should all be &#39;reject&#39;):&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">test</span> <span class="ow">in</span> <span class="n">reject_tests</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">tm</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="s2">&quot;reject&quot;</span> <span class="k">if</span> <span class="n">is_reject_class</span><span class="p">(</span><span class="n">test</span><span class="p">)</span> <span class="k">else</span> <span class="s2">&quot;not reject&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;String: &#39;</span><span class="si">{</span><span class="n">test</span><span class="si">}</span><span class="s2">&#39;, Result: </span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="s2">, Expected: </span><span class="si">{</span><span class="n">expected</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Test cases for loop class</span>
+    <span class="n">loop_tests</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;bb&quot;</span><span class="p">,</span> <span class="s2">&quot;bab&quot;</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">LOOP CLASS TESTS (should all be &#39;loop&#39;):&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">test</span> <span class="ow">in</span> <span class="n">loop_tests</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">tm</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="s2">&quot;loop&quot;</span> <span class="k">if</span> <span class="n">is_loop_class</span><span class="p">(</span><span class="n">test</span><span class="p">)</span> <span class="k">else</span> <span class="s2">&quot;not loop&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;String: &#39;</span><span class="si">{</span><span class="n">test</span><span class="si">}</span><span class="s2">&#39;, Result: </span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="s2">, Expected: </span><span class="si">{</span><span class="n">expected</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Run the tests</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">test_tm</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ACCEPT CLASS TESTS (should all be &#39;accept&#39;):
+String: &#39;aa&#39;, Result: accept, Expected: accept
+String: &#39;aab&#39;, Result: accept, Expected: accept
+String: &#39;baa&#39;, Result: accept, Expected: accept
+String: &#39;baab&#39;, Result: accept, Expected: accept
+String: &#39;ababaa&#39;, Result: accept, Expected: accept
+
+REJECT CLASS TESTS (should all be &#39;reject&#39;):
+String: &#39;a&#39;, Result: reject, Expected: reject
+String: &#39;ba&#39;, Result: reject, Expected: reject
+String: &#39;baba&#39;, Result: reject, Expected: reject
+String: &#39;bbba&#39;, Result: reject, Expected: reject
+
+LOOP CLASS TESTS (should all be &#39;loop&#39;):
+String: &#39;&#39;, Result: loop, Expected: loop
+String: &#39;b&#39;, Result: loop, Expected: loop
+String: &#39;bb&#39;, Result: loop, Expected: loop
+String: &#39;bab&#39;, Result: loop, Expected: loop
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="example-2">
+<h4>1.2.2 Example 2<a class="headerlink" href="#example-2" title="Link to this heading">#</a></h4>
+<p>The following Turing machine has three states:</p>
+<ul class="simple">
+<li><p>START (1): The initial state</p></li>
+<li><p>2: An intermediate state</p></li>
+<li><p>HALT: The accepting state</p></li>
+</ul>
+<p>The transitions are:</p>
+<ul class="simple">
+<li><p>From START to 2:</p>
+<ul>
+<li><p>When reading ‘Δ’ (blank), write ‘b’, move Right</p></li>
+<li><p>When reading ‘a’, write ‘b’, move Right</p></li>
+</ul>
+</li>
+<li><p>From START to HALT:</p>
+<ul>
+<li><p>When reading ‘b’, write ‘b’, move Right</p></li>
+</ul>
+</li>
+<li><p>From 2 to 2:</p>
+<ul>
+<li><p>When reading ‘a’, write ‘b’, move Right</p></li>
+<li><p>When reading ‘b’, write ‘b’, move Right</p></li>
+<li><p>When reading ‘Δ’ (blank), write ‘b’, move Right</p></li>
+</ul>
+</li>
+</ul>
+<pre  class="mermaid">
+        stateDiagram-v2
+    accTitle: A Example TM
+    accDescr: a diagram representing a TM that has three states
+    START: START (1)
+    INTERMEDIATE: 2
+    HALT: HALT
+
+    START --&gt; INTERMEDIATE : (Δ,b,R)/(a,b,R)
+    START --&gt; HALT : (b,b,R)
+    INTERMEDIATE --&gt; INTERMEDIATE : (a,b,R)/(b,b,R)/(Δ,b,R)
+    </pre><p>This Turing machine accepts strings that start with <span class="math notranslate nohighlight">\(b\)</span>. Therefore, the language recognized by this machine is <span class="math notranslate nohighlight">\(L = b(a+b)^*\)</span></p>
+<p><strong>Accept Class</strong>: Strings that start with <span class="math notranslate nohighlight">\(b\)</span> are accepted. When the machine reads <span class="math notranslate nohighlight">\(b\)</span> in the start state (1), it transitions directly to the HALT state. Examples: <span class="math notranslate nohighlight">\(b\)</span>, <span class="math notranslate nohighlight">\(ba\)</span>, <span class="math notranslate nohighlight">\(bb\)</span>, <span class="math notranslate nohighlight">\(baa\)</span>.</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(ACCEPT(T)\)</span>: L</p></li>
+</ul>
+<p><strong>Reject Class</strong>: This machine doesn’t explicitly reject any strings - it either accepts or loops.</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(REJECT(T): \varnothing\)</span></p></li>
+</ul>
+<p><strong>Loop Class</strong>: All strings that don’t start with <span class="math notranslate nohighlight">\(b\)</span> will cause the machine to loop. If the first symbol is <span class="math notranslate nohighlight">\(a\)</span>’ or <span class="math notranslate nohighlight">\(Δ\)</span>, the machine transitions to state 2. Once in state 2, the machine loops indefinitely, as all transitions from 2 lead back to itself. Examples: <span class="math notranslate nohighlight">\(a\)</span>, <span class="math notranslate nohighlight">\(aa\)</span>, <span class="math notranslate nohighlight">\(ab\)</span>.</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(LOOP(T)\)</span>: <span class="math notranslate nohighlight">\(L'\)</span>, the complement of <span class="math notranslate nohighlight">\(L\)</span>.</p></li>
+</ul>
+<p>Since we can construct a Turing machine that accepts strings in <span class="math notranslate nohighlight">\(L = b(a+b)^*\)</span> and either rejects or loops on strings not in <span class="math notranslate nohighlight">\(L\)</span>, we conclude that <span class="math notranslate nohighlight">\(L\)</span> is a recursively enumerable language.</p>
+<p>Example Python Implementation:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create the Turing Machine accepting strings starting with &#39;b&#39;</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_start_with_b_tm</span><span class="p">():</span>
+    <span class="c1"># Define states</span>
+    <span class="n">states</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;x1&#39;</span><span class="p">,</span> <span class="s1">&#39;x2&#39;</span><span class="p">,</span> <span class="s1">&#39;HALT&#39;</span><span class="p">}</span>
+    
+    <span class="c1"># Define alphabet</span>
+    <span class="n">alphabet</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;△&#39;</span><span class="p">}</span>
+    <span class="n">tape_alphabet</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;△&#39;</span><span class="p">}</span>
+    
+    <span class="c1"># Define transition function according to the diagram</span>
+    <span class="n">transition_function</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="c1"># Transitions from x1 (START)</span>
+        <span class="p">(</span><span class="s1">&#39;x1&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">):</span> <span class="p">(</span><span class="s1">&#39;x2&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">),</span>  <span class="c1"># (a,b,R) - read a, write b, move right, go to x2</span>
+        <span class="p">(</span><span class="s1">&#39;x1&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">):</span> <span class="p">(</span><span class="s1">&#39;HALT&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">),</span>  <span class="c1"># (b,b,R) - read b, write b, move right, go to HALT</span>
+        <span class="p">(</span><span class="s1">&#39;x1&#39;</span><span class="p">,</span> <span class="s1">&#39;△&#39;</span><span class="p">):</span> <span class="p">(</span><span class="s1">&#39;x2&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">),</span>  <span class="c1"># (△,b,R) - read blank, write b, move right, go to x2</span>
+        
+        <span class="c1"># Transitions from x2 (self-loop)</span>
+        <span class="p">(</span><span class="s1">&#39;x2&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">):</span> <span class="p">(</span><span class="s1">&#39;x2&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">),</span>  <span class="c1"># (a,b,R) - read a, write b, move right, stay in x2</span>
+        <span class="p">(</span><span class="s1">&#39;x2&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">):</span> <span class="p">(</span><span class="s1">&#39;x2&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">),</span>  <span class="c1"># (b,b,R) - read b, write b, move right, stay in x2</span>
+        <span class="p">(</span><span class="s1">&#39;x2&#39;</span><span class="p">,</span> <span class="s1">&#39;△&#39;</span><span class="p">):</span> <span class="p">(</span><span class="s1">&#39;x2&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">),</span>  <span class="c1"># (△,b,R) - read blank, write b, move right, stay in x2</span>
+    <span class="p">}</span>
+    
+    <span class="c1"># Define start, accept, and reject states</span>
+    <span class="n">start_state</span> <span class="o">=</span> <span class="s1">&#39;x1&#39;</span>
+    <span class="n">accept_state</span> <span class="o">=</span> <span class="s1">&#39;HALT&#39;</span>  <span class="c1"># The diagram shows HALT as an accepting state</span>
+    <span class="n">reject_state</span> <span class="o">=</span> <span class="s1">&#39;reject&#39;</span>  <span class="c1"># Not shown in diagram but needed for implementation</span>
+    
+    <span class="k">return</span> <span class="n">TuringMachine</span><span class="p">(</span><span class="n">states</span><span class="p">,</span> <span class="n">alphabet</span><span class="p">,</span> <span class="n">tape_alphabet</span><span class="p">,</span> <span class="n">transition_function</span><span class="p">,</span> 
+                         <span class="n">start_state</span><span class="p">,</span> <span class="n">accept_state</span><span class="p">,</span> <span class="n">reject_state</span><span class="p">)</span>
+
+
+<span class="c1"># Function to analyze the language recognized by this TM</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">analyze_start_with_b_tm</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Analyzes the language recognized by the Turing machine from the diagram.</span>
+<span class="sd">    Returns a description of the language and examples.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">tm</span> <span class="o">=</span> <span class="n">create_start_with_b_tm</span><span class="p">()</span>
+    
+    <span class="c1"># Test various inputs to understand the language</span>
+    <span class="n">test_strings</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;aa&#39;</span><span class="p">,</span> <span class="s1">&#39;ab&#39;</span><span class="p">,</span> <span class="s1">&#39;bb&#39;</span><span class="p">,</span> <span class="s1">&#39;aaa&#39;</span><span class="p">,</span> <span class="s1">&#39;aab&#39;</span><span class="p">,</span> <span class="s1">&#39;aba&#39;</span><span class="p">,</span> <span class="s1">&#39;abb&#39;</span><span class="p">,</span> <span class="s1">&#39;baa&#39;</span><span class="p">,</span> <span class="s1">&#39;bab&#39;</span><span class="p">,</span> <span class="s1">&#39;bba&#39;</span><span class="p">,</span> <span class="s1">&#39;bbb&#39;</span><span class="p">]</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>
+    
+    <span class="k">for</span> <span class="n">string</span> <span class="ow">in</span> <span class="n">test_strings</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">tm</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+        <span class="n">results</span><span class="p">[</span><span class="n">string</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span>
+    
+    <span class="c1"># Based on the results, describe the language</span>
+    <span class="n">accepted_strings</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">results</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">r</span> <span class="o">==</span> <span class="s1">&#39;accept&#39;</span><span class="p">]</span>
+    <span class="n">rejected_strings</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">results</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">r</span> <span class="o">==</span> <span class="s1">&#39;reject&#39;</span><span class="p">]</span>
+    <span class="n">looping_strings</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">results</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">r</span> <span class="o">==</span> <span class="s1">&#39;loop&#39;</span><span class="p">]</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Analysis of Turing Machine Language:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accepted strings: </span><span class="si">{</span><span class="n">accepted_strings</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Rejected strings: </span><span class="si">{</span><span class="n">rejected_strings</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Looping strings: </span><span class="si">{</span><span class="n">looping_strings</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Interpret the language pattern</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Language Description:&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s1">&#39;b&#39;</span> <span class="ow">in</span> <span class="n">accepted_strings</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">accepted_strings</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">s</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">)):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;This Turing machine accepts strings that start with &#39;b&#39;&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="ow">not</span> <span class="n">accepted_strings</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;This Turing machine doesn&#39;t accept any strings (empty language)&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;This Turing machine accepts strings with pattern: [determine pattern from accepted strings]&quot;</span><span class="p">)</span>
+        
+    <span class="k">return</span> <span class="n">results</span>
+
+
+<span class="c1"># Test the implementation</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="c1"># Create and test the Turing machine</span>
+    <span class="n">tm</span> <span class="o">=</span> <span class="n">create_start_with_b_tm</span><span class="p">()</span>
+    
+    <span class="c1"># Test a few specific strings</span>
+    <span class="n">test_cases</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;aa&#39;</span><span class="p">,</span> <span class="s1">&#39;ab&#39;</span><span class="p">,</span> <span class="s1">&#39;ba&#39;</span><span class="p">,</span> <span class="s1">&#39;bb&#39;</span><span class="p">]</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Testing Turing Machine from the diagram:&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">test</span> <span class="ow">in</span> <span class="n">test_cases</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">tm</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Input: &#39;</span><span class="si">{</span><span class="n">test</span><span class="si">}</span><span class="s2">&#39;, Result: </span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Analyze the language more broadly</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">50</span><span class="p">)</span>
+    <span class="n">analyze_start_with_b_tm</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Testing Turing Machine from the diagram:
+Input: &#39;&#39;, Result: loop
+Input: &#39;a&#39;, Result: loop
+Input: &#39;b&#39;, Result: accept
+Input: &#39;aa&#39;, Result: loop
+Input: &#39;ab&#39;, Result: loop
+Input: &#39;ba&#39;, Result: accept
+Input: &#39;bb&#39;, Result: accept
+
+==================================================
+Analysis of Turing Machine Language:
+Accepted strings: [&#39;b&#39;, &#39;bb&#39;, &#39;baa&#39;, &#39;bab&#39;, &#39;bba&#39;, &#39;bbb&#39;]
+Rejected strings: []
+Looping strings: [&#39;&#39;, &#39;a&#39;, &#39;aa&#39;, &#39;ab&#39;, &#39;aaa&#39;, &#39;aab&#39;, &#39;aba&#39;, &#39;abb&#39;]
+
+Language Description:
+This Turing machine accepts strings that start with &#39;b&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="recursive-language">
+<h2>2. Recursive Language<a class="headerlink" href="#recursive-language" title="Link to this heading">#</a></h2>
+<section id="id1">
+<h3>2.1 Defintion<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<p>A language <span class="math notranslate nohighlight">\(L\)</span> is recursive if there exists a Turing machine <span class="math notranslate nohighlight">\(T\)</span> such that:</p>
+<ul class="simple">
+<li><p>For every string <span class="math notranslate nohighlight">\(w \in L\)</span>, <span class="math notranslate nohighlight">\(T\)</span> halts and accepts <span class="math notranslate nohighlight">\(w\)</span></p></li>
+<li><p>For every string <span class="math notranslate nohighlight">\(s \notin L\)</span>, <span class="math notranslate nohighlight">\(T\)</span> rejects <span class="math notranslate nohighlight">\(s\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(T\)</span> must terminates on all inputs after a finite number of steps</p></li>
+</ul>
+<p>Think of a recursive language as a language for which you can write a computer program that always finishes running and always tells you correctly whether the input belongs to the language. We say a recursive language <span class="math notranslate nohighlight">\(L\)</span> is Turing-decidable since there exists a Turing machine that decides membership for every string in <span class="math notranslate nohighlight">\(L\)</span>. That is, the machine will halt on all inputs: it accepts strings that belong to <span class="math notranslate nohighlight">\(L\)</span> and rejects those that don’t, with no possibility of looping forever. This makes recursive languages more powerful in a practical sense, because you can always determine whether a given string is in the language. Unlike Turing-recognizable languages, recursive languages guarantee both recognition and rejection through halting behavior.</p>
+</section>
+<section id="id2">
+<h3>2.2 Examples<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<p>This is a simple Turing machine with just two states:</p>
+<ul class="simple">
+<li><p>START (the initial state)</p></li>
+<li><p>HALT (the accepting state)</p></li>
+</ul>
+<p>There is a single transition:</p>
+<ul class="simple">
+<li><p>From START state to HALT state when reading ‘a’, writing ‘a’, and moving the tape head right (a,a,R)</p></li>
+</ul>
+<pre  class="mermaid">
+        stateDiagram-v2
+    accTitle: A Simple TM
+    accDescr: a diagram representing a TM that has two states
+    START: START
+    HALT: HALT
+
+    START --&gt; HALT : (a,a,R)
+    </pre><p>The language being accepted by this Turing machine contains all strings starting with <span class="math notranslate nohighlight">\(a\)</span>.</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(ACCEPT(T): a(a+b)^*\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(REJECT(T): \Lambda + b(a+b)^*\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(LOOP(T): \varnothing\)</span></p></li>
+</ul>
+<p>This language is recursive (decidable) because the machine accepting it always terminates on any input. For any input string, the machine gives a definitive “yes” or “no” answer in a finite number of steps.</p>
+</section>
+<section id="example-python-implementation">
+<h3>2.3 Example Python Implementation<a class="headerlink" href="#example-python-implementation" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create the Turing machine accepting strings starting with &#39;a&#39;</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_starts_with_a_tm</span><span class="p">():</span>
+    <span class="c1"># Define the components</span>
+    <span class="n">states</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;START&#39;</span><span class="p">,</span> <span class="s1">&#39;HALT&#39;</span><span class="p">}</span>
+    <span class="n">alphabet</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">}</span>  <span class="c1"># You can add more symbols to the alphabet as needed</span>
+    <span class="n">tape_alphabet</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;△&#39;</span><span class="p">}</span>  <span class="c1"># Tape alphabet includes blank symbol</span>
+    
+    <span class="c1"># Define the transition function based on the diagram</span>
+    <span class="c1"># Only one transition: from START to HALT when reading &#39;a&#39;</span>
+    <span class="n">transition_function</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="p">(</span><span class="s1">&#39;START&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">):</span> <span class="p">(</span><span class="s1">&#39;HALT&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">)</span>
+    <span class="p">}</span>
+    
+    <span class="c1"># Define the starting, accepting, and rejecting states</span>
+    <span class="n">start_state</span> <span class="o">=</span> <span class="s1">&#39;START&#39;</span>
+    <span class="n">accept_state</span> <span class="o">=</span> <span class="s1">&#39;HALT&#39;</span>
+    <span class="n">reject_state</span> <span class="o">=</span> <span class="s1">&#39;REJECT&#39;</span>  <span class="c1"># Not explicitly shown in the diagram, but needed for implementation</span>
+    
+    <span class="k">return</span> <span class="n">TuringMachine</span><span class="p">(</span><span class="n">states</span><span class="p">,</span> <span class="n">alphabet</span><span class="p">,</span> <span class="n">tape_alphabet</span><span class="p">,</span> <span class="n">transition_function</span><span class="p">,</span> 
+                         <span class="n">start_state</span><span class="p">,</span> <span class="n">accept_state</span><span class="p">,</span> <span class="n">reject_state</span><span class="p">)</span>
+
+<span class="c1"># Function to test if a string starts with &#39;a&#39;</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">starts_with_a</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check if the string starts with the character &#39;a&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">string</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">string</span> <span class="k">else</span> <span class="kc">False</span>
+
+<span class="c1"># Test the Turing machine</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_tm</span><span class="p">():</span>
+    <span class="n">tm</span> <span class="o">=</span> <span class="n">create_starts_with_a_tm</span><span class="p">()</span>
+    
+    <span class="c1"># Test cases for strings that should be accepted</span>
+    <span class="n">accept_tests</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;aa&quot;</span><span class="p">,</span> <span class="s2">&quot;ab&quot;</span><span class="p">,</span> <span class="s2">&quot;abc&quot;</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ACCEPT TESTS (strings starting with &#39;a&#39;):&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">test</span> <span class="ow">in</span> <span class="n">accept_tests</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">tm</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="s2">&quot;accept&quot;</span> <span class="k">if</span> <span class="n">starts_with_a</span><span class="p">(</span><span class="n">test</span><span class="p">)</span> <span class="k">else</span> <span class="s2">&quot;reject&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;String: &#39;</span><span class="si">{</span><span class="n">test</span><span class="si">}</span><span class="s2">&#39;, Result: </span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="s2">, Expected: </span><span class="si">{</span><span class="n">expected</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Test cases for strings that should be rejected</span>
+    <span class="n">reject_tests</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;ba&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;cab&quot;</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">REJECT TESTS (strings not starting with &#39;a&#39;):&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">test</span> <span class="ow">in</span> <span class="n">reject_tests</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">tm</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="s2">&quot;reject&quot;</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">starts_with_a</span><span class="p">(</span><span class="n">test</span><span class="p">)</span> <span class="k">else</span> <span class="s2">&quot;accept&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;String: &#39;</span><span class="si">{</span><span class="n">test</span><span class="si">}</span><span class="s2">&#39;, Result: </span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="s2">, Expected: </span><span class="si">{</span><span class="n">expected</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Run the tests</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">test_tm</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ACCEPT TESTS (strings starting with &#39;a&#39;):
+String: &#39;a&#39;, Result: accept, Expected: accept
+String: &#39;aa&#39;, Result: accept, Expected: accept
+String: &#39;ab&#39;, Result: accept, Expected: accept
+String: &#39;abc&#39;, Result: accept, Expected: accept
+
+REJECT TESTS (strings not starting with &#39;a&#39;):
+String: &#39;&#39;, Result: reject, Expected: reject
+String: &#39;b&#39;, Result: reject, Expected: reject
+String: &#39;ba&#39;, Result: reject, Expected: reject
+String: &#39;c&#39;, Result: reject, Expected: reject
+String: &#39;cab&#39;, Result: reject, Expected: reject
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="what-makes-a-language-decidable-or-recognizable">
+<h2>3. What Makes a Language Decidable or Recognizable?<a class="headerlink" href="#what-makes-a-language-decidable-or-recognizable" title="Link to this heading">#</a></h2>
+<p>By definition, if there exists at least one Turing machine that satisfies the criteria for recognizing or deciding a language, we classify the language accordingly:</p>
+<ul class="simple">
+<li><p>If there is a Turing machine that accepts all strings in the language and terminates on all inputs (accepts or rejects), then the language is called recursive (decidable).</p></li>
+<li><p>If there is a Turing machine that accepts all strings in the language but may loop forever on inputs not in the language, then the language is called recursively enumerable ( recognizable or semi-decidable).</p></li>
+</ul>
+<p>The classification of the language depends on the existence of such a machine, not on the behavior of every possible machine for that language. So even if one Turing machine for a language loops on some inputs, that doesn’t mean the language is not recursive. There might be another Turing machine that terminates on all inputs. If even one such halting machine exists, the language is recursive. Conversely, if no machine can decide the language without possibly looping on some inputs, but there is at least one machine that can accept all valid strings, then the language is recursively enumerable but not recursive.</p>
+<p>The key points are:</p>
+<ul class="simple">
+<li><p>Language classification is based on what is possible, not on what every implementation does.</p></li>
+<li><p>The presence of one looping machine does not mean the language is not recursive.</p></li>
+<li><p>What matters is whether a halting machine (for recursive) or an accepting machine (for recursively enumerable) exists.</p></li>
+</ul>
+</section>
+<section id="key-properties-and-features">
+<h2>4. Key Properties and Features<a class="headerlink" href="#key-properties-and-features" title="Link to this heading">#</a></h2>
+<section id="dovetailing-construction">
+<h3>4.1 Dovetailing Construction<a class="headerlink" href="#dovetailing-construction" title="Link to this heading">#</a></h3>
+<section id="what-is-dovetailing">
+<h4>4.1.1 What is Dovetailing<a class="headerlink" href="#what-is-dovetailing" title="Link to this heading">#</a></h4>
+<p>Dovetailing is a technique used to simulate multiple Turing machines at the same time, by interleaving their steps. Instead of running one machine to completion before starting the next, dovetailing runs a little bit of each machine in turn, switching back and forth rapidly. When we have multiple machines that might run forever, dovetailing ensures we don’t get stuck waiting on one machine that never halts. Instead, we give each machine a slice of time, so if any one of them halts, we will find out eventually.</p>
+</section>
+<section id="how-does-it-work">
+<h4>4.1.2 How does it work<a class="headerlink" href="#how-does-it-work" title="Link to this heading">#</a></h4>
+<p>Suppose we want to simulate two machines <span class="math notranslate nohighlight">\(T_1\)</span> and <span class="math notranslate nohighlight">\(T_2\)</span> on the same input <span class="math notranslate nohighlight">\(w\)</span>:</p>
+<ul class="simple">
+<li><p>Run step 1 of <span class="math notranslate nohighlight">\(T_1\)</span></p></li>
+<li><p>Run step 1 of <span class="math notranslate nohighlight">\(T_2\)</span></p></li>
+<li><p>Run step 2 of <span class="math notranslate nohighlight">\(T_1\)</span></p></li>
+<li><p>Run step 2 of <span class="math notranslate nohighlight">\(T_2\)</span></p></li>
+<li><p>Run step 3 of <span class="math notranslate nohighlight">\(T_1\)</span></p></li>
+<li><p>Run step 3 of <span class="math notranslate nohighlight">\(T_2\)</span></p></li>
+<li><p>… and so on.</p></li>
+</ul>
+<p>You keep alternating steps between the two machines. As soon as either <span class="math notranslate nohighlight">\(T_1\)</span> or <span class="math notranslate nohighlight">\(T_2\)</span> halts and accepts, the dovetailing simulation can accept the input immediately.</p>
+</section>
+</section>
+<section id="union-of-recursively-enumerable-languages">
+<h3>4.2 Union of Recursively Enumerable Languages<a class="headerlink" href="#union-of-recursively-enumerable-languages" title="Link to this heading">#</a></h3>
+<p>The class of recursively enumerable languages is closed under union, which means if <span class="math notranslate nohighlight">\(L_1\)</span> and <span class="math notranslate nohighlight">\(L_2\)</span> are recursively enumerable languages, then their union <span class="math notranslate nohighlight">\(L_1 \cup L_2\)</span> is also recursively enumerable.</p>
+<p>To prove correctness, we construct a Turing machine that accepts <span class="math notranslate nohighlight">\(L_1 \cup L_2\)</span> by simulating both machines for <span class="math notranslate nohighlight">\(L_1\)</span> and <span class="math notranslate nohighlight">\(L_2\)</span> in parallel. The new machine accepts any input string if either original machine accepts it, and it loops indefinitely on strings not in the union, as allowed for recursively enumerable languages. Let <span class="math notranslate nohighlight">\(T_1\)</span> be a Turing machine that recognizes <span class="math notranslate nohighlight">\(L_1\)</span>. Let <span class="math notranslate nohighlight">\(T_2\)</span> be a Turing machine that recognizes <span class="math notranslate nohighlight">\(L_2\)</span>. An important property of recursively enumerable languages is that Turing machines recognizing them are not required to terminate on strings not in the language. For strings <span class="math notranslate nohighlight">\(w\)</span>, the behavior of our union machine <span class="math notranslate nohighlight">\(T_3\)</span> should be:</p>
+<ul class="simple">
+<li><p>If <span class="math notranslate nohighlight">\(w \in L_1\)</span> or <span class="math notranslate nohighlight">\(w \in L_2\)</span>, then <span class="math notranslate nohighlight">\(T_3\)</span> should accept <span class="math notranslate nohighlight">\(w\)</span>.</p></li>
+<li><p>If <span class="math notranslate nohighlight">\(w \notin L_1\)</span> and <span class="math notranslate nohighlight">\(w \notin L_2\)</span>, then <span class="math notranslate nohighlight">\(T_3\)</span> should not accept <span class="math notranslate nohighlight">\(w\)</span>, it can either:</p>
+<ul>
+<li><p>Explicitly reject <span class="math notranslate nohighlight">\(w\)</span>, or</p></li>
+<li><p>Loop forever (not terminate at all)</p></li>
+</ul>
+</li>
+</ul>
+<p>The key insight here is that for an recursively enumerable language recognizer, we only guarantee acceptance for strings in the language. For strings not in the language, there is no requirement to reach a specific decision. Our union machine <span class="math notranslate nohighlight">\(T_3\)</span> should preserve this characteristic. This behavior is naturally achieved by the dovetailing construction:</p>
+<ul class="simple">
+<li><p>If <span class="math notranslate nohighlight">\(w \in L_1\)</span>, then <span class="math notranslate nohighlight">\(T_1\)</span> will eventually accept it, and <span class="math notranslate nohighlight">\(T_3\)</span> will detect this and accept it.</p></li>
+<li><p>If <span class="math notranslate nohighlight">\(w \in L_2\)</span>, then <span class="math notranslate nohighlight">\(T_2\)</span> will eventually accept it, and <span class="math notranslate nohighlight">\(T_3\)</span> will detect this and accept it.</p></li>
+<li><p>If <span class="math notranslate nohighlight">\(w \notin L_1\)</span> and <span class="math notranslate nohighlight">\(w \notin L_2\)</span>, then <span class="math notranslate nohighlight">\(T_3\)</span> should either reject it or loop forever.</p></li>
+</ul>
+<p>Now here’s an interesting question: can we build a Turing machine that accepts all strings in the union of two recursively enumerable languages, and rejects all strings not in the union without looping forever? If the answer is yes, meaning we can build such a machine or find an algorithm that always halts with the correct answer, then by definition, the union of the two languages would be recursive, not just recursively enumerable. The answer is actually No, we cannot always build a Turing machine that both accepts all strings in the union of two recursively enumerable languages AND rejects all strings not in the union, unless both original languages are already recursive (decidable). We’ll explore the detailed proof after we discuss another key property of recursive languages. Look at it from a different angle: the construction has to deal with situations where <span class="math notranslate nohighlight">\(T_1\)</span> runs forever on some input <span class="math notranslate nohighlight">\(w \notin L_1\)</span> and <span class="math notranslate nohighlight">\(T_2\)</span> also runs forever on that same <span class="math notranslate nohighlight">\(w \notin L_2\)</span>. In these cases, there’s no way for the combined machine <span class="math notranslate nohighlight">\(T_3\)</span> to decide in finite time that <span class="math notranslate nohighlight">\(w\)</span> isn’t in the union. Since we are building an recursively enumerable recognizer, looping on strings not in the language is normal and actually expected. So let us revise the third step of the dovetailing construction as follows:</p>
+<ul class="simple">
+<li><p>If <span class="math notranslate nohighlight">\(w \notin L_1\)</span> and <span class="math notranslate nohighlight">\(w \notin L_2\)</span>, then <span class="math notranslate nohighlight">\(T_3\)</span> will run forever without terminating.</p></li>
+</ul>
+<p>In practical implementations of the union construction, we typically do not add explicit rejection logic. Instead:</p>
+<ul class="simple">
+<li><p>The dovetailing process continues indefinitely.</p></li>
+<li><p>If either <span class="math notranslate nohighlight">\(T_1\)</span> or <span class="math notranslate nohighlight">\(T_2\)</span> accepts, <span class="math notranslate nohighlight">\(T_3\)</span> immediately accepts.</p></li>
+<li><p>If both <span class="math notranslate nohighlight">\(T_1\)</span> and <span class="math notranslate nohighlight">\(T_2\)</span> eventually reject, <span class="math notranslate nohighlight">\(T_3\)</span> could be designed to run forever. Alternatively, we can modify <span class="math notranslate nohighlight">\(T_1\)</span> and <span class="math notranslate nohighlight">\(T_2\)</span> so that, instead of rejecting words they don’t accept, they run forever on those inputs.</p></li>
+<li><p>If either <span class="math notranslate nohighlight">\(T_1\)</span> or <span class="math notranslate nohighlight">\(T_2\)</span> runs forever, <span class="math notranslate nohighlight">\(T_3\)</span> does’t need any need special handling, because the original machine is already running indefinitely.</p></li>
+</ul>
+<p>On the union machine <span class="math notranslate nohighlight">\(T_3\)</span>:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(ACCEPT(T_3) = ACCEPT(T_1) + ACCEPT(T_2)\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(REJECT(T_3) = \varnothing\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(LOOP(T_3) = REJECT(T_1) + REJECT(T_2) + LOOP(T_1) + LOOP(T_2)\)</span></p></li>
+</ul>
+</section>
+<section id="complement-of-recursively-enumerable-languages">
+<h3>4.3 Complement of Recursively Enumerable Languages<a class="headerlink" href="#complement-of-recursively-enumerable-languages" title="Link to this heading">#</a></h3>
+<p>The complement of a language <span class="math notranslate nohighlight">\(L\)</span>, denoted as <span class="math notranslate nohighlight">\(L'\)</span>, is defined as the set of all strings over the alphabet that are not in <span class="math notranslate nohighlight">\(L\)</span>: <span class="math notranslate nohighlight">\(L' = \{w \in \Sigma^* | w \notin L\}\)</span>. The vertical bar <span class="math notranslate nohighlight">\(|\)</span> means “such that.” If <span class="math notranslate nohighlight">\(L\)</span> is a recursively enumerable language, its complement <span class="math notranslate nohighlight">\(L'\)</span> is not necessarily recursively enumerable. Recursively enumerable languages are not closed under complement. We will prove this in the next section by introducing how Turing machines can be encoded, along with a few interesting new languages.</p>
+</section>
+<section id="complement-of-recursive-languages">
+<h3>4.4 Complement of Recursive Languages<a class="headerlink" href="#complement-of-recursive-languages" title="Link to this heading">#</a></h3>
+<p>If the language <span class="math notranslate nohighlight">\(L\)</span> is recursive, then its complement <span class="math notranslate nohighlight">\(L'\)</span> is also recursive. In other words, the recursive languages are closed under complementation. To prove this, it is often easier to use Post machines instead of Turing machines. Although Post machines are not covered in detail in this textbook, they are explained in the further reading section. The key idea is to modify a Post machine for a recursive language so that it handles every possible input character by explicitly adding transitions to REJECT states. By adding REJECT states, we ensure the machine has a defined transition for every input symbol in every configuration. This turns the machine’s transition function into a total function. To recognize the complement of the language, we simply flip the ACCEPT and REJECT states. This creates a new Post machine that accepts exactly the strings not in the original language and still terminates on all inputs. Since this new machine also never loops, the complement language is recursive. Finally, because every Post machine has an equivalent Turing machine, this result holds for Turing machines as well.</p>
+<p>However, this approach does not work for recursively enumerable languages. We cannot use the same reasoning to show that the complement of a recursively enumerable language is also recursively enumerable, because a Post machine for an recursively enumerable language might loop forever on some inputs. Simply swapping the ACCEPT and REJECT states doesn’t resolve this as any input that originally caused the machine to loop will still loop in the new machine. As a result, the machine cannot decide those inputs, and the complement language may not be recursively enumerable.</p>
+<p>This property reveals several important insights:</p>
+<ul class="simple">
+<li><p>Decidability Means Complete Knowledge: If a problem is decidable (recursive), we have complete knowledge about both positive and negative instances. We can determine with certainty whether any string is in the language or not.</p></li>
+<li><p>Contrast with recursively enumerable Languages: recursively enumerable languages are not closed under complementation. There exist recursively enumerable languages whose complements are not recursively enumerable.</p></li>
+</ul>
+</section>
+<section id="recursively-enumerable-complement-implies-recursiveness">
+<h3>4.5 Recursively Enumerable Complement Implies Recursiveness<a class="headerlink" href="#recursively-enumerable-complement-implies-recursiveness" title="Link to this heading">#</a></h3>
+<p>If a language <span class="math notranslate nohighlight">\(L\)</span> is recursively enumerable and its complement <span class="math notranslate nohighlight">\(L'\)</span> is also recursively enumerable, then <span class="math notranslate nohighlight">\(L\)</span> is recursive (decidable). To prove this, we know that both languages are recursively enumerable, so there must exist two Turing machines <span class="math notranslate nohighlight">\(T_1\)</span> and <span class="math notranslate nohighlight">\(T_2\)</span> such that <span class="math notranslate nohighlight">\(T_1\)</span> recognizes <span class="math notranslate nohighlight">\(L\)</span> and <span class="math notranslate nohighlight">\(T_2\)</span> recognizes <span class="math notranslate nohighlight">\(L'\)</span>:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(ACCEPT(T_1) = L\)</span>,</p></li>
+<li><p><span class="math notranslate nohighlight">\(ACCEPT(T_2) = L'\)</span></p></li>
+</ul>
+<p>We can construct a Turing machine <span class="math notranslate nohighlight">\(T_3\)</span> that decides <span class="math notranslate nohighlight">\(L\)</span> as follows: On input <span class="math notranslate nohighlight">\(w\)</span>, run <span class="math notranslate nohighlight">\(T_1\)</span> and <span class="math notranslate nohighlight">\(T_2\)</span> in parallel using the dovetailing technique:</p>
+<ul class="simple">
+<li><p>If <span class="math notranslate nohighlight">\(T_1\)</span> accepts <span class="math notranslate nohighlight">\(w\)</span>, then <span class="math notranslate nohighlight">\(T_3\)</span> ACCEPT</p></li>
+<li><p>If <span class="math notranslate nohighlight">\(T_2\)</span> accepts <span class="math notranslate nohighlight">\(w\)</span>, then <span class="math notranslate nohighlight">\(T_3\)</span> REJECT</p></li>
+</ul>
+<p>The reason why it works is because:</p>
+<ul class="simple">
+<li><p>If <span class="math notranslate nohighlight">\(w \in L\)</span>, then <span class="math notranslate nohighlight">\(T_1\)</span> will eventually accept <span class="math notranslate nohighlight">\(w\)</span>, and <span class="math notranslate nohighlight">\(T_3\)</span> will accept it</p></li>
+<li><p>If <span class="math notranslate nohighlight">\(w \notin L\)</span>, that means <span class="math notranslate nohighlight">\(w \in L'\)</span>, then <span class="math notranslate nohighlight">\(T_2\)</span> will eventually accept <span class="math notranslate nohighlight">\(w\)</span>, and <span class="math notranslate nohighlight">\(T_3\)</span> will reject it</p></li>
+<li><p>For any input <span class="math notranslate nohighlight">\(w\)</span>, either <span class="math notranslate nohighlight">\(T_1\)</span> or <span class="math notranslate nohighlight">\(T_2\)</span> must eventually accept it (as <span class="math notranslate nohighlight">\(w\)</span> must be either in <span class="math notranslate nohighlight">\(L\)</span> or in <span class="math notranslate nohighlight">\(L'\)</span>), so <span class="math notranslate nohighlight">\(T_3\)</span> always terminates. Thus, <span class="math notranslate nohighlight">\(T_3\)</span> decides <span class="math notranslate nohighlight">\(L\)</span>, making <span class="math notranslate nohighlight">\(L\)</span> recursive.</p></li>
+</ul>
+<p>When we say that we can build something, such as a machine or algorithm, it is important to back that up by showing how the construction is actually done. Demonstrating the “can” part is what turns a claim into a proven fact. However, in this case, the detailed construction process is quite lengthy and goes beyond the scope of this textbook. For those interested in a deeper understanding, the full construction is available in the further reading section.</p>
+<p>In practical terms, this theorem says if you can enumerate all the “yes” instances AND all the “no” instances of a problem, then you can decide the problem. However, if you can only enumerate one set (either “yes” or “no” instances), then the problem might be undecidable.</p>
+</section>
+<section id="intersection-of-recursively-enumerable-languages">
+<h3>4.6 Intersection of Recursively Enumerable Languages<a class="headerlink" href="#intersection-of-recursively-enumerable-languages" title="Link to this heading">#</a></h3>
+<p>If <span class="math notranslate nohighlight">\(L_1\)</span> and <span class="math notranslate nohighlight">\(L_2\)</span> are recursively enumerable languages, then their intersection <span class="math notranslate nohighlight">\(L_1 \cap L_2\)</span> is also recursively enumerable. This means the class of recursively enumerable languages is closed under intersection operations. To prove this, we need to construct a Turing machine <span class="math notranslate nohighlight">\(L_3\)</span> that recognizes <span class="math notranslate nohighlight">\(L_1 \cap L_2\)</span>. Unlike the union construction, we need both machines to accept for <span class="math notranslate nohighlight">\(L_3\)</span> to accept:</p>
+<ul class="simple">
+<li><p>Step 1: Create a two-track Turing machine that copies the input from track 1 to track 2, then moves the head back to the start and begins running <span class="math notranslate nohighlight">\(L_1\)</span> on track 1.</p></li>
+<li><p>Step 2: Modify <span class="math notranslate nohighlight">\(L_1\)</span> to operate only on the top track, and change its HALT state so that it rewinds the tape head and then starts <span class="math notranslate nohighlight">\(L_2\)</span>.</p></li>
+<li><p>Step 3: Modify <span class="math notranslate nohighlight">\(L_2\)</span> to operate only on the bottom track without changing its HALT state.</p></li>
+</ul>
+<p>This combined machine first runs <span class="math notranslate nohighlight">\(L_1\)</span> on the input. If <span class="math notranslate nohighlight">\(L_1\)</span> accepts it, it then runs <span class="math notranslate nohighlight">\(L_2\)</span> on the same input. The machine accepts only if both <span class="math notranslate nohighlight">\(L_1\)</span> and <span class="math notranslate nohighlight">\(L_2\)</span> accept. Therefore, it recognizes exactly the strings in the intersection of the two languages. Some inputs may still be rejected or cause one of the machines to loop forever. However, since we are only building a recognizer for a recursively enumerable intersection, this behavior is acceptable and does not affect the correctness of the construction.</p>
+</section>
+</section>
+<section id="practice-exercises">
+<h2>5. Practice Exercises<a class="headerlink" href="#practice-exercises" title="Link to this heading">#</a></h2>
+<section id="exercise-1">
+<h3>5.1 Exercise 1:<a class="headerlink" href="#exercise-1" title="Link to this heading">#</a></h3>
+<p>Give an example of a language that is recursively enumerable but not recursive. Explain why it falls into this category.</p>
+</section>
+<section id="exercise-2">
+<h3>5.2 Exercise 2:<a class="headerlink" href="#exercise-2" title="Link to this heading">#</a></h3>
+<p>Prove that every recursive language is recursively enumerable, but not every recursively enumerable language is recursive.</p>
+</section>
+<section id="exercise-3">
+<h3>5.3 Exercise 3:<a class="headerlink" href="#exercise-3" title="Link to this heading">#</a></h3>
+<p>Let <span class="math notranslate nohighlight">\(L_1\)</span> and <span class="math notranslate nohighlight">\(L_2\)</span> be recursively enumerable languages. Which of the following must also be recursively enumerable? Justify your answer.</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(L_1 \cup L_2\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(L_1 \cap L_2\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(L_1 - L_2\)</span></p></li>
+</ul>
+</section>
+</section>
+<section id="further-reading">
+<h2>6. Further Reading<a class="headerlink" href="#further-reading" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>“Introduction to the Theory of Computation” by Michael Sipser, Chapter 3</p></li>
+<li><p>“Introduction to Computer Theory” by Daniel I.A. Cohen, Chapter 23</p></li>
+<li><p>“Automata Theory, Languages, and Computation” by Hopcroft, Motwani, and Ullman, Chapter 8</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content\Part_3_Turing_Machines\Chapter_14"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../Chapter_13/Chapter13_Introduction_to_Turing_Machines.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">11. </span>Introduction to Turing Machines</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../Chapter_15/Chapter15_Turing_Machine_Encoding.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">13. </span>Turing Machine Encoding</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recursively-enumerable-languages">1. Recursively Enumerable Languages</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#defintion">1.1 Defintion</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#examples">1.2 Examples</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1">1.2.1 Example 1</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-2">1.2.2 Example 2</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recursive-language">2. Recursive Language</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">2.1 Defintion</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2.2 Examples</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-python-implementation">2.3 Example Python Implementation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-makes-a-language-decidable-or-recognizable">3. What Makes a Language Decidable or Recognizable?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#key-properties-and-features">4. Key Properties and Features</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dovetailing-construction">4.1 Dovetailing Construction</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-dovetailing">4.1.1 What is Dovetailing</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#how-does-it-work">4.1.2 How does it work</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#union-of-recursively-enumerable-languages">4.2 Union of Recursively Enumerable Languages</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#complement-of-recursively-enumerable-languages">4.3 Complement of Recursively Enumerable Languages</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#complement-of-recursive-languages">4.4 Complement of Recursive Languages</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recursively-enumerable-complement-implies-recursiveness">4.5 Recursively Enumerable Complement Implies Recursiveness</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intersection-of-recursively-enumerable-languages">4.6 Intersection of Recursively Enumerable Languages</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-exercises">5. Practice Exercises</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1">5.1 Exercise 1:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2">5.2 Exercise 2:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-3">5.3 Exercise 3:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">6. Further Reading</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Yong Zhang, Dylan Zwick
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

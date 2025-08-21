@@ -1,0 +1,1962 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Introduction to Turing Machines &#8212; Decode Computation:Hands-On Formal Languages and Algorithms</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content - backup/Part_3_Turing_Machines/Chapter_13/Chapter13_Introduction_to_Turing_Machines';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/logo.png" class="logo__image only-light" alt="Decode Computation:Hands-On Formal Languages and Algorithms - Home"/>
+    <script>document.write(`<img src="../../../_static/logo.png" class="logo__image only-dark" alt="Decode Computation:Hands-On Formal Languages and Algorithms - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../intro.html">
+                    Decode Computation︰ Hands-On Formal Languages and Algorithms
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Regular Languages</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../content/Part_1_Regular_Languages/Chapter01_Languages.html">1. Languages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../content/Part_1_Regular_Languages/Chapter02_Regular_Expressions.html">2. Regular Expressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../content/Part_1_Regular_Languages/Chapter03_Finite_Automata.html">3. Finite Automata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../content/Part_1_Regular_Languages/Chapter04_Nondeterministic_Finite_Automata.html">4. Nondeterministic Finite Automata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../content/Part_1_Regular_Languages/Chapter05_Nonregular_Languages.html">5. Nonregular Languages</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Context Free Languages</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../content/Part_2_Context_Free_Languages/Chapter_08/Chapter08_Fundamentals_of_CFG.html">6. Fundamentals of Context-Free Grammar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../content/Part_2_Context_Free_Languages/Chapter_09/Chapter09_CFG_Normal_Forms_and_Transformations.html">7. Normal Forms and Transformations in Context-Free Grammars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../content/Part_2_Context_Free_Languages/Chapter_10/Chapter10_PDA.html">8. Pushdown Automata (PDA)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../content/Part_2_Context_Free_Languages/Chapter_11/Chapter11_Properties_of_Context_free%20Languages.html">9. Properties of Context-free Languages (CFL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../content/Part_2_Context_Free_Languages/Chapter_12/Chapter12_Decidability_in_CFG.html">10. Decidability in Context-Free Grammars (CFGs)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Turing Machines</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../content/Part_3_Turing_Machines/Chapter_13/Chapter13_Introduction_to_Turing_Machines.html">11. Introduction to Turing Machines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../content/Part_3_Turing_Machines/Chapter_14/Chapter14_Turing_Machine_Languages.html">12. Turing Machine Languages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../content/Part_3_Turing_Machines/Chapter_15/Chapter15_Turing_Machine_Encoding.html">13. Turing Machine Encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../content/Part_3_Turing_Machines/Chapter_16/Chapter16_Universal_Turing_Machine.html">14. The Universal Turing Machine</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced Topics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../content/Part_4_Advanced_Topics/Chapter17_P_and_NP_Problems.html">15. P and NP Problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../content/Part_4_Advanced_Topics/Chapter18_NP_Completeness.html">16. NP-Completeness</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontent - backup/Part_3_Turing_Machines/Chapter_13/Chapter13_Introduction_to_Turing_Machines.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/content - backup/Part_3_Turing_Machines/Chapter_13/Chapter13_Introduction_to_Turing_Machines.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Introduction to Turing Machines</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#definition-of-turing-machines">1. Definition of Turing Machines</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definition">1.1 Definition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-python-implementation">1.2 Example Python Implementation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#turing-machine-tape">1.3 Turing Machine tape</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#examples-of-turing-machines">2. Examples of Turing Machines</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1-a-turing-machine-that-accepts-a-nb-n">2.1 Example 1: A Turing Machine that Accepts <span class="math notranslate nohighlight">\(a^nb^n\)</span></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">2.1.1 Definition:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#machine-diagram">2.1.2 Machine Diagram:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#how-this-turing-machine-works">2.1.3 How this Turing Machine Works:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2.1.4 Example Python Implementation</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-2-a-turing-machine-that-accepts-palindrome">2.2 Example 2: A Turing Machine that Accepts PALINDROME</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">2.2.1 Definition:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">2.2.2 Machine Diagram:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">2.2.3 How this Turing Machine Works:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">2.2.4 Example Python Implementation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#processing-input-with-turing-machines">3. Processing Input with Turing Machines</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#one-way-vs-two-way-infinite-tapes">3.1 One-Way vs. Two-Way Infinite Tapes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-a-turing-machine-processes-input">3.2 How a Turing Machine Processes Input</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-transition-function-in-detail">3.3 The Transition Function in Detail</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#turing-machines-for-regular-languages">4. Turing Machines for Regular Languages</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-of-converting-a-fa-to-a-tm">4.1 Example of Converting a FA to a TM</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#three-classes-of-input-strings-to-turing-machines">5. Three Classes of Input Strings to Turing Machines</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">5.1 Definition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#examples">5.2 Examples</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1-turning-machine-that-accepts-all-strings-with-aa">5.2.1 Example 1. Turning Machine that Accepts all strings with <span class="math notranslate nohighlight">\(aa\)</span></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-2">5.2.2 Example 2</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-the-loop-class-is-essential-in-turing-machine-theory">5.3 Why the LOOP Class is Essential in Turing Machine Theory</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#practical-implications">5.4 Practical Implications:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-exercises">6. Practice Exercises</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1-turing-machine-state-diagram">6.1 Exercise 1: Turing Machine State Diagram</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2-machine-execution-tracing">6.2 Exercise 2: Machine Execution Tracing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-3-input-classification">6.3 Exercise 3: Input Classification</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-4-converting-fa-to-tm">6.4 Exercise 4: Converting FA to TM</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-5-modifying-a-tm">6.5 Exercise 5: Modifying a TM</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-6-implement-in-python">6.6 Exercise 6: Implement in Python</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">7. Further Reading</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="introduction-to-turing-machines">
+<h1>Introduction to Turing Machines<a class="headerlink" href="#introduction-to-turing-machines" title="Link to this heading">#</a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">#</a></h2>
+<p>This section provides a comprehensive introduction to Turing Machines, one of the most fundamental concepts in theoretical computer science. Named after the British mathematician Alan Turing, these abstract machines serve as a mathematical model of computation that, despite their simplicity, can simulate any computer algorithm. Turing Machines are central to our understanding of what problems are computationally solvable. They form the foundation of the Church-Turing thesis, which suggests that any function that can be effectively calculated can be computed by a Turing Machine. This concept has profound implications for computer science, mathematics, and philosophy.</p>
+</section>
+<section id="definition-of-turing-machines">
+<h2>1. Definition of Turing Machines<a class="headerlink" href="#definition-of-turing-machines" title="Link to this heading">#</a></h2>
+<section id="definition">
+<h3>1.1 Definition<a class="headerlink" href="#definition" title="Link to this heading">#</a></h3>
+<p>A Turing machine is a mathematical model of computation that defines an abstract machine, which manipulates symbols on a strip of tape according to a table of rules. Despite its simplicity, the Turing machine can simulate the logic of any computer algorithm.</p>
+<p>A Turing machine can be formally defined as a 7-tuple: <span class="math notranslate nohighlight">\(M=(Q,\Sigma,\Gamma,T, H, \delta, \triangle)\)</span> where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(Q\)</span> is a finite set of states with exactly one START state and zero or more HALT states.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\Sigma\)</span> is a finite set of input symbols that can appear in the original input string provided to the machine.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\Gamma\)</span> is a finite set of tape symbols the machine can write on the tape, including input symbols plus extra symbols like markers.</p></li>
+<li><p><span class="math notranslate nohighlight">\(T\)</span> is a TAPE consisting of a sequence of numbered cells, each holding either a single character or a blank symbol. The input word is written on the tape with one character per cell, starting from the leftmost cell (cell 1). All remaining cells on the tape are initially filled with blanks.</p></li>
+<li><p><span class="math notranslate nohighlight">\(H\)</span> is a TAPE HEAD that, in a single step, can read the contents of a cell on the tape, overwrite it with another character, and then move either one cell to the left or right. At the start of computation, the tape head begins by reading the input in the leftmost cell (cell 1).</p></li>
+<li><p><span class="math notranslate nohighlight">\(\delta\)</span> is a program or a set of transition functions that tells the machine what to do based on the current state and the symbol under the head.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\triangle\)</span> is a blank symbol, which is not part of input symbols or tape symbols.</p></li>
+</ul>
+</section>
+<section id="example-python-implementation">
+<h3>1.2 Example Python Implementation<a class="headerlink" href="#example-python-implementation" title="Link to this heading">#</a></h3>
+<p>Below is a Python implementation that simulates the behavior of a Turing Machine.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">TuringMachine</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">states</span><span class="p">,</span> <span class="n">input_symbols</span><span class="p">,</span> <span class="n">tape_symbols</span><span class="p">,</span> <span class="n">transition_function</span><span class="p">,</span> <span class="n">blank_symbol</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize a Turing Machine based on the formal definition M=(Q,Σ,Γ,T,H,δ,△).</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters:</span>
+<span class="sd">        - states: Set of states (Q) with a designated START state and zero or more HALT states</span>
+<span class="sd">                 Format: {&#39;START&#39;, &#39;q1&#39;, &#39;q2&#39;, ..., &#39;HALT1&#39;, &#39;HALT2&#39;, ...}</span>
+<span class="sd">        - input_symbols: Set of input symbols (Σ)</span>
+<span class="sd">        - tape_symbols: Set of tape symbols (Γ)</span>
+<span class="sd">        - transition_function: Dictionary mapping (state, symbol) to (new_state, new_symbol, direction)</span>
+<span class="sd">                               Direction is &#39;L&#39; or &#39;R&#39; for left or right</span>
+<span class="sd">        - blank_symbol: The blank symbol (△) used for empty cells</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Ensure states include a START state</span>
+        <span class="k">if</span> <span class="s1">&#39;START&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">states</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The set of states must include a &#39;START&#39; state&quot;</span><span class="p">)</span>
+            
+        <span class="c1"># Verify the blank symbol is not in input symbols</span>
+        <span class="k">if</span> <span class="n">blank_symbol</span> <span class="ow">in</span> <span class="n">input_symbols</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The blank symbol cannot be part of the input symbols&quot;</span><span class="p">)</span>
+            
+        <span class="c1"># Initialize the Turing Machine components</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">states</span> <span class="o">=</span> <span class="n">states</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_symbols</span> <span class="o">=</span> <span class="n">input_symbols</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tape_symbols</span> <span class="o">=</span> <span class="n">tape_symbols</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transition_function</span> <span class="o">=</span> <span class="n">transition_function</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blank_symbol</span> <span class="o">=</span> <span class="n">blank_symbol</span>
+        
+        <span class="c1"># Extract HALT states (states that start with &#39;HALT&#39;)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">halt_states</span> <span class="o">=</span> <span class="p">{</span><span class="n">state</span> <span class="k">for</span> <span class="n">state</span> <span class="ow">in</span> <span class="n">states</span> <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;HALT&#39;</span><span class="p">)}</span>
+        
+        <span class="c1"># Initialize the machine&#39;s operational components</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tape</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># T: The tape</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">head_position</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># H: Head position (1-indexed as per definition)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_state</span> <span class="o">=</span> <span class="s1">&#39;START&#39;</span>  <span class="c1"># Current state starts at START</span>
+        
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_string</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the input on the tape and initialize the machine.</span>
+<span class="sd">        Input starts at the leftmost cell (cell 1).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Validate input symbols</span>
+        <span class="k">for</span> <span class="n">symbol</span> <span class="ow">in</span> <span class="n">input_string</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">symbol</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_symbols</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid input symbol: </span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        
+        <span class="c1"># Initialize tape with input starting at position 1 (1-indexed)</span>
+        <span class="c1"># Python lists are 0-indexed, so we&#39;ll add a None at index 0 to align with 1-indexed definition</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tape</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">input_string</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">head_position</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># Start at leftmost cell (cell 1)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_state</span> <span class="o">=</span> <span class="s1">&#39;START&#39;</span>  <span class="c1"># Reset to START state</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_current_symbol</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Read the symbol at the current head position.&quot;&quot;&quot;</span>
+        <span class="c1"># If head position is beyond tape length, return blank</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">head_position</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tape</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">blank_symbol</span>
+        <span class="c1"># If position is valid, return the symbol</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tape</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">head_position</span><span class="p">]</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">write_symbol</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Write a symbol at the current head position.&quot;&quot;&quot;</span>
+        <span class="c1"># Extend tape if needed</span>
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">head_position</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tape</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tape</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">blank_symbol</span><span class="p">)</span>
+        
+        <span class="c1"># Write the symbol</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tape</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">head_position</span><span class="p">]</span> <span class="o">=</span> <span class="n">symbol</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Execute a single step of the Turing Machine.</span>
+<span class="sd">        Returns False if halted or no valid transition, True otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># If in a HALT state, machine has halted</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_state</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">halt_states</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        
+        <span class="c1"># Get current symbol under head</span>
+        <span class="n">current_symbol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_current_symbol</span><span class="p">()</span>
+        
+        <span class="c1"># Look up transition</span>
+        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_state</span><span class="p">,</span> <span class="n">current_symbol</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">transition_function</span><span class="p">:</span>
+            <span class="c1"># Get next state, symbol to write, and direction to move</span>
+            <span class="n">next_state</span><span class="p">,</span> <span class="n">new_symbol</span><span class="p">,</span> <span class="n">direction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transition_function</span><span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_state</span><span class="p">,</span> <span class="n">current_symbol</span><span class="p">)]</span>
+            
+            <span class="c1"># Update state</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_state</span> <span class="o">=</span> <span class="n">next_state</span>
+            
+            <span class="c1"># Write new symbol</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">write_symbol</span><span class="p">(</span><span class="n">new_symbol</span><span class="p">)</span>
+            
+            <span class="c1"># Move head</span>
+            <span class="k">if</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">&#39;L&#39;</span><span class="p">:</span>
+                <span class="c1"># Don&#39;t move left beyond cell 1</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">head_position</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">head_position</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">&#39;R&#39;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">head_position</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid direction: </span><span class="si">{</span><span class="n">direction</span><span class="si">}</span><span class="s2">. Must be &#39;L&#39; or &#39;R&#39;&quot;</span><span class="p">)</span>
+            
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># No transition defined for current state and symbol</span>
+            <span class="k">return</span> <span class="kc">False</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_steps</span><span class="o">=</span><span class="mi">10000</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Run the Turing Machine until it halts or reaches max_steps.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">        - &#39;accepted&#39; if machine reaches a HALT state</span>
+<span class="sd">        - &#39;rejected&#39; if no valid transition</span>
+<span class="sd">        - &#39;timeout&#39; if max_steps reached</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">steps</span> <span class="o">=</span> <span class="mi">0</span>
+        
+        <span class="k">while</span> <span class="n">steps</span> <span class="o">&lt;</span> <span class="n">max_steps</span><span class="p">:</span>
+            <span class="c1"># If in HALT state, machine has accepted</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_state</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">halt_states</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s1">&#39;accepted&#39;</span>
+            
+            <span class="c1"># Execute a step</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">step</span><span class="p">():</span>
+                <span class="c1"># No valid transition</span>
+                <span class="k">return</span> <span class="s1">&#39;rejected&#39;</span>
+            
+            <span class="n">steps</span> <span class="o">+=</span> <span class="mi">1</span>
+        
+        <span class="c1"># Max steps reached</span>
+        <span class="k">return</span> <span class="s1">&#39;timeout&#39;</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_tape_contents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the current contents of the tape as a string.</span>
+<span class="sd">        Excludes the None at index 0 (used for 1-indexing alignment).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Convert tape to string, excluding the None at index 0</span>
+        <span class="c1"># and stopping at the rightmost non-blank symbol</span>
+        <span class="n">rightmost</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tape</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="k">while</span> <span class="n">rightmost</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">tape</span><span class="p">[</span><span class="n">rightmost</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">blank_symbol</span><span class="p">:</span>
+            <span class="n">rightmost</span> <span class="o">-=</span> <span class="mi">1</span>
+        
+        <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tape</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="n">rightmost</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">print_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Print the current configuration of the machine.&quot;&quot;&quot;</span>
+        <span class="c1"># Get tape content (excluding None at index 0)</span>
+        <span class="n">tape_content</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tape</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tape</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="p">[]</span>
+        
+        <span class="c1"># Extend tape with blanks for visualization if head is beyond current tape</span>
+        <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">tape_content</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">head_position</span><span class="p">:</span>
+            <span class="n">tape_content</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">blank_symbol</span><span class="p">)</span>
+        
+        <span class="c1"># Create string representation of tape</span>
+        <span class="n">tape_str</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tape_content</span><span class="p">)</span>
+        
+        <span class="c1"># Create head position indicator</span>
+        <span class="c1"># Adjust for spaces between symbols and 1-indexing</span>
+        <span class="n">head_indicator</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">head_position</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span> <span class="o">+</span> <span class="s1">&#39;^&#39;</span>
+        
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;State: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">current_state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tape:  </span><span class="si">{</span><span class="n">tape_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Head:  </span><span class="si">{</span><span class="n">head_indicator</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="turing-machine-tape">
+<h3>1.3 Turing Machine tape<a class="headerlink" href="#turing-machine-tape" title="Link to this heading">#</a></h3>
+<p>The following image depicts a Turing machine tape. It shows a horizontal tape divided into cells, with each cell numbered sequentially from 1 to 5 across the top. The contents of each cell are clearly marked:</p>
+<ul class="simple">
+<li><p>Cell 1 contains the symbol “a”</p></li>
+<li><p>Cell 2 contains the symbol “b”</p></li>
+<li><p>Cell 3 contains the symbol “a”</p></li>
+<li><p>Cells 4 and 5 contain the blank symbol <span class="math notranslate nohighlight">\(\triangle\)</span></p></li>
+</ul>
+<p>An ellipsis “…” indicates that the tape continues indefinitely to the right.</p>
+<p>A tape head indicator (shown as an upward-pointing arrow) is positioned beneath Cell 1, pointing to the first “a” symbol. The text “TAPE HEAD” appears below the arrow to clearly label this component. This illustration represents the conceptual model of a Turing machine’s memory structure, showing the current configuration of the tape and the position of the read/write head. In Turing machine theory, the tape head can read the current symbol, write a new symbol, and move left or right according to the machine’s transition rules.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># from IPython.display import SVG</span>
+<span class="c1"># SVG(&#39;tape_head.svg&#39;)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">SVG</span><span class="p">,</span> <span class="n">display</span><span class="p">,</span> <span class="n">HTML</span><span class="p">,</span> <span class="n">Markdown</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.patches</span><span class="w"> </span><span class="kn">import</span> <span class="n">Rectangle</span>
+
+<span class="c1"># Load SVG from file</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_svg_from_file</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load SVG content from a file&quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">svg_content</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SVG loaded from </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">svg_content</span>
+    
+<span class="n">loaded_svg</span> <span class="o">=</span> <span class="n">load_svg_from_file</span><span class="p">(</span><span class="s1">&#39;tape_head.svg&#39;</span><span class="p">)</span>
+
+<span class="n">html_with_caption</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">&lt;figure style=&quot;text-align: center;&quot;&gt;</span>
+<span class="s2">    </span><span class="si">{</span><span class="n">loaded_svg</span><span class="si">}</span>
+<span class="s2">    &lt;figcaption style=&quot;margin-top: 10px; font-style: italic; color: #666;&quot;&gt;</span>
+<span class="s2">        Figure 1: a Turing machine tape</span>
+<span class="s2">    &lt;/figcaption&gt;</span>
+<span class="s2">&lt;/figure&gt;</span>
+<span class="s2">&quot;&quot;&quot;</span>
+<span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="n">html_with_caption</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SVG loaded from tape_head.svg
+</pre></div>
+</div>
+<div class="output text_html">
+<figure style="text-align: center;">
+    <svg width="350" height="150" viewBox="0 0 350 150" xmlns="http://www.w3.org/2000/svg">
+    <!-- Tape cells -->
+  <rect x="40" y="20" width="270" height="30" fill="none" stroke="black" stroke-width="2"/>
+  
+  <!-- Cell dividers -->
+  <line x1="85" y1="20" x2="85" y2="50" stroke="black" stroke-width="2"/>
+  <line x1="130" y1="20" x2="130" y2="50" stroke="black" stroke-width="2"/>
+  <line x1="175" y1="20" x2="175" y2="50" stroke="black" stroke-width="2"/>
+  <line x1="220" y1="20" x2="220" y2="50" stroke="black" stroke-width="2"/>
+  <line x1="265" y1="20" x2="265" y2="50" stroke="black" stroke-width="2"/>
+  
+  <!-- Cell content -->
+  <text x="62.5" y="40" font-family="serif" font-size="16" text-anchor="middle">a</text>
+  <text x="107.5" y="40" font-family="serif" font-size="16" text-anchor="middle">b</text>
+  <text x="152.5" y="40" font-family="serif" font-size="16" text-anchor="middle">a</text>
+  <text x="197.5" y="40" font-family="serif" font-size="16" text-anchor="middle">&#x394;</text>
+  <text x="242.5" y="40" font-family="serif" font-size="16" text-anchor="middle">&#x394;</text>
+  
+  <!-- Ellipsis for continuation -->
+  <text x="290" y="35" font-family="serif" font-size="16" text-anchor="middle">. . .</text>
+  
+  <!-- Cell indices -->
+  <text x="62.5" y="15" font-family="serif" font-size="14" text-anchor="middle">1</text>
+  <text x="107.5" y="15" font-family="serif" font-size="14" text-anchor="middle">2</text>
+  <text x="152.5" y="15" font-family="serif" font-size="14" text-anchor="middle">3</text>
+  <text x="197.5" y="15" font-family="serif" font-size="14" text-anchor="middle">4</text>
+  <text x="242.5" y="15" font-family="serif" font-size="14" text-anchor="middle">5</text>
+  
+  <!-- Tape head arrow pointing to the cell -->
+  <path d="M62.5,80 L62.5,58 L55,65 M62.5,58 L70,65" fill="none" stroke="black" stroke-width="2"/>
+  
+  <!-- Tape head label -->
+  <text x="62.5" y="100" font-family="serif" font-weight="bold" font-size="14" text-anchor="middle">TAPE HEAD</text>
+</svg>
+    <figcaption style="margin-top: 10px; font-style: italic; color: #666;">
+        Figure 1: a Turing machine tape
+    </figcaption>
+</figure>
+</div></div>
+</div>
+</section>
+</section>
+<section id="examples-of-turing-machines">
+<h2>2. Examples of Turing Machines<a class="headerlink" href="#examples-of-turing-machines" title="Link to this heading">#</a></h2>
+<p>Let’s implement some simple Turing machines to illustrate the concept.</p>
+<section id="example-1-a-turing-machine-that-accepts-a-nb-n">
+<h3>2.1 Example 1: A Turing Machine that Accepts <span class="math notranslate nohighlight">\(a^nb^n\)</span><a class="headerlink" href="#example-1-a-turing-machine-that-accepts-a-nb-n" title="Link to this heading">#</a></h3>
+<section id="id1">
+<h4>2.1.1 Definition:<a class="headerlink" href="#id1" title="Link to this heading">#</a></h4>
+<p>Using the formal definition structure <span class="math notranslate nohighlight">\(M=(Q,\Sigma,\Gamma,T, H, \delta, \triangle)\)</span>, we define the Turing machine that accepts the language <span class="math notranslate nohighlight">\(L = \{a^nb^n, n \geq 0 \}\)</span> as follows:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(Q: \{1START, 2, 3, 4, 5, 6HALT\}\)</span>, the finite set of states</p></li>
+<li><p><span class="math notranslate nohighlight">\(\Sigma = \{a, b\}\)</span>, the finite set of input symbols</p></li>
+<li><p><span class="math notranslate nohighlight">\(\Gamma = \{a, b, A, B\}\)</span>, the finite set of tape symbols (excluding the blank symbol)</p></li>
+<li><p><span class="math notranslate nohighlight">\(T\)</span>: the tape consisting of cells, with the input starting at cell 1. Initially it contains the input string, with one character per cell. All remaining cells are filled with blank symbols.</p></li>
+<li><p><span class="math notranslate nohighlight">\(H\)</span>: the tape head that starts at position 1. It can read, write, and move left or right in each step.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\delta\)</span>: the transition function defined as follows:</p>
+<ul>
+<li><p>δ(START, a) = (2, A, R)</p></li>
+<li><p>δ(START, △) = (HALT, △, R)</p></li>
+<li><p>δ(2, a) = (2, a, R)</p></li>
+<li><p>δ(2, B) = (2, B, R)</p></li>
+<li><p>δ(2, b) = (3, B, L)</p></li>
+<li><p>δ(3, B) = (3, B, L)</p></li>
+<li><p>δ(3, a) = (4, a, L)</p></li>
+<li><p>δ(3, A) = (5, A, R)</p></li>
+<li><p>δ(4, a) = (4, a, L)</p></li>
+<li><p>δ(4, A) = (START, A, R)</p></li>
+<li><p>δ(5, B) = (5, B, R)</p></li>
+<li><p>δ(5, △) = (HALT, △, R)</p></li>
+</ul>
+</li>
+<li><p><span class="math notranslate nohighlight">\(△\)</span>: the blank symbol, it is not part of the input or tape symbol sets.</p></li>
+</ul>
+</section>
+<section id="machine-diagram">
+<h4>2.1.2 Machine Diagram:<a class="headerlink" href="#machine-diagram" title="Link to this heading">#</a></h4>
+<p>The following diagram visualizes the state transitions of this Turing machine.</p>
+<div class="highlight-mermaid notranslate"><div class="highlight"><pre><span></span>stateDiagram-v2
+    accTitle: State Transitions of a Turing machine
+    accDescr: a diagram representing state transitions of a Turing machine
+    direction LR
+    
+    START: 1 START
+    q2: 2
+    q3: 3
+    q4: 4
+    q5: 5
+    HALT:6  HALT
+    
+    START --&gt; q2: (a,A,R)
+    START --&gt; HALT: (△,△,R)
+    
+    q2 --&gt; q2: (a,a,R)
+    q2 --&gt; q2: (B,B,R)
+    q2 --&gt; q3: (b,B,L)
+    
+    q3 --&gt; q3: (B,B,L)
+    q3 --&gt; q4: (a,a,L)
+    q3 --&gt; q5: (A,A,R)
+    
+    q4 --&gt; q4: (a,a,L)
+    q4 --&gt; START: (A,A,R)
+    
+    q5 --&gt; q5: (B,B,R)
+    q5 --&gt; HALT: (△,△,R)
+    
+    classDef start fill:#9f6,stroke:#333,stroke-width:2px
+    classDef halt fill:#f96,stroke:#333,stroke-width:2px
+    classDef state fill:#bbf,stroke:#333,stroke-width:1px
+    
+    class START start
+    class HALT halt
+    class q2,q3,q4,q5 state
+</pre></div>
+</div>
+</section>
+<section id="how-this-turing-machine-works">
+<h4>2.1.3 How this Turing Machine Works:<a class="headerlink" href="#how-this-turing-machine-works" title="Link to this heading">#</a></h4>
+<p>This Turing machine is designed to recognize strings of the form <span class="math notranslate nohighlight">\(a^nb^n\)</span>, which means n ‘a’s followed by exactly n ‘b’s (where n ≥ 0). Let us explain in detail how this machine processes inputs. The machine works by systematically “matching and marking” ‘a’s and ‘b’s. It converts the leftmost ‘a’ to ‘A’ (marking it as processed); scans right to find the leftmost ‘b’ and converts it to ‘B’ (marking it as processed); returns to the beginning to repeat the process with the next ‘a’. When all pairs are matched, it verifies that all input has been processed. If there are equal numbers of ‘a’s and ‘b’s, it accepts the input; otherwise, it rejects the input.</p>
+<p>Let us examine each state and its role:</p>
+<ul class="simple">
+<li><p>State 1 (START): Processes the leftmost unmarked ‘a’ or accepts if the input is blank</p></li>
+<li><p>State 2: Scans right looking for the leftmost unmarked ‘b’</p></li>
+<li><p>State 3: After marking ‘b’, scans left looking for ‘a’s or ‘A’s</p></li>
+<li><p>State 4: After finding an unmarked ‘a’, scans left to return to the beginning</p></li>
+<li><p>State 5: After finding a marked ‘A’, verifies all ‘b’s have been processed</p></li>
+</ul>
+<p>For example, let us process an input: “aabb”</p>
+<ul class="simple">
+<li><p>Start (State 1): Machine reads ‘a’, replaces it with ‘A’, moves right, enters State 2. Tape: Aabb</p></li>
+<li><p>State 2: Reads ‘a’, keeps it, moves right, stays in State 2. Tape: Aabb</p></li>
+<li><p>State 2 → State 3: Reads ‘b’, replaces it with ‘B’, moves left, enters State 3. Tape: AabB</p></li>
+<li><p>State 3: Reads ‘a’, moves left, enters State 4. Tape: AabB</p></li>
+<li><p>State 4 → State 1: Reads ‘A’, moves right, returns to State 1. Tape: AabB</p></li>
+<li><p>State 1 → State 2: Reads ‘a’, replaces it with ‘A’, moves right, enters State 2. Tape: AAbB</p></li>
+<li><p>State 2 → State 3: Reads ‘B’, keeps it, moves right, stays in State 2. Then reads ‘b’, replaces it with ‘B’, moves left, enters State 3. Tape: AABB</p></li>
+<li><p>State 3 → State 5: Reads ‘B’, keeps it, moves left, stays in State 3. Then reads ‘A’, moves right, enters State 5. Tape: AABB</p></li>
+<li><p>State 5 → HALT: Reads ‘B’, keeps it, moves right, stays in State 5. Then reads blank, moves right, enters HALT state. Input is accepted.</p></li>
+</ul>
+</section>
+<section id="id2">
+<h4>2.1.4 Example Python Implementation<a class="headerlink" href="#id2" title="Link to this heading">#</a></h4>
+<p>Below is a representative Python implementation of the described Turing machine.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">create_anbn_tm</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates a Turing machine that recognizes strings of the form a^n b^n.</span>
+<span class="sd">    Based on the state diagram provided in the instructions.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Define the components of the Turing machine</span>
+    <span class="n">states</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;START&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="s1">&#39;HALT&#39;</span><span class="p">}</span>
+    <span class="n">input_symbols</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">}</span>
+    <span class="n">tape_symbols</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;△&#39;</span><span class="p">}</span>  <span class="c1"># &#39;A&#39; marks processed &#39;a&#39;, &#39;B&#39; marks processed &#39;b&#39;</span>
+    <span class="n">blank_symbol</span> <span class="o">=</span> <span class="s1">&#39;△&#39;</span>
+    
+    <span class="c1"># Transition function based on the state diagram</span>
+    <span class="n">transition_function</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="c1"># START state (state 1)</span>
+        <span class="p">(</span><span class="s1">&#39;START&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">):</span> <span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">),</span>  <span class="c1"># Replace &#39;a&#39; with &#39;A&#39; and move to state 2</span>
+        <span class="p">(</span><span class="s1">&#39;START&#39;</span><span class="p">,</span> <span class="s1">&#39;△&#39;</span><span class="p">):</span> <span class="p">(</span><span class="s1">&#39;HALT&#39;</span><span class="p">,</span> <span class="s1">&#39;△&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">),</span>  <span class="c1"># Accept empty string immediately</span>
+        
+        <span class="c1"># State 2</span>
+        <span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">):</span> <span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">),</span>      <span class="c1"># Skip &#39;a&#39; and stay in state 2</span>
+        <span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">):</span> <span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">),</span>      <span class="c1"># Skip &#39;B&#39; and stay in state 2</span>
+        <span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">):</span> <span class="p">(</span><span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;L&#39;</span><span class="p">),</span>      <span class="c1"># Replace &#39;b&#39; with &#39;B&#39; and move to state 3</span>
+        
+        <span class="c1"># State 3</span>
+        <span class="p">(</span><span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">):</span> <span class="p">(</span><span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;L&#39;</span><span class="p">),</span>      <span class="c1"># Skip &#39;B&#39; and stay in state 3</span>
+        <span class="p">(</span><span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">):</span> <span class="p">(</span><span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;L&#39;</span><span class="p">),</span>      <span class="c1"># Read &#39;a&#39; and move to state 4</span>
+        <span class="p">(</span><span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">):</span> <span class="p">(</span><span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">),</span>      <span class="c1"># Read &#39;A&#39; and move to state 5</span>
+        
+        <span class="c1"># State 4</span>
+        <span class="p">(</span><span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">):</span> <span class="p">(</span><span class="s1">&#39;START&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">),</span>  <span class="c1"># Read &#39;A&#39; and move back to START</span>
+        <span class="p">(</span><span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">):</span> <span class="p">(</span><span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;L&#39;</span><span class="p">),</span>      <span class="c1"># Skip &#39;a&#39; and stay in state 4</span>
+        
+        <span class="c1"># State 5</span>
+        <span class="p">(</span><span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">):</span> <span class="p">(</span><span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">),</span>      <span class="c1"># Skip &#39;B&#39; and stay in state 5</span>
+        <span class="p">(</span><span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="s1">&#39;△&#39;</span><span class="p">):</span> <span class="p">(</span><span class="s1">&#39;HALT&#39;</span><span class="p">,</span> <span class="s1">&#39;△&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">),</span>   <span class="c1"># Read blank and halt</span>
+    <span class="p">}</span>
+    
+    <span class="k">return</span> <span class="n">TuringMachine</span><span class="p">(</span><span class="n">states</span><span class="p">,</span> <span class="n">input_symbols</span><span class="p">,</span> <span class="n">tape_symbols</span><span class="p">,</span> <span class="n">transition_function</span><span class="p">,</span> <span class="n">blank_symbol</span><span class="p">)</span>
+
+<span class="c1"># Test the a^n b^n Turing machine</span>
+<span class="n">anbn_tm</span> <span class="o">=</span> <span class="n">create_anbn_tm</span><span class="p">()</span>
+
+<span class="n">test_strings</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;ab&quot;</span><span class="p">,</span> <span class="s2">&quot;aabb&quot;</span><span class="p">,</span> <span class="s2">&quot;abb&quot;</span><span class="p">,</span> <span class="s2">&quot;aaabb&quot;</span><span class="p">,</span> <span class="s2">&quot;aaabbb&quot;</span><span class="p">,</span> <span class="s2">&quot;bbaa&quot;</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">test_str</span> <span class="ow">in</span> <span class="n">test_strings</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">anbn_tm</span><span class="o">.</span><span class="n">set_input</span><span class="p">(</span><span class="n">test_str</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">anbn_tm</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Input: &#39;</span><span class="si">{</span><span class="n">test_str</span><span class="si">}</span><span class="s2">&#39;, Result: </span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        
+        <span class="c1"># Show final tape contents for debugging</span>
+        <span class="n">final_tape</span> <span class="o">=</span> <span class="n">anbn_tm</span><span class="o">.</span><span class="n">get_tape_contents</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Final tape: </span><span class="si">{</span><span class="n">final_tape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Final state: </span><span class="si">{</span><span class="n">anbn_tm</span><span class="o">.</span><span class="n">current_state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;---&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Input: &#39;</span><span class="si">{</span><span class="n">test_str</span><span class="si">}</span><span class="s2">&#39;, Error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;---&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Input: &#39;&#39;, Result: accepted
+Final tape: 
+Final state: HALT
+---
+Input: &#39;ab&#39;, Result: accepted
+Final tape: AB
+Final state: HALT
+---
+Input: &#39;aabb&#39;, Result: accepted
+Final tape: AABB
+Final state: HALT
+---
+Input: &#39;abb&#39;, Result: rejected
+Final tape: ABb
+Final state: 5
+---
+Input: &#39;aaabb&#39;, Result: rejected
+Final tape: AAABB
+Final state: 2
+---
+Input: &#39;aaabbb&#39;, Result: accepted
+Final tape: AAABBB
+Final state: HALT
+---
+Input: &#39;bbaa&#39;, Result: rejected
+Final tape: bbaa
+Final state: START
+---
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="example-2-a-turing-machine-that-accepts-palindrome">
+<h3>2.2 Example 2: A Turing Machine that Accepts PALINDROME<a class="headerlink" href="#example-2-a-turing-machine-that-accepts-palindrome" title="Link to this heading">#</a></h3>
+<section id="id3">
+<h4>2.2.1 Definition:<a class="headerlink" href="#id3" title="Link to this heading">#</a></h4>
+<p>We define the Turing machine that accepts the language PALINDROME as follows:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(Q: \{1START, 2, 3, 4, 5, 6, 7, 8HALT\}\)</span>, the finite set of states</p></li>
+<li><p><span class="math notranslate nohighlight">\(\Sigma = \{a, b\}\)</span>, the finite set of input symbols</p></li>
+<li><p><span class="math notranslate nohighlight">\(\Gamma = \{a, b\}\)</span>, the finite set of tape symbols (excluding the blank symbol)</p></li>
+<li><p><span class="math notranslate nohighlight">\(T\)</span>: the tape consisting of cells, with the input starting at cell 1.</p></li>
+<li><p><span class="math notranslate nohighlight">\(H\)</span>: the tape head that starts at position 1.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\delta\)</span>: the transition function defined as follows:</p>
+<ul>
+<li><p>δ(1_START, a) = (2, △, R)</p></li>
+<li><p>δ(1_START, b) = (5, △, R)</p></li>
+<li><p>δ(1_START, △) = (8_HALT, △, R)</p></li>
+<li><p>δ(2, a) = (2, a, R)</p></li>
+<li><p>δ(2, b) = (2, b, R)</p></li>
+<li><p>δ(2, △) = (3, △, L)</p></li>
+<li><p>δ(3, a) = (4, △, L)</p></li>
+<li><p>δ(3, △) = (8_HALT, △, R)</p></li>
+<li><p>δ(4, a) = (4, a, L)</p></li>
+<li><p>δ(4, b) = (4, b, L)</p></li>
+<li><p>δ(4, △) = (1_START, △, R)</p></li>
+<li><p>δ(5, a) = (5, a, R)</p></li>
+<li><p>δ(5, b) = (5, b, R)</p></li>
+<li><p>δ(5, △) = (6, △, L)</p></li>
+<li><p>δ(6, b) = (7, △, L)</p></li>
+<li><p>δ(6, △) = (8_HALT, △, R)</p></li>
+<li><p>δ(7, a) = (7, a, L)</p></li>
+<li><p>δ(7, b) = (7, b, L)</p></li>
+<li><p>δ(7, △) = (1_START, △, R)</p></li>
+</ul>
+</li>
+<li><p><span class="math notranslate nohighlight">\(△\)</span>: the blank symbol, it is not part of the input or tape symbol sets.</p></li>
+</ul>
+</section>
+<section id="id4">
+<h4>2.2.2 Machine Diagram:<a class="headerlink" href="#id4" title="Link to this heading">#</a></h4>
+<p>The following diagram visualizes the state transitions of this Turing machine.</p>
+<div class="highlight-mermaid notranslate"><div class="highlight"><pre><span></span>stateDiagram-v2
+    accTitle: State Transitions of a Turing machine
+    accDescr: a diagram representing state transitions of a Turing machine
+    direction LR
+    
+    START: 1 START
+    q2: 2
+    q3: 3
+    q4: 4
+    q5: 5
+    q6: 6
+    q7: 7
+    HALT: 8 HALT
+    
+    START --&gt; q2: (a,Δ,R)
+    START --&gt; q5: (b,Δ,R)
+    START --&gt; HALT: (Δ,Δ,R)
+    
+    q2 --&gt; q2: (a,a,R)
+    q2 --&gt; q2: (b,b,R)
+    q2 --&gt; q3: (Δ,Δ,L)
+    
+    q3 --&gt; q4: (a,Δ,L)
+    q3 --&gt; HALT: (Δ,Δ,R)
+    
+    q4 --&gt; q4: (a,a,L)
+    q4 --&gt; q4: (b,b,L)
+    q4 --&gt; START: (Δ,Δ,R)
+    
+    q5 --&gt; q5: (a,a,R)
+    q5 --&gt; q5: (b,b,R)
+    q5 --&gt; q6: (Δ,Δ,L)
+    
+    q6 --&gt; q7: (b,Δ,L)
+    q6 --&gt; HALT: (Δ,Δ,R)
+    
+    q7 --&gt; q7: (a,a,L)
+    q7 --&gt; q7: (b,b,L)
+    q7 --&gt; START: (Δ,Δ,R)
+    
+    classDef start fill:#9f6,stroke:#333,stroke-width:2px
+    classDef halt fill:#f96,stroke:#333,stroke-width:2px
+    classDef state fill:#bbf,stroke:#333,stroke-width:1px
+    
+    class START start
+    class HALT halt
+    class q2,q3,q4,q5,q6,q7 state
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h4>2.2.3 How this Turing Machine Works:<a class="headerlink" href="#id5" title="Link to this heading">#</a></h4>
+<p>A palindrome is a string that reads the same forward and backward, like “aba” or “abba”. Let us explain in detail how this machine processes inputs. The machine uses a systematic approach of “matching and erasing” from the outside inward. It examines the leftmost character and travels to the rightmost character to check if it’s a match. If they match, erases both and repeats the process; if they don’t match or the machine encounters an unexpected pattern, it rejects the input. If it successfully processes the entire string (reaching the middle with all matches), it accepts the input.</p>
+<p>Two Processing Paths:</p>
+<ul class="simple">
+<li><p>Upper path (States 2-3-4) for processing ‘a’ characters</p></li>
+<li><p>Lower path (States 5-6-7) for processing ‘b’ characters</p></li>
+</ul>
+<p>Let us examine each state and its role:</p>
+<ul class="simple">
+<li><p>State 1 (START): Examines the first character and directs processing based on whether it’s ‘a’, ‘b’, or blank</p></li>
+<li><p>State 2: After seeing ‘a’ at the start, scans right until reaching the end of the string</p></li>
+<li><p>State 3: Looks for a matching ‘a’ at the end of the string</p></li>
+<li><p>State 4: After finding and erasing the matching ‘a’, returns to the start for the next iteration</p></li>
+<li><p>State 5: After seeing ‘b’ at the start, scans right until reaching the end of the string</p></li>
+<li><p>State 6: Looks for a matching ‘b’ at the end of the string</p></li>
+<li><p>State 7: After finding and erasing the matching ‘b’, returns to the start for the next iteration</p></li>
+<li><p>State 8 (HALT): Accepts the input as a palindrome</p></li>
+</ul>
+<p>For example, let us process an input: “aba”</p>
+<ul class="simple">
+<li><p>Start (State 1):     * Machine reads ‘a’, erases it (writes blank Δ), moves right, and enters State 2. Tape: Δba</p></li>
+<li><p>State 2: Reads ‘b’, keeps it, moves right, stays in State 2. Tape: Δba</p></li>
+<li><p>State 2 (continued): Reads ‘a’, keeps it, moves right, stays in State 2. Tape: Δba</p></li>
+<li><p>State 2 → State 3: Reaches the end (reads blank), moves left, enters State 3. Tape: Δba</p></li>
+<li><p>State 3 → State 4: Reads ‘a’, erases it (writes blank), moves left, enters State 4. Tape: ΔbΔ</p></li>
+<li><p>State 4 → State 1: Reads ‘b’, keeps it, moves left, stays in State 4. Then reads blank, moves right, returns to State 1. Tape: ΔbΔ</p></li>
+<li><p>State 1 → State 5: Reads ‘b’, erases it (writes blank), moves right, enters State 5. Tape: ΔΔΔ</p></li>
+<li><p>State 5 → State 6: Reads blank, moves left, enters State 6. Tape: ΔΔΔ</p></li>
+<li><p>State 6 → State 8: Reads blank, moves right, enters State 8 (HALT). Input accepted as a palindrome</p></li>
+</ul>
+</section>
+<section id="id6">
+<h4>2.2.4 Example Python Implementation<a class="headerlink" href="#id6" title="Link to this heading">#</a></h4>
+<p>Below, we’ll demonstrate how to implement this Turing machine.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">create_palindrome_tm</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates a Turing machine that recognizes palindromes based on the provided state diagram.</span>
+<span class="sd">    The machine accepts strings that read the same forward and backward.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Define the components of the Turing machine</span>
+    <span class="n">states</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;1_START&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="s1">&#39;6&#39;</span><span class="p">,</span> <span class="s1">&#39;7&#39;</span><span class="p">,</span> <span class="s1">&#39;8_HALT&#39;</span><span class="p">}</span>
+    <span class="n">input_symbols</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">}</span>
+    <span class="n">tape_symbols</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;△&#39;</span><span class="p">}</span>  <span class="c1"># &#39;_&#39; is the blank symbol (Δ)</span>
+    <span class="n">blank_symbol</span> <span class="o">=</span> <span class="s1">&#39;△&#39;</span>
+    
+    <span class="c1"># Transition function based on the state diagram</span>
+    <span class="c1"># (current_state, current_symbol) -&gt; (next_state, write_symbol, move_direction)</span>
+    <span class="n">transition_function</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="c1"># From START (state 1)</span>
+        <span class="p">(</span><span class="s1">&#39;1_START&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">):</span> <span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;△&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">),</span>       <span class="c1"># (a,Δ,R) to state 2</span>
+        <span class="p">(</span><span class="s1">&#39;1_START&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">):</span> <span class="p">(</span><span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="s1">&#39;△&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">),</span>       <span class="c1"># (b,Δ,R) to state 5</span>
+        <span class="p">(</span><span class="s1">&#39;1_START&#39;</span><span class="p">,</span> <span class="s1">&#39;△&#39;</span><span class="p">):</span> <span class="p">(</span><span class="s1">&#39;8_HALT&#39;</span><span class="p">,</span> <span class="s1">&#39;△&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">),</span>  <span class="c1"># (Δ,Δ,R) to HALT - empty string is a palindrome</span>
+        
+        <span class="c1"># State 2 - Processing &#39;a&#39; at the start</span>
+        <span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">):</span> <span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">),</span>             <span class="c1"># (a,a,R) self-loop</span>
+        <span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">):</span> <span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">),</span>             <span class="c1"># (b,b,R) self-loop</span>
+        <span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;△&#39;</span><span class="p">):</span> <span class="p">(</span><span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;△&#39;</span><span class="p">,</span> <span class="s1">&#39;L&#39;</span><span class="p">),</span>             <span class="c1"># (Δ,Δ,L) to state 3</span>
+        
+        <span class="c1"># State 3 - Moving left to find matching &#39;a&#39;</span>
+        <span class="p">(</span><span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">):</span> <span class="p">(</span><span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;△&#39;</span><span class="p">,</span> <span class="s1">&#39;L&#39;</span><span class="p">),</span>             <span class="c1"># (a,Δ,L) to state 4</span>
+        <span class="p">(</span><span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;△&#39;</span><span class="p">):</span> <span class="p">(</span><span class="s1">&#39;8_HALT&#39;</span><span class="p">,</span> <span class="s1">&#39;△&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">),</span>        <span class="c1"># (Δ,Δ,R) to HALT</span>
+        
+        <span class="c1"># State 4 - Processing after finding matching &#39;a&#39;</span>
+        <span class="p">(</span><span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">):</span> <span class="p">(</span><span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;L&#39;</span><span class="p">),</span>             <span class="c1"># (a,a,L) self-loop</span>
+        <span class="p">(</span><span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">):</span> <span class="p">(</span><span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;L&#39;</span><span class="p">),</span>             <span class="c1"># (b,b,L) self-loop</span>
+        <span class="p">(</span><span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;△&#39;</span><span class="p">):</span> <span class="p">(</span><span class="s1">&#39;1_START&#39;</span><span class="p">,</span> <span class="s1">&#39;△&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">),</span>       <span class="c1"># (Δ,Δ,R) back to START</span>
+        
+        <span class="c1"># State 5 - Processing &#39;b&#39; at the start</span>
+        <span class="p">(</span><span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">):</span> <span class="p">(</span><span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">),</span>             <span class="c1"># (a,a,R) self-loop</span>
+        <span class="p">(</span><span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">):</span> <span class="p">(</span><span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">),</span>             <span class="c1"># (b,b,R) self-loop</span>
+        <span class="p">(</span><span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="s1">&#39;△&#39;</span><span class="p">):</span> <span class="p">(</span><span class="s1">&#39;6&#39;</span><span class="p">,</span> <span class="s1">&#39;△&#39;</span><span class="p">,</span> <span class="s1">&#39;L&#39;</span><span class="p">),</span>             <span class="c1"># (Δ,Δ,L) to state 6</span>
+        
+        <span class="c1"># State 6 - Moving left to find matching &#39;b&#39;</span>
+        <span class="p">(</span><span class="s1">&#39;6&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">):</span> <span class="p">(</span><span class="s1">&#39;7&#39;</span><span class="p">,</span> <span class="s1">&#39;△&#39;</span><span class="p">,</span> <span class="s1">&#39;L&#39;</span><span class="p">),</span>             <span class="c1"># (b,Δ,L) to state 7</span>
+        <span class="p">(</span><span class="s1">&#39;6&#39;</span><span class="p">,</span> <span class="s1">&#39;△&#39;</span><span class="p">):</span> <span class="p">(</span><span class="s1">&#39;8_HALT&#39;</span><span class="p">,</span> <span class="s1">&#39;△&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">),</span>        <span class="c1"># (Δ,Δ,R) to HALT</span>
+        
+        <span class="c1"># State 7 - Processing after finding matching &#39;b&#39;</span>
+        <span class="p">(</span><span class="s1">&#39;7&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">):</span> <span class="p">(</span><span class="s1">&#39;7&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;L&#39;</span><span class="p">),</span>             <span class="c1"># (a,a,L) self-loop</span>
+        <span class="p">(</span><span class="s1">&#39;7&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">):</span> <span class="p">(</span><span class="s1">&#39;7&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;L&#39;</span><span class="p">),</span>             <span class="c1"># (b,b,L) self-loop</span>
+        <span class="p">(</span><span class="s1">&#39;7&#39;</span><span class="p">,</span> <span class="s1">&#39;△&#39;</span><span class="p">):</span> <span class="p">(</span><span class="s1">&#39;1_START&#39;</span><span class="p">,</span> <span class="s1">&#39;△&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">),</span>       <span class="c1"># (Δ,Δ,R) back to START</span>
+    <span class="p">}</span>
+    
+    <span class="k">return</span> <span class="n">TuringMachine</span><span class="p">(</span><span class="n">states</span><span class="p">,</span> <span class="n">input_symbols</span><span class="p">,</span> <span class="n">tape_symbols</span><span class="p">,</span> <span class="n">transition_function</span><span class="p">,</span> <span class="n">blank_symbol</span><span class="p">)</span>
+
+<span class="c1"># Test the palindrome Turing machine</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_palindrome_tm</span><span class="p">():</span>
+    <span class="n">palindrome_tm</span> <span class="o">=</span> <span class="n">create_palindrome_tm</span><span class="p">()</span>
+    
+    <span class="n">test_strings</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;aa&quot;</span><span class="p">,</span> <span class="s2">&quot;bb&quot;</span><span class="p">,</span> <span class="s2">&quot;aba&quot;</span><span class="p">,</span> <span class="s2">&quot;bab&quot;</span><span class="p">,</span> <span class="s2">&quot;abba&quot;</span><span class="p">,</span> <span class="s2">&quot;baab&quot;</span><span class="p">,</span> <span class="s2">&quot;abb&quot;</span><span class="p">,</span> <span class="s2">&quot;bba&quot;</span><span class="p">,</span> <span class="s2">&quot;abab&quot;</span><span class="p">]</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Testing Palindrome Turing Machine:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;----------------------------------&quot;</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">test_str</span> <span class="ow">in</span> <span class="n">test_strings</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">palindrome_tm</span><span class="o">.</span><span class="n">set_input</span><span class="p">(</span><span class="n">test_str</span><span class="p">)</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">palindrome_tm</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>  <span class="c1"># Set a high step limit</span>
+            
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Input: &#39;</span><span class="si">{</span><span class="n">test_str</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Result: </span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Final state: </span><span class="si">{</span><span class="n">palindrome_tm</span><span class="o">.</span><span class="n">current_state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Final tape: </span><span class="si">{</span><span class="n">palindrome_tm</span><span class="o">.</span><span class="n">get_tape_contents</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;----------------------------------&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Input: &#39;</span><span class="si">{</span><span class="n">test_str</span><span class="si">}</span><span class="s2">&#39;, Error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;----------------------------------&quot;</span><span class="p">)</span>
+
+<span class="c1"># Define the TuringMachine class to match our implementation</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">TuringMachine</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">states</span><span class="p">,</span> <span class="n">input_symbols</span><span class="p">,</span> <span class="n">tape_symbols</span><span class="p">,</span> <span class="n">transition_function</span><span class="p">,</span> <span class="n">blank_symbol</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize a Turing Machine with the 7-tuple definition.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters:</span>
+<span class="sd">        - states: Set of states with a designated START state and HALT states</span>
+<span class="sd">        - input_symbols: Set of input symbols</span>
+<span class="sd">        - tape_symbols: Set of tape symbols</span>
+<span class="sd">        - transition_function: Dictionary mapping (state, symbol) to (new_state, new_symbol, direction)</span>
+<span class="sd">        - blank_symbol: The blank symbol used for empty cells</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">states</span> <span class="o">=</span> <span class="n">states</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_symbols</span> <span class="o">=</span> <span class="n">input_symbols</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tape_symbols</span> <span class="o">=</span> <span class="n">tape_symbols</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transition_function</span> <span class="o">=</span> <span class="n">transition_function</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blank_symbol</span> <span class="o">=</span> <span class="n">blank_symbol</span>
+        
+        <span class="c1"># Initialize the machine&#39;s state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tape</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span>  <span class="c1"># Using 1-indexing, with None at position 0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">head_position</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># Start at position 1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_state</span> <span class="o">=</span> <span class="s1">&#39;1_START&#39;</span>  <span class="c1"># Start state</span>
+        
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_string</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the input on the tape and initialize the machine.&quot;&quot;&quot;</span>
+        <span class="c1"># Validate input symbols</span>
+        <span class="k">for</span> <span class="n">symbol</span> <span class="ow">in</span> <span class="n">input_string</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">symbol</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_symbols</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid input symbol: </span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        
+        <span class="c1"># Initialize tape with input starting at position 1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tape</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">input_string</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">head_position</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_state</span> <span class="o">=</span> <span class="s1">&#39;1_START&#39;</span>
+        
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_current_symbol</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Read the symbol at the current head position.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">head_position</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tape</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">blank_symbol</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tape</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">head_position</span><span class="p">]</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">write_symbol</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Write a symbol at the current head position.&quot;&quot;&quot;</span>
+        <span class="c1"># Extend tape if needed</span>
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">head_position</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tape</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tape</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">blank_symbol</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">tape</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">head_position</span><span class="p">]</span> <span class="o">=</span> <span class="n">symbol</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Execute a single step of the Turing Machine.</span>
+<span class="sd">        Returns False if halted or no valid transition, True otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Check if in a HALT state</span>
+        <span class="k">if</span> <span class="s1">&#39;8_HALT&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_state</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        
+        <span class="c1"># Get current symbol</span>
+        <span class="n">current_symbol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_current_symbol</span><span class="p">()</span>
+        
+        <span class="c1"># Check for valid transition</span>
+        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_state</span><span class="p">,</span> <span class="n">current_symbol</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">transition_function</span><span class="p">:</span>
+            <span class="n">next_state</span><span class="p">,</span> <span class="n">new_symbol</span><span class="p">,</span> <span class="n">direction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transition_function</span><span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_state</span><span class="p">,</span> <span class="n">current_symbol</span><span class="p">)]</span>
+            
+            <span class="c1"># Update state</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_state</span> <span class="o">=</span> <span class="n">next_state</span>
+            
+            <span class="c1"># Write the new symbol</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">write_symbol</span><span class="p">(</span><span class="n">new_symbol</span><span class="p">)</span>
+            
+            <span class="c1"># Move head</span>
+            <span class="k">if</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">&#39;L&#39;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">head_position</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">head_position</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">&#39;R&#39;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">head_position</span> <span class="o">+=</span> <span class="mi">1</span>
+            
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># No valid transition</span>
+            <span class="k">return</span> <span class="kc">False</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_steps</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Run the Turing Machine until it halts or reaches max_steps.&quot;&quot;&quot;</span>
+        <span class="n">steps</span> <span class="o">=</span> <span class="mi">0</span>
+        
+        <span class="k">while</span> <span class="n">steps</span> <span class="o">&lt;</span> <span class="n">max_steps</span><span class="p">:</span>
+            <span class="c1"># If in HALT state, machine has accepted</span>
+            <span class="k">if</span> <span class="s1">&#39;8_HALT&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_state</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s1">&#39;accepted&#39;</span>
+            
+            <span class="c1"># Execute a step</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">step</span><span class="p">():</span>
+                <span class="k">return</span> <span class="s1">&#39;rejected&#39;</span>  <span class="c1"># No valid transition</span>
+            
+            <span class="n">steps</span> <span class="o">+=</span> <span class="mi">1</span>
+        
+        <span class="k">return</span> <span class="s1">&#39;timeout&#39;</span>  <span class="c1"># Exceeded maximum steps</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_tape_contents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the non-blank contents of the tape.&quot;&quot;&quot;</span>
+        <span class="c1"># Skip the None at index 0 and exclude trailing blanks</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tape</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;&quot;</span>
+            
+        <span class="n">content</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tape</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+        
+        <span class="c1"># Remove trailing blanks</span>
+        <span class="k">while</span> <span class="n">content</span> <span class="ow">and</span> <span class="n">content</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">blank_symbol</span><span class="p">:</span>
+            <span class="n">content</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            
+        <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span> <span class="k">for</span> <span class="n">symbol</span> <span class="ow">in</span> <span class="n">content</span> <span class="k">if</span> <span class="n">symbol</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">blank_symbol</span><span class="p">])</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">print_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Print the current configuration of the machine.&quot;&quot;&quot;</span>
+        <span class="n">tape_str</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span> <span class="k">if</span> <span class="n">symbol</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">symbol</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">blank_symbol</span> <span class="k">else</span> <span class="s1">&#39;Δ&#39;</span> 
+                           <span class="k">for</span> <span class="n">symbol</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tape</span><span class="p">[</span><span class="mi">1</span><span class="p">:]])</span>
+        
+        <span class="n">head_indicator</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">head_position</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span> <span class="o">+</span> <span class="s1">&#39;^&#39;</span>
+        
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;State: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">current_state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tape:  </span><span class="si">{</span><span class="n">tape_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Head:  </span><span class="si">{</span><span class="n">head_indicator</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Run the test if this file is executed directly</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">test_palindrome_tm</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Testing Palindrome Turing Machine:
+----------------------------------
+Input: &#39;&#39;
+Result: accepted
+Final state: 8_HALT
+Final tape: 
+----------------------------------
+Input: &#39;a&#39;
+Result: accepted
+Final state: 8_HALT
+Final tape: 
+----------------------------------
+Input: &#39;b&#39;
+Result: accepted
+Final state: 8_HALT
+Final tape: 
+----------------------------------
+Input: &#39;aa&#39;
+Result: accepted
+Final state: 8_HALT
+Final tape: 
+----------------------------------
+Input: &#39;bb&#39;
+Result: accepted
+Final state: 8_HALT
+Final tape: 
+----------------------------------
+Input: &#39;aba&#39;
+Result: accepted
+Final state: 8_HALT
+Final tape: 
+----------------------------------
+Input: &#39;bab&#39;
+Result: accepted
+Final state: 8_HALT
+Final tape: 
+----------------------------------
+Input: &#39;abba&#39;
+Result: accepted
+Final state: 8_HALT
+Final tape: 
+----------------------------------
+Input: &#39;baab&#39;
+Result: accepted
+Final state: 8_HALT
+Final tape: 
+----------------------------------
+Input: &#39;abb&#39;
+Result: rejected
+Final state: 3
+Final tape: bb
+----------------------------------
+Input: &#39;bba&#39;
+Result: rejected
+Final state: 6
+Final tape: ba
+----------------------------------
+Input: &#39;abab&#39;
+Result: rejected
+Final state: 3
+Final tape: bab
+----------------------------------
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="processing-input-with-turing-machines">
+<h2>3. Processing Input with Turing Machines<a class="headerlink" href="#processing-input-with-turing-machines" title="Link to this heading">#</a></h2>
+<p>A Turing machine processes input quite differently from a finite automaton or a Pushdown automaton, despite their similarities. This section explains the operation of a Turing machine when processing input and details how the transition function drives this process.</p>
+<section id="one-way-vs-two-way-infinite-tapes">
+<h3>3.1 One-Way vs. Two-Way Infinite Tapes<a class="headerlink" href="#one-way-vs-two-way-infinite-tapes" title="Link to this heading">#</a></h3>
+<p>It’s worth noting that in Alan Turing’s original 1936 paper, “On Computable Numbers, with an Application to the Entscheidungsproblem,” the Turing machine was defined with a tape that stretched infinitely in both directions. In contrast, the model used in this textbook simplifies things by using a tape that’s only infinite to the right. This change introduces a boundary at the first cell, something we’ll discuss below. Even though the tape setup is different, it turns out this doesn’t change what the machine can actually do. Turing machines with one-way infinite tapes are just as powerful as those with two-way infinite tapes. Anything one can compute, the other can too. You just need a bit of extra bookkeeping to manage the boundary on the left side. This equivalence is important because it shows that the fundamental power of Turing machines doesn’t depend on the direction the tape goes. The core idea of what it means for something to be “computable” stays the same.</p>
+</section>
+<section id="how-a-turing-machine-processes-input">
+<h3>3.2 How a Turing Machine Processes Input<a class="headerlink" href="#how-a-turing-machine-processes-input" title="Link to this heading">#</a></h3>
+<p>Let’s start by understanding what happens when a Turing machine runs on an input string:</p>
+<ul class="simple">
+<li><p>Initial Configuration:</p>
+<ul>
+<li><p>The input string is placed on the tape, one symbol per cell, starting at position 1</p></li>
+<li><p>All other cells are filled with the blank symbol (<span class="math notranslate nohighlight">\(\triangle\)</span>)</p></li>
+<li><p>The tape head starts at position 1 (the leftmost cell of the input)</p></li>
+<li><p>The machine begins in the START state</p></li>
+</ul>
+</li>
+<li><p>Execution Process:</p>
+<ul>
+<li><p>In each step, the machine reads the symbol under the tape head</p></li>
+<li><p>Based on the current state and the read symbol, the machine:</p>
+<ul>
+<li><p>Transitions to a new state or remains in the current state</p></li>
+<li><p>Writes a symbol on the current cell (possibly the same symbol)</p></li>
+<li><p>Moves the tape head one position left or right</p></li>
+</ul>
+</li>
+<li><p>This process continues until the machine reaches a HALT state or has no valid transition</p></li>
+</ul>
+</li>
+<li><p>Acceptance:</p>
+<ul>
+<li><p>If the machine reaches a HALT state, the input is accepted</p></li>
+<li><p>If the machine gets stuck (no valid transition exists for the current state and symbol), the input is rejected</p></li>
+<li><p>If the machine runs forever without halting, the input is neither accepted nor rejected</p></li>
+</ul>
+</li>
+<li><p>Important Boundary Condition:</p>
+<ul>
+<li><p>If the TAPE HEAD attempts to move LEFT from cell 1, the machine crashes and immediately rejects the input</p></li>
+<li><p>This occurs regardless of the state the machine transitions to, even if it’s a HALT state.</p></li>
+<li><p>This boundary condition exists because the tape is only infinite to the right, not to the left</p></li>
+<li><p>In our implementation, we’ve enforced this by ensuring the head position never goes below 1</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="the-transition-function-in-detail">
+<h3>3.3 The Transition Function in Detail<a class="headerlink" href="#the-transition-function-in-detail" title="Link to this heading">#</a></h3>
+<p>The transition function <span class="math notranslate nohighlight">\(\delta\)</span> is the heart of a Turing machine. It dictates the machine’s behavior for every possible situation it might encounter. Formally, the transition function maps: <span class="math notranslate nohighlight">\(\delta(Q × \Gamma) = Q × \Gamma × \{L, R\}\)</span> where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(Q\)</span> is the set of states</p></li>
+<li><p><span class="math notranslate nohighlight">\(\Gamma\)</span> is the set of tape symbols</p></li>
+<li><p><span class="math notranslate nohighlight">\(L\)</span> and <span class="math notranslate nohighlight">\(R\)</span> represent left and right movements of the TAPE HEAD</p></li>
+<li><p>The <span class="math notranslate nohighlight">\(×\)</span>  symbol indicates a Cartesian product, <span class="math notranslate nohighlight">\(Q × \Gamma\)</span> meaning the function takes as input a pair consisting of a state and a tape symbol</p></li>
+</ul>
+<p>For each combination of a state <span class="math notranslate nohighlight">\(q_1 \in Q\)</span> and a tape symbol <span class="math notranslate nohighlight">\(a_1 \in \Gamma\)</span>, the transition function specifies:</p>
+<ul class="simple">
+<li><p>The next state <span class="math notranslate nohighlight">\(q_2 \in Q\)</span></p></li>
+<li><p>The symbol <span class="math notranslate nohighlight">\(a_2 \in \Gamma\)</span> to write on the current cell</p></li>
+<li><p>The direction <span class="math notranslate nohighlight">\(d \in \{L, R\}\)</span> to move the TAPE HEAD</p></li>
+</ul>
+<p>For example, the transition function <span class="math notranslate nohighlight">\(\delta(START, a) = (HALT, b, R)\)</span> means that when the machine is in the START state and reads the symbol <span class="math notranslate nohighlight">\(a\)</span>, it transitions to the HALT state, writes <span class="math notranslate nohighlight">\(b\)</span> on the tape, and moves the TAPE HEAD one cell to the right.</p>
+<p>In our Python implementation, this is represented as a dictionary where:</p>
+<ul class="simple">
+<li><p>The key is a tuple (current_state, current_symbol)</p></li>
+<li><p>The value is a tuple (next_state, symbol_to_write, direction_to_move)</p></li>
+</ul>
+</section>
+</section>
+<section id="turing-machines-for-regular-languages">
+<h2>4. Turing Machines for Regular Languages<a class="headerlink" href="#turing-machines-for-regular-languages" title="Link to this heading">#</a></h2>
+<p>Regular languages are a subset of formal languages that can be recognized by finite automata (FA). Regular languages form a subset of formal languages that can be recognized by finite automata (FA). In the following subsection, we demonstrate that any regular language can also be recognized by a Turing machine (TM). This is achieved by systematically converting a finite automaton into an equivalent Turing machine. This conversion highlights that Turing machines are more powerful than finite automata when it comes to defining or recognizing formal languages.</p>
+<p>The process of converting a finite automaton to a Turing machine is straightforward:</p>
+<ul class="simple">
+<li><p>Start with an FA that accepts the regular language <span class="math notranslate nohighlight">\(L\)</span></p></li>
+<li><p>Transform edge labels: Change each transition label <span class="math notranslate nohighlight">\(a\)</span> to <span class="math notranslate nohighlight">\((a, a, R)\)</span>, meaning “read ‘a’, write ‘a’, move right”</p></li>
+<li><p>Rename the start state: Change the initial state (typically labeled with a “-” symbol in a FA) to “START”</p></li>
+<li><p>Handle acceptance: Remove the accepting state markers (typically “+” symbols in a FA), and instead add transitions from each accepting state to a new “HALT” state with edge labels <span class="math notranslate nohighlight">\((\triangle, \triangle, R)\)</span>, where <span class="math notranslate nohighlight">\(\triangle\)</span> represents the blank symbol.</p></li>
+</ul>
+<p>This conversion works because the Turing machine simulates the FA by:</p>
+<ul class="simple">
+<li><p>Reading the input string and moving right, just like an FA would</p></li>
+<li><p>Following the exact same state transitions as the FA</p></li>
+<li><p>When reaching the end of the input (indicated by a blank symbol):</p>
+<ul>
+<li><p>If the current state corresponds to an accepting state in the FA, the TM will transition to HALT and accept the input;</p></li>
+<li><p>If the current state is not an accepting state in the FA, the TM will have no valid transition for the blank symbol and will reject the input.</p></li>
+</ul>
+</li>
+</ul>
+<p>The resulting TM accepts exactly the same strings as the original FA.</p>
+<section id="example-of-converting-a-fa-to-a-tm">
+<h3>4.1 Example of Converting a FA to a TM<a class="headerlink" href="#example-of-converting-a-fa-to-a-tm" title="Link to this heading">#</a></h3>
+<p>Consider the following FA, which accepts all strings containing a double occurrence of the letter <span class="math notranslate nohighlight">\(a\)</span> (i.e., the substring <span class="math notranslate nohighlight">\(aa\)</span>).</p>
+<div class="highlight-mermaid notranslate"><div class="highlight"><pre><span></span>flowchart LR
+    accTitle: Example of Converting a FA to a TM
+    accDescr: a diagram representing Converting a FA to a TM
+    q0((q0-))
+    q1((q1))
+    q2((q2+))
+    
+    %% Self loop on q0
+    q0 --&gt;|b| q0
+    
+    %% Transitions between q0 and q1
+    q0 --&gt;|a| q1
+    q1 --&gt;|b| q0
+    
+    %% Transition from q1 to q2
+    q1 --&gt;|a| q2
+    
+    %% Self loop on q2
+    q2 --&gt;|a,b| q2
+    
+    %% Style to match the image
+    %% Position q0 on the left
+    %% Position q1 in the middle
+    %% Position q2 on the right
+    classDef default fill:#fff,stroke:#333,stroke-width:1px
+    classDef start fill:#fff,stroke:#333,stroke-width:1px
+    classDef accept fill:#fff,stroke:#333,stroke-width:3px
+    
+    class q0 start
+    class q2 accept
+</pre></div>
+</div>
+<p>It can be converted into an equivalent Turing Machine, as illustrated below:</p>
+<div class="highlight-mermaid notranslate"><div class="highlight"><pre><span></span>flowchart LR
+    accTitle: Example of Converting a FA to a TM
+    accDescr: a diagram representing a TM converted from a FA
+    start((1 START))
+    state2((2))
+    halt[HALT 3]
+    
+    %% Self loop on start state
+    start --&gt;|&quot;(b, b, R)&quot;| start
+    
+    %% Transition from start to state2
+    start --&gt;|&quot;(a, a, R)&quot;| state2
+    
+    %% Transition from state2 to halt
+    state2 --&gt;|&quot;(a, a, R)&quot;| halt
+    
+    %% Transition from state2 back to start
+    state2 --&gt;|&quot;(b, b, R)&quot;| start
+    
+    %% Style to match the image
+    classDef default fill:#fff,stroke:#333,stroke-width:1px
+    classDef halt fill:#fff,stroke:#333,stroke-width:1px,rx:15,ry:15
+    
+    class halt halt
+</pre></div>
+</div>
+<p>Note that the HALT state of the Turing Machine does not require looping transitions, as reaching this state signifies that the machine stops processing further input and accepts the string. This conversion technique demonstrates a fundamental relationship between finite automata and Turing machines: Turing machines are strictly more powerful than finite automata, capable of recognizing all regular languages plus many more complex languages that finite automata cannot handle.</p>
+</section>
+</section>
+<section id="three-classes-of-input-strings-to-turing-machines">
+<h2>5. Three Classes of Input Strings to Turing Machines<a class="headerlink" href="#three-classes-of-input-strings-to-turing-machines" title="Link to this heading">#</a></h2>
+<section id="id7">
+<h3>5.1 Definition<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
+<p>When a Turing machine processes an input string, exactly one of three outcomes must occur:</p>
+<ul class="simple">
+<li><p>The machine accepts the input</p></li>
+<li><p>The machine rejects the input</p></li>
+<li><p>The machine loops infinitely</p></li>
+</ul>
+<p>These three outcomes define three mutually exclusive and exhaustive classes for all possible input strings to any Turing machine. For any Turing machine <span class="math notranslate nohighlight">\(T\)</span> and input string <span class="math notranslate nohighlight">\(s\)</span>, we can classify <span class="math notranslate nohighlight">\(s\)</span> into exactly one of three classes:</p>
+<ol class="arabic simple">
+<li><p>Accept class: The set of strings that <span class="math notranslate nohighlight">\(T\)</span> accepts, denoted as <span class="math notranslate nohighlight">\(ACCEPT(T)\)</span></p></li>
+<li><p>Reject class: The set of strings that <span class="math notranslate nohighlight">\(T\)</span> explicitly rejects after a finite number of steps, denoted as <span class="math notranslate nohighlight">\(REJECT(T)\)</span></p></li>
+<li><p>Loop class: The set of strings on which <span class="math notranslate nohighlight">\(T\)</span> runs forever without halting, denoted as <span class="math notranslate nohighlight">\(LOOP(T)\)</span></p></li>
+</ol>
+</section>
+<section id="examples">
+<h3>5.2 Examples<a class="headerlink" href="#examples" title="Link to this heading">#</a></h3>
+<section id="example-1-turning-machine-that-accepts-all-strings-with-aa">
+<h4>5.2.1 Example 1. Turning Machine that Accepts all strings with <span class="math notranslate nohighlight">\(aa\)</span><a class="headerlink" href="#example-1-turning-machine-that-accepts-all-strings-with-aa" title="Link to this heading">#</a></h4>
+<p>In the previous section, we discussed how to convert a finite automaton (FA) into a Turing machine (TM), using the language of all strings containing the substring <span class="math notranslate nohighlight">\(aa\)</span> as an example. Now, let’s modify that TM by adding a new loop transition <span class="math notranslate nohighlight">\(\delta(START, △) = (START, △, R)\)</span> to the START state. The updated machine is visualized as follows.</p>
+<div class="highlight-mermaid notranslate"><div class="highlight"><pre><span></span>flowchart LR
+    accTitle: A modified TM
+    accDescr: a diagram representing a Modified TM by adding a new loop transition
+    start((1 START))
+    state2((2))
+    halt[HALT 3]
+    
+    %% Self loop on start state
+    start --&gt;|&quot;(b, b, R)&quot;| start
+    start --&gt;|&quot;(△, △, R)&quot;| start
+    
+    %% Transition from start to state2
+    start --&gt;|&quot;(a, a, R)&quot;| state2
+    
+    %% Transition from state2 to halt
+    state2 --&gt;|&quot;(a, a, R)&quot;| halt
+    
+    %% Transition from state2 back to start
+    state2 --&gt;|&quot;(b, b, R)&quot;| start
+    
+    %% Style to match the image
+    classDef default fill:#fff,stroke:#333,stroke-width:1px
+    classDef halt fill:#fff,stroke:#333,stroke-width:1px,rx:15,ry:15
+    
+    class halt halt
+</pre></div>
+</div>
+<p>This modified TM still accepts the same language. However, there is an important behavioral difference:
+In the original machine, if the input ended while the TM was in the START state (i.e., it encountered a blank symbol), there was no defined transition, causing the machine to implicitly reject the input by halting without accepting.
+In the modified version, the new loop transition allows the machine to stay in the START state, write a blank symbol, and move right upon reading a blank. This prevents an immediate rejection and subtly changes how the machine handles end-of-input situations. However, this change also introduces the possibility of infinite looping: if the machine reaches the end of the input in the START state (meaning it has not seen “aa” in the input), it will continue moving right forever, never halting. Thus, some input strings that would have been rejected before will now cause the machine to loop indefinitely instead of halting with a rejection.</p>
+<p>The following table categorizes all possible inputs to this Turing machine:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Input Class</p></th>
+<th class="head"><p>Input Type</p></th>
+<th class="head"><p>Behavior</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Accept Class</p></td>
+<td><p>Strings containing “aa”</p></td>
+<td><p>The machine finds the pattern “aa”, transitions to state q2, and eventually reaches the HALT state. These strings are accepted in a finite number of steps. Examples: “aa”, “aab”, “baa”, “aaaa”.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Reject Class</p></td>
+<td><p>Strings that end with “a” but don’t contain “aa”</p></td>
+<td><p>When processing strings ending with “a” (but not containing “aa”), the machine will be in state q2 when it reads the final symbol “a”. Since q2 does not have a transition on blank sybmol, the machine will crash and implicitly rejects the input. Examples: “a”, “ba”, “baba”.</p></td>
+</tr>
+<tr class="row-even"><td><p>Loop Class</p></td>
+<td><p>Strings not containing “aa” and not ending with “a”</p></td>
+<td><p>The machine never encounters the pattern “aa” and isn’t in state q2 when it reaches the end. When it reaches the end of input (blank symbol) in the START state, it continues moving right indefinitely due to the <span class="math notranslate nohighlight">\(\delta(START, △) = (START, △, R)\)</span> transition. The machine never halts. Examples: “” (empty string), “b”, “bb”, “babab”.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="example-2">
+<h4>5.2.2 Example 2<a class="headerlink" href="#example-2" title="Link to this heading">#</a></h4>
+<p>The following Turing machine recognizes strings over the alphabet <span class="math notranslate nohighlight">\(\{a, b, c\}\)</span> that contain an even number of ‘a’s (including zero ‘a’s) and no ‘c’. The machine works by keeping track of parity: whether it has seen an even or odd number of ‘a’s so far. The START state of the machine is also called q_even, reflecting that we begin having seen 0 ‘a’s (which is an even number).</p>
+<div class="highlight-mermaid notranslate"><div class="highlight"><pre><span></span>stateDiagram-v2
+    accTitle: A TM Accepting Strings containing an even number of &#39;a&#39;s and no &#39;c&#39;
+    accDescr: a diagram representing a TM that accepts Strings containing an even number of &#39;a&#39;s and no &#39;c&#39;
+    direction LR
+    START(q_even)
+    
+    START(q_even) --&gt; q_odd: (a, a, R)
+    START(q_even) --&gt; START(q_even): (b, b, R)
+    START(q_even) --&gt; HALT: (△, △, R)
+    START(q_even) --&gt; q_loop: (c, c, R)
+    
+    q_odd --&gt; START(q_even): (a, a, R)
+    q_odd --&gt; q_odd: (b, b, R)    
+    q_odd --&gt; q_loop: (c, c, R)    
+
+    q_loop --&gt; q_loop: (a, a, R)
+    q_loop --&gt; q_loop: (b, b, R)
+    q_loop --&gt; q_loop: (c, c, L)
+    q_loop --&gt; q_loop: (△, △, L)
+    
+</pre></div>
+</div>
+<p>How does this machine work:</p>
+<ul class="simple">
+<li><p>The machine starts in START(or q_even), indicating we’ve seen 0 ‘a’s so far (which is even)</p></li>
+<li><p>For inputs without ‘c’:</p>
+<ul>
+<li><p>For each ‘a’ encountered, it toggles between q_even and q_odd states</p></li>
+<li><p>Each ‘b’ is simply skipped (doesn’t affect the parity count)</p></li>
+</ul>
+</li>
+<li><p>When it reaches the end of the input (blank symbol):</p>
+<ul>
+<li><p>If in state q_even, it transitions to HALT (even number of ‘a’s)</p></li>
+<li><p>If in state q_odd, there is no defined transition, so the machine implicitly crashes and rejects the input</p></li>
+</ul>
+</li>
+<li><p>For inputs containing ‘c’:</p>
+<ul>
+<li><p>When the machine encounters ‘c’, it transitions to the q_loop state</p></li>
+<li><p>In q_loop state, on inputs ‘a’ or ‘b’, it keeps moving right</p></li>
+<li><p>In q_loop state, on input ‘c’ or blank, it moves left. This creates a “back-and-forth” pattern that never terminates</p></li>
+</ul>
+</li>
+</ul>
+<p>The following table categorizes all possible inputs to this Turing machine:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Input Class</p></th>
+<th class="head"><p>Input Type</p></th>
+<th class="head"><p>Behavior</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Accept Class</strong></p></td>
+<td><p>Strings with an even number of ‘a’s and no ‘c’s:<br>- Empty string (“”) <br>- Strings with only ‘b’s (“b”, “bb”, etc.)<br>- Strings with 2, 4, 6… ‘a’s (“aa”, “aabb”, “baababa”, etc.)</p></td>
+<td><p>1. Machine processes the input from left to right<br>2. Ends in state q_even when it reaches the blank symbol<br>3. Transitions to HALT state<br>4. Accepts the input</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Reject Class</strong></p></td>
+<td><p>Strings with an odd number of ‘a’s and no ‘c’s:<br>- Strings with 1 ‘a’ (“a”, “ab”, “ba”, etc.)<br>- Strings with 3, 5, 7… ‘a’s (“aaa”, “aabaaba”, etc.)</p></td>
+<td><p>1. Machine processes the input from left to right<br>2. Ends in state q_odd when it reaches the blank symbol<br>3. Has no valid transition for (q_odd, △)<br>4. Implicitly rejects by halting without accepting</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Loop Class</strong></p></td>
+<td><p>Strings containing at least one ‘c’:<br>- “c”<br>- “ac”, “bc”, “ca”, “cb”<br>- Any string with ‘c’ anywhere, regardless of the number of ‘a’s</p></td>
+<td><p>1. Machine processes input until it encounters ‘c’<br>2. Transitions to q_loop state<br>3. When it eventually reaches another ‘c’ or a blank, it moves left<br>4. Continues moving back and forth between symbols indefinitely<br>5. Never halts</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+<section id="why-the-loop-class-is-essential-in-turing-machine-theory">
+<h3>5.3 Why the LOOP Class is Essential in Turing Machine Theory<a class="headerlink" href="#why-the-loop-class-is-essential-in-turing-machine-theory" title="Link to this heading">#</a></h3>
+<p>The LOOP class is a crucial concept in the theory of computation for several important reasons:</p>
+<ol class="arabic simple">
+<li><p>Completeness of Classification: The LOOP class completes the classification system for Turing machines. Without this class, we would have no way to categorize inputs that cause a machine to run forever. Every input to a Turing machine must either be accepted, rejected, or cause the machine to loop indefinitely - these three classes together form a complete partitioning of all possible inputs.</p></li>
+<li><p>Undecidability and the Halting Problem: The existence of the LOOP class is directly connected to one of the most fundamental results in computer science: the Halting Problem. The Halting Problem shows that it is impossible to create an algorithm that can determine, for every possible program and input, whether that program will eventually halt or run forever.
+The LOOP class represents precisely those inputs for which a machine will never halt.</p></li>
+<li><p>Differentiating Between Types of Languages: The LOOP class helps us distinguish between different types of languages:</p></li>
+</ol>
+<ul class="simple">
+<li><p>Decidable languages: A language is decidable if there exists a Turing machine that</p>
+<ul>
+<li><p>accepts all strings in the language,</p></li>
+<li><p>rejects all strings not in the language, and</p></li>
+<li><p>has an empty LOOP class. These are the most well-behaved languages.</p></li>
+</ul>
+</li>
+<li><p>Recognizable languages: A language is recognizable (but not decidable) if there exists a Turing machine that</p>
+<ul>
+<li><p>accepts all strings in the language,</p></li>
+<li><p>reject or loop forever for strings not in the language.</p></li>
+<li><p>in this case, the LOOP class is non-empty.</p></li>
+</ul>
+</li>
+</ul>
+<ol class="arabic simple" start="4">
+<li><p>Theoretical Limitations of Computing: The LOOP class represents a fundamental limitation of computation. It shows that there are problems for which an algorithm can be specified, but it will never terminate for certain inputs. This has profound implications:</p>
+<ul class="simple">
+<li><p>Not all well-defined problems are effectively computable</p></li>
+<li><p>Some computational processes cannot be predicted without actually running them</p></li>
+<li><p>There are inherent limits to what can be calculated algorithmically</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="practical-implications">
+<h3>5.4 Practical Implications:<a class="headerlink" href="#practical-implications" title="Link to this heading">#</a></h3>
+<p>In our example Turing machine that recognizes strings containing “aa” but loops on strings without “aa”, we saw how a small modification (adding a loop transition on blank symbols) dramatically changed the behavior. This illustrates an important practical concern in computing:</p>
+<ul class="simple">
+<li><p>Programs can contain infinite loops that might be difficult to detect</p></li>
+<li><p>Determining whether a program will terminate for all inputs is generally impossible</p></li>
+<li><p>Software verification and testing must contend with the possibility of non-termination</p></li>
+</ul>
+<p>The LOOP class isn’t merely a theoretical curiosity: it represents a fundamental aspect of computation that affects both the theoretical foundations of computer science and practical aspects of software development.</p>
+</section>
+</section>
+<section id="practice-exercises">
+<h2>6. Practice Exercises<a class="headerlink" href="#practice-exercises" title="Link to this heading">#</a></h2>
+<section id="exercise-1-turing-machine-state-diagram">
+<h3>6.1 Exercise 1: Turing Machine State Diagram<a class="headerlink" href="#exercise-1-turing-machine-state-diagram" title="Link to this heading">#</a></h3>
+<p>Draw a state diagram for a Turing machine that accepts strings over <span class="math notranslate nohighlight">\(\{a, b\}\)</span> that:</p>
+<ul class="simple">
+<li><p>End with the letter ‘a’</p></li>
+<li><p>Contain exactly one ‘b’</p></li>
+<li><p>Have an odd number of ‘b’s</p></li>
+</ul>
+</section>
+<section id="exercise-2-machine-execution-tracing">
+<h3>6.2 Exercise 2: Machine Execution Tracing<a class="headerlink" href="#exercise-2-machine-execution-tracing" title="Link to this heading">#</a></h3>
+<p>For the Turing machine that accepts strings with an even number of ‘a’s and no ‘c’, trace through the execution steps for the following inputs:</p>
+<ul class="simple">
+<li><p>“aba”</p></li>
+<li><p>“baa”</p></li>
+<li><p>“abba”</p></li>
+</ul>
+<p>Show the state, tape contents, and head position at each step.</p>
+</section>
+<section id="exercise-3-input-classification">
+<h3>6.3 Exercise 3: Input Classification<a class="headerlink" href="#exercise-3-input-classification" title="Link to this heading">#</a></h3>
+<p>For the following Turing machine transition function, classify each of the given strings as Accept, Reject, or Loop:</p>
+<ul class="simple">
+<li><p>states = {q0, q1, qaccept}</p></li>
+<li><p>input_symbols = {0, 1}</p></li>
+<li><p>tape_symbols = {0, 1, _}</p></li>
+<li><p>initial_state = q0</p></li>
+<li><p>accept_states = {qaccept}</p></li>
+</ul>
+<p>Transitions:</p>
+<ul class="simple">
+<li><p>(q0, 0) -&gt; (q0, 0, R)</p></li>
+<li><p>(q0, 1) -&gt; (q1, 1, R)</p></li>
+<li><p>(q0, _) -&gt; (qaccept, _, R)</p></li>
+<li><p>(q1, 0) -&gt; (q1, 0, R)</p></li>
+<li><p>(q1, 1) -&gt; (q0, 1, R)</p></li>
+<li><p>(q1, _) -&gt; (q1, _, L)</p></li>
+</ul>
+<p>Inputs:</p>
+<ul class="simple">
+<li><p>“01”</p></li>
+<li><p>“00”</p></li>
+<li><p>“101”</p></li>
+<li><p>“111”</p></li>
+<li><p>“”</p></li>
+</ul>
+</section>
+<section id="exercise-4-converting-fa-to-tm">
+<h3>6.4 Exercise 4: Converting FA to TM<a class="headerlink" href="#exercise-4-converting-fa-to-tm" title="Link to this heading">#</a></h3>
+<p>Convert the following finite automaton to a Turing machine:</p>
+<ul class="simple">
+<li><p>States: {q0, q1, q2}</p></li>
+<li><p>Input alphabet: {a, b}</p></li>
+<li><p>Start state: q0</p></li>
+<li><p>Accept states: {q2}</p></li>
+</ul>
+<p>Transitions:</p>
+<ul class="simple">
+<li><p>q0 on ‘a’ → q1</p></li>
+<li><p>q0 on ‘b’ → q0</p></li>
+<li><p>q1 on ‘a’ → q1</p></li>
+<li><p>q1 on ‘b’ → q2</p></li>
+<li><p>q2 on ‘a’ → q1</p></li>
+<li><p>q2 on ‘b’ → q0</p></li>
+</ul>
+<p>Show your transition function for the resulting Turing machine.</p>
+</section>
+<section id="exercise-5-modifying-a-tm">
+<h3>6.5 Exercise 5: Modifying a TM<a class="headerlink" href="#exercise-5-modifying-a-tm" title="Link to this heading">#</a></h3>
+<p>Take the Turing machine that accepts strings with an even number of ‘a’s and no ‘c’, modify it by removing the transition between q_odd and q_loop, and analyze how this change affects the machine’s behavior with respect to the three classes of input: ACCEPT, REJECT, and LOOP.</p>
+</section>
+<section id="exercise-6-implement-in-python">
+<h3>6.6 Exercise 6: Implement in Python<a class="headerlink" href="#exercise-6-implement-in-python" title="Link to this heading">#</a></h3>
+<p>Implement the following Turing machines in Python, using the TuringMachine class from the notebook:</p>
+<ul class="simple">
+<li><p>A machine that increments a binary number (e.g., “1011” becomes “1100”)</p></li>
+<li><p>A machine that recognizes palindromes over {0, 1}</p></li>
+<li><p>A machine that accepts strings where the number of ‘a’s equals the number of ‘b’s</p></li>
+</ul>
+<p>Test each implementation with appropriate inputs.</p>
+</section>
+</section>
+<section id="further-reading">
+<h2>7. Further Reading<a class="headerlink" href="#further-reading" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>“Introduction to the Theory of Computation” by Michael Sipser, Section 3.1</p></li>
+<li><p>“Introduction to Computer Theory” by Daniel I.A. Cohen, Chapter 19</p></li>
+<li><p>“Automata Theory, Languages, and Computation” by Hopcroft, Motwani, and Ullman, Chapter 8</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content - backup\Part_3_Turing_Machines\Chapter_13"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#definition-of-turing-machines">1. Definition of Turing Machines</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definition">1.1 Definition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-python-implementation">1.2 Example Python Implementation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#turing-machine-tape">1.3 Turing Machine tape</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#examples-of-turing-machines">2. Examples of Turing Machines</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1-a-turing-machine-that-accepts-a-nb-n">2.1 Example 1: A Turing Machine that Accepts <span class="math notranslate nohighlight">\(a^nb^n\)</span></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">2.1.1 Definition:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#machine-diagram">2.1.2 Machine Diagram:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#how-this-turing-machine-works">2.1.3 How this Turing Machine Works:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2.1.4 Example Python Implementation</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-2-a-turing-machine-that-accepts-palindrome">2.2 Example 2: A Turing Machine that Accepts PALINDROME</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">2.2.1 Definition:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">2.2.2 Machine Diagram:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">2.2.3 How this Turing Machine Works:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">2.2.4 Example Python Implementation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#processing-input-with-turing-machines">3. Processing Input with Turing Machines</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#one-way-vs-two-way-infinite-tapes">3.1 One-Way vs. Two-Way Infinite Tapes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-a-turing-machine-processes-input">3.2 How a Turing Machine Processes Input</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-transition-function-in-detail">3.3 The Transition Function in Detail</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#turing-machines-for-regular-languages">4. Turing Machines for Regular Languages</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-of-converting-a-fa-to-a-tm">4.1 Example of Converting a FA to a TM</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#three-classes-of-input-strings-to-turing-machines">5. Three Classes of Input Strings to Turing Machines</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">5.1 Definition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#examples">5.2 Examples</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1-turning-machine-that-accepts-all-strings-with-aa">5.2.1 Example 1. Turning Machine that Accepts all strings with <span class="math notranslate nohighlight">\(aa\)</span></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-2">5.2.2 Example 2</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-the-loop-class-is-essential-in-turing-machine-theory">5.3 Why the LOOP Class is Essential in Turing Machine Theory</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#practical-implications">5.4 Practical Implications:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-exercises">6. Practice Exercises</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1-turing-machine-state-diagram">6.1 Exercise 1: Turing Machine State Diagram</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2-machine-execution-tracing">6.2 Exercise 2: Machine Execution Tracing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-3-input-classification">6.3 Exercise 3: Input Classification</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-4-converting-fa-to-tm">6.4 Exercise 4: Converting FA to TM</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-5-modifying-a-tm">6.5 Exercise 5: Modifying a TM</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-6-implement-in-python">6.6 Exercise 6: Implement in Python</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">7. Further Reading</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Yong Zhang, Dylan Zwick
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

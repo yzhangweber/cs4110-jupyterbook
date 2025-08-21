@@ -1,0 +1,1509 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>3. Finite Automata &#8212; Decode Computation:Hands-On Formal Languages and Algorithms</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/Part_1_Regular_Languages/Chapter03_Finite_Automata';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="4. Nondeterministic Finite Automata" href="Chapter04_Nondeterministic_Finite_Automata.html" />
+    <link rel="prev" title="2. Regular Expressions" href="Chapter02_Regular_Expressions.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Decode Computation:Hands-On Formal Languages and Algorithms - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Decode Computation:Hands-On Formal Languages and Algorithms - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Decode Computation︰ Hands-On Formal Languages and Algorithms
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Regular Languages</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Chapter01_Languages.html">1. Languages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter02_Regular_Expressions.html">2. Regular Expressions</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">3. Finite Automata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter04_Nondeterministic_Finite_Automata.html">4. Nondeterministic Finite Automata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter05_Nonregular_Languages.html">5. Nonregular Languages</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Context Free Languages</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Part_2_Context_Free_Languages/Chapter_08/Chapter08_Fundamentals_of_CFG.html">6. Fundamentals of Context-Free Grammar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_2_Context_Free_Languages/Chapter_09/Chapter09_CFG_Normal_Forms_and_Transformations.html">7. Normal Forms and Transformations in Context-Free Grammars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_2_Context_Free_Languages/Chapter_10/Chapter10_PDA.html">8. Pushdown Automata (PDA)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_2_Context_Free_Languages/Chapter_11/Chapter11_Properties_of_Context_free%20Languages.html">9. Properties of Context-free Languages (CFL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_2_Context_Free_Languages/Chapter_12/Chapter12_Decidability_in_CFG.html">10. Decidability in Context-Free Grammars (CFGs)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Turing Machines</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Part_3_Turing_Machines/Chapter_13/Chapter13_Introduction_to_Turing_Machines.html">11. Introduction to Turing Machines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_3_Turing_Machines/Chapter_14/Chapter14_Turing_Machine_Languages.html">12. Turing Machine Languages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_3_Turing_Machines/Chapter_15/Chapter15_Turing_Machine_Encoding.html">13. Turing Machine Encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_3_Turing_Machines/Chapter_16/Chapter16_Universal_Turing_Machine.html">14. The Universal Turing Machine</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced Topics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Part_4_Advanced_Topics/Chapter17_P_and_NP_Problems.html">15. P and NP Problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_4_Advanced_Topics/Chapter18_NP_Completeness.html">16. NP-Completeness</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontent/Part_1_Regular_Languages/Chapter03_Finite_Automata.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/content/Part_1_Regular_Languages/Chapter03_Finite_Automata.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Finite Automata</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-concepts-and-definitions">1. Basic Concepts and Definitions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#representing-finite-automata">2. Representing Finite Automata</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#representing-finite-automata-in-python">3. Representing Finite Automata in Python</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#finite-automata-and-languages">4. Finite Automata and Languages</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-finite-automata-in-python">5. Using Finite Automata In Python</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-exercises">6. Practice Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">7. Further Reading</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#appendix-the-fa-class-with-all-methods">8. Appendix: The FA Class with All Methods</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="finite-automata">
+<h1><span class="section-number">3. </span>Finite Automata<a class="headerlink" href="#finite-automata" title="Link to this heading">#</a></h1>
+<section id="learning-objectives">
+<h2>Learning Objectives<a class="headerlink" href="#learning-objectives" title="Link to this heading">#</a></h2>
+<p>After completing this chapter, you will be able to:</p>
+<ul class="simple">
+<li><p>Define a finite automaton.</p></li>
+<li><p>Represent a finite automaton with a state diagram or a transition table.</p></li>
+<li><p>Work with and understand a finite automaton class built in Python.</p></li>
+<li><p>Define a language with a finite automaton.</p></li>
+</ul>
+</section>
+<section id="basic-concepts-and-definitions">
+<h2>1. Basic Concepts and Definitions<a class="headerlink" href="#basic-concepts-and-definitions" title="Link to this heading">#</a></h2>
+<p>Let’s talk about games.</p>
+<p>In the United States two popular games for children are Candyland and Chutes and Ladders. You may have played them when you were a kid. The basic idea for both is very simple - you move along a sequence of squares by either drawing cards or rolling dice, and the goal is to get to the end of the sequence. It’s a race, but there’s no strategy involved - whether you win or lose is entirely up to the luck of either the draw or the roll. It’s good for little children, and it teaches them to follow directions and pay attention, but its appeal is limited because it’s not possible to get “good” at playing the game.</p>
+<center>
+  <img src="https://drive.google.com/uc?export=view&id=1kMNyzLVOnLLX_tnz5md6-pex-mDOueW_" height = "500" alt="Candyland">
+  <br>
+  <img src="https://drive.google.com/uc?export=view&id=1yVK7hhT8NUARwvZtAA8MxS_wODHR1Eu4" height = "600" alt="Chutes and Ladders">
+</center><p>What are some things these games have in common? Well, they both involve:</p>
+<ul class="simple">
+<li><p>A finite set of states, one of which is designated as the initial state, called the <em>start state</em>, and some of which are designated winning or <em>final states</em>.</p></li>
+<li><p>A set of possible inputs. In these cases, either the draw of a card or the roll of a dice.</p></li>
+<li><p>A finite set of <em>transitions</em> that tell you for each state and for each input which state to go to next.</p></li>
+</ul>
+<p>Well, this is, essentially, the definition of a <em>finite automaton</em> (FA for short). It’s <em>finite</em> because the number of possible states and possible inputs is finite, and <em>automaton</em> because the change of states is totally governed by the input. In other words, it’s automatic - there is no choice involved. (“Automaton” comes from Greek, and its correct plural is “automata”). The formal definition is below.</p>
+<hr class="docutils" />
+<p><strong>Definition</strong></p>
+<p>A <strong>finite automaton</strong> consists of:</p>
+<ul class="simple">
+<li><p>A finite set of states <span class="math notranslate nohighlight">\(\displaystyle Q\)</span>.</p></li>
+<li><p>A finite set <span class="math notranslate nohighlight">\(\displaystyle \Sigma\)</span> of input characters, called its <em>alphabet</em>.</p></li>
+<li><p>A transition function <span class="math notranslate nohighlight">\(T\)</span>, where for every state <span class="math notranslate nohighlight">\(q \in Q\)</span> and input character <span class="math notranslate nohighlight">\(a \in \Sigma\)</span> there is a transition map <span class="math notranslate nohighlight">\(T(q,a) \rightarrow q'\)</span> specifying the next state after the automaton in state <span class="math notranslate nohighlight">\(q\)</span> reads the input <span class="math notranslate nohighlight">\(a\)</span>.</p></li>
+<li><p>A unique initial state <span class="math notranslate nohighlight">\(q_{0}\)</span></p></li>
+<li><p>A subset <span class="math notranslate nohighlight">\(F \subseteq Q\)</span> of final states. Note the set of final states could possibly be empty, possibly have more than one element, and possibly contain the initial state.</p></li>
+</ul>
+<p>This <span class="math notranslate nohighlight">\(5\)</span>-tuple, <span class="math notranslate nohighlight">\((Q,\Sigma,T,q_{0},F)\)</span> defines a finite automaton.</p>
+</section>
+<hr class="docutils" />
+<section id="representing-finite-automata">
+<h2>2. Representing Finite Automata<a class="headerlink" href="#representing-finite-automata" title="Link to this heading">#</a></h2>
+<p>Let’s suppose we have a much simpler game than either Candyland or Chutes and Ladders. Instead of rolling a dice we just flip a coin, so the possibilities at any state are just heads and tails. In other words, our input alphabet is just <span class="math notranslate nohighlight">\(\Sigma = \{H,T\}\)</span>. Our board looks like this:</p>
+<center>
+  <img src="https://drive.google.com/uc?export=view&id=1BYLUIXexFtMEWQFAvlBSB8-BQOeAotxD" height = "500" alt="Simple Chutes and Ladders">
+</center><p>The idea here is that:</p>
+<ul class="simple">
+<li><p>The game starts at the initial state <span class="math notranslate nohighlight">\(1\)</span>.</p></li>
+<li><p>On the first flip of the coin, the player advances to state <span class="math notranslate nohighlight">\(2\)</span> for anything they flip.</p></li>
+<li><p>At state <span class="math notranslate nohighlight">\(2\)</span>, if the player flips <span class="math notranslate nohighlight">\(T\)</span> they take a ladder to the final state <span class="math notranslate nohighlight">\(4\)</span>. If the player flips <span class="math notranslate nohighlight">\(H\)</span>, they advance to state <span class="math notranslate nohighlight">\(3\)</span>.</p></li>
+<li><p>At state <span class="math notranslate nohighlight">\(3\)</span>, if the player flips <span class="math notranslate nohighlight">\(H\)</span> they take a chute back to the initial state <span class="math notranslate nohighlight">\(1\)</span>. For <span class="math notranslate nohighlight">\(T\)</span>, they advance to the final state <span class="math notranslate nohighlight">\(4\)</span>.</p></li>
+<li><p>If, for some reason, the player wants to keep playing at the final state, they just stay there for any coin flip.</p></li>
+</ul>
+<p>In the board diagram, the circles (or <em>nodes</em>) are the different states, and the arrows marked with letters represent how those input letters transition between states. The initial state is marked with <span class="math notranslate nohighlight">\(-\)</span>, and the final states are makred with <span class="math notranslate nohighlight">\(+\)</span>. This is the basic idea behind the <em>state diagram</em> of a finite automaton, which is a compact and illuminating way of representing all its features.</p>
+<p>We could also represent the board using a <em>transition table</em>. Specifically, the rows of the table correspond with the states of the finite automaton, the columns correspond with the possible inputs (the alphabet), and the entries represent the transitions:</p>
+<center>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>State</p></th>
+<th class="head text-center"><p>H</p></th>
+<th class="head text-center"><p>T</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p>1</p></td>
+<td class="text-center"><p>2</p></td>
+<td class="text-center"><p>2</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>2</p></td>
+<td class="text-center"><p>3</p></td>
+<td class="text-center"><p>4</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>3</p></td>
+<td class="text-center"><p>1</p></td>
+<td class="text-center"><p>4</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>4</p></td>
+<td class="text-center"><p>4</p></td>
+<td class="text-center"><p>4</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</center></section>
+<section id="representing-finite-automata-in-python">
+<h2>3. Representing Finite Automata in Python<a class="headerlink" href="#representing-finite-automata-in-python" title="Link to this heading">#</a></h2>
+<p>We can diagram a finite automaton in Python using the <em>Digraph</em> class from the graphviz library. The <em>Source</em> class lets us visualize it.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">graphviz</span><span class="w"> </span><span class="kn">import</span> <span class="n">Digraph</span><span class="p">,</span> <span class="n">Source</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can create a class (we’ll call it <em>cal</em> for “Chutes and Ladders”), and then specify the states and the transitions (called nodes and edges in the <em>Digraph</em> class).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cal</span> <span class="o">=</span> <span class="n">Digraph</span><span class="p">()</span>
+<span class="n">cal</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rankdir</span><span class="o">=</span><span class="s1">&#39;LR&#39;</span><span class="p">)</span> <span class="c1"># This specifies the diagram should go left to right</span>
+
+<span class="c1"># States</span>
+<span class="n">cal</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;1-&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span> <span class="c1"># Initial state</span>
+<span class="n">cal</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
+<span class="n">cal</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
+<span class="n">cal</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;4+&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span> <span class="c1"># Accept state</span>
+
+<span class="c1"># Transitions</span>
+<span class="n">cal</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;1-&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;H,T&#39;</span><span class="p">)</span>
+<span class="n">cal</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;H&#39;</span><span class="p">)</span>
+<span class="n">cal</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;4+&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;T&#39;</span><span class="p">)</span>
+<span class="n">cal</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;1-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;H&#39;</span><span class="p">)</span>
+<span class="n">cal</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;4+&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;T&#39;</span><span class="p">)</span>
+<span class="n">cal</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;4+&#39;</span><span class="p">,</span> <span class="s1">&#39;4+&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;H,T&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Source</span><span class="p">(</span><span class="n">cal</span><span class="o">.</span><span class="n">source</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="nn">File D:\Python313\Lib\site-packages\graphviz\backend\execute.py:76,</span> in <span class="ni">run_check</span><span class="nt">(cmd, input_lines, encoding, quiet, **kwargs)</span>
+<span class="g g-Whitespace">     </span><span class="mi">75</span>         <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;stdout&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;stderr&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span>
+<span class="ne">---&gt; </span><span class="mi">76</span>     <span class="n">proc</span> <span class="o">=</span> <span class="n">_run_input_lines</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">input_lines</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">=</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">77</span> <span class="k">else</span><span class="p">:</span>
+
+<span class="nn">File D:\Python313\Lib\site-packages\graphviz\backend\execute.py:96,</span> in <span class="ni">_run_input_lines</span><span class="nt">(cmd, input_lines, kwargs)</span>
+<span class="g g-Whitespace">     </span><span class="mi">95</span> <span class="k">def</span><span class="w"> </span><span class="nf">_run_input_lines</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">input_lines</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
+<span class="ne">---&gt; </span><span class="mi">96</span>     <span class="n">popen</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">stdin</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">98</span>     <span class="n">stdin_write</span> <span class="o">=</span> <span class="n">popen</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">write</span>
+
+<span class="nn">File D:\Python313\Lib\subprocess.py:1039,</span> in <span class="ni">Popen.__init__</span><span class="nt">(self, args, bufsize, executable, stdin, stdout, stderr, preexec_fn, close_fds, shell, cwd, env, universal_newlines, startupinfo, creationflags, restore_signals, start_new_session, pass_fds, user, group, extra_groups, encoding, errors, text, umask, pipesize, process_group)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1036</span>             <span class="bp">self</span><span class="o">.</span><span class="n">stderr</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">TextIOWrapper</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1037</span>                     <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="n">errors</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">1039</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_execute_child</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">executable</span><span class="p">,</span> <span class="n">preexec_fn</span><span class="p">,</span> <span class="n">close_fds</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1040</span>                         <span class="n">pass_fds</span><span class="p">,</span> <span class="n">cwd</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1041</span>                         <span class="n">startupinfo</span><span class="p">,</span> <span class="n">creationflags</span><span class="p">,</span> <span class="n">shell</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1042</span>                         <span class="n">p2cread</span><span class="p">,</span> <span class="n">p2cwrite</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1043</span>                         <span class="n">c2pread</span><span class="p">,</span> <span class="n">c2pwrite</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1044</span>                         <span class="n">errread</span><span class="p">,</span> <span class="n">errwrite</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1045</span>                         <span class="n">restore_signals</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1046</span>                         <span class="n">gid</span><span class="p">,</span> <span class="n">gids</span><span class="p">,</span> <span class="n">uid</span><span class="p">,</span> <span class="n">umask</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1047</span>                         <span class="n">start_new_session</span><span class="p">,</span> <span class="n">process_group</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1048</span> <span class="k">except</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1049</span>     <span class="c1"># Cleanup if the child failed starting.</span>
+
+<span class="nn">File D:\Python313\Lib\subprocess.py:1554,</span> in <span class="ni">Popen._execute_child</span><span class="nt">(self, args, executable, preexec_fn, close_fds, pass_fds, cwd, env, startupinfo, creationflags, shell, p2cread, p2cwrite, c2pread, c2pwrite, errread, errwrite, unused_restore_signals, unused_gid, unused_gids, unused_uid, unused_umask, unused_start_new_session, unused_process_group)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1553</span> <span class="k">try</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1554</span>     <span class="n">hp</span><span class="p">,</span> <span class="n">ht</span><span class="p">,</span> <span class="n">pid</span><span class="p">,</span> <span class="n">tid</span> <span class="o">=</span> <span class="n">_winapi</span><span class="o">.</span><span class="n">CreateProcess</span><span class="p">(</span><span class="n">executable</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1555</span>                              <span class="c1"># no special security</span>
+<span class="g g-Whitespace">   </span><span class="mi">1556</span>                              <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1557</span>                              <span class="nb">int</span><span class="p">(</span><span class="ow">not</span> <span class="n">close_fds</span><span class="p">),</span>
+<span class="g g-Whitespace">   </span><span class="mi">1558</span>                              <span class="n">creationflags</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1559</span>                              <span class="n">env</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1560</span>                              <span class="n">cwd</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1561</span>                              <span class="n">startupinfo</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1562</span> <span class="k">finally</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1563</span>     <span class="c1"># Child is launched. Close the parent&#39;s copy of those pipe</span>
+<span class="g g-Whitespace">   </span><span class="mi">1564</span>     <span class="c1"># handles that only the child should have open.  You need</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>   <span class="mi">1567</span>     <span class="c1"># pipe will not close when the child process exits and the</span>
+<span class="g g-Whitespace">   </span><span class="mi">1568</span>     <span class="c1"># ReadFile will hang.</span>
+
+<span class="ne">FileNotFoundError</span>: [WinError 2] The system cannot find the file specified
+
+<span class="n">The</span> <span class="n">above</span> <span class="n">exception</span> <span class="n">was</span> <span class="n">the</span> <span class="n">direct</span> <span class="n">cause</span> <span class="n">of</span> <span class="n">the</span> <span class="n">following</span> <span class="n">exception</span><span class="p">:</span>
+
+<span class="ne">ExecutableNotFound</span><span class="g g-Whitespace">                        </span>Traceback (most recent call last)
+<span class="nn">File D:\Python313\Lib\site-packages\IPython\core\formatters.py:1036,</span> in <span class="ni">MimeBundleFormatter.__call__</span><span class="nt">(self, obj, include, exclude)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1033</span>     <span class="n">method</span> <span class="o">=</span> <span class="n">get_real_method</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">print_method</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1035</span>     <span class="k">if</span> <span class="n">method</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1036</span>         <span class="k">return</span> <span class="n">method</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="n">include</span><span class="p">,</span> <span class="n">exclude</span><span class="o">=</span><span class="n">exclude</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1037</span>     <span class="k">return</span> <span class="kc">None</span>
+<span class="g g-Whitespace">   </span><span class="mi">1038</span> <span class="k">else</span><span class="p">:</span>
+
+<span class="nn">File D:\Python313\Lib\site-packages\graphviz\jupyter_integration.py:98,</span> in <span class="ni">JupyterIntegration._repr_mimebundle_</span><span class="nt">(self, include, exclude, **_)</span>
+<span class="g g-Whitespace">     </span><span class="mi">96</span> <span class="n">include</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">include</span><span class="p">)</span> <span class="k">if</span> <span class="n">include</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_jupyter_mimetype</span><span class="p">}</span>
+<span class="g g-Whitespace">     </span><span class="mi">97</span> <span class="n">include</span> <span class="o">-=</span> <span class="nb">set</span><span class="p">(</span><span class="n">exclude</span> <span class="ow">or</span> <span class="p">[])</span>
+<span class="ne">---&gt; </span><span class="mi">98</span> <span class="k">return</span> <span class="p">{</span><span class="n">mimetype</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method_name</span><span class="p">)()</span>
+<span class="nn">     99         for mimetype, method_name</span> in <span class="ni">MIME_TYPES.items</span><span class="nt">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">100</span>         <span class="k">if</span> <span class="n">mimetype</span> <span class="ow">in</span> <span class="n">include</span><span class="p">}</span>
+
+<span class="nn">File D:\Python313\Lib\site-packages\graphviz\jupyter_integration.py:112,</span> in <span class="ni">JupyterIntegration._repr_image_svg_xml</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">    </span><span class="mi">110</span> <span class="k">def</span><span class="w"> </span><span class="nf">_repr_image_svg_xml</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">111</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;Return the rendered graph as SVG string.&quot;&quot;&quot;</span>
+<span class="ne">--&gt; </span><span class="mi">112</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;svg&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="n">SVG_ENCODING</span><span class="p">)</span>
+
+<span class="nn">File D:\Python313\Lib\site-packages\graphviz\piping.py:104,</span> in <span class="ni">Pipe.pipe</span><span class="nt">(self, format, renderer, formatter, neato_no_op, quiet, engine, encoding)</span>
+<span class="g g-Whitespace">     </span><span class="mi">55</span> <span class="k">def</span><span class="w"> </span><span class="nf">pipe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">56</span>          <span class="nb">format</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">57</span>          <span class="n">renderer</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>     <span class="mi">61</span>          <span class="n">engine</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">62</span>          <span class="n">encoding</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<span class="g g-Whitespace">     </span><span class="mi">63</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;Return the source piped through the Graphviz layout command.</span>
+<span class="g g-Whitespace">     </span><span class="mi">64</span><span class="sd"> </span>
+<span class="g g-Whitespace">     </span><span class="mi">65</span><span class="sd">     Args:</span>
+<span class="sd">   (...)    102         &#39;&lt;?xml version=&#39;</span>
+<span class="g g-Whitespace">    </span><span class="mi">103</span><span class="sd">     &quot;&quot;&quot;</span>
+<span class="ne">--&gt; </span><span class="mi">104</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pipe_legacy</span><span class="p">(</span><span class="nb">format</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">105</span>                              <span class="n">renderer</span><span class="o">=</span><span class="n">renderer</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">106</span>                              <span class="n">formatter</span><span class="o">=</span><span class="n">formatter</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">107</span>                              <span class="n">neato_no_op</span><span class="o">=</span><span class="n">neato_no_op</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">108</span>                              <span class="n">quiet</span><span class="o">=</span><span class="n">quiet</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">109</span>                              <span class="n">engine</span><span class="o">=</span><span class="n">engine</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">110</span>                              <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">)</span>
+
+<span class="nn">File D:\Python313\Lib\site-packages\graphviz\_tools.py:185,</span> in <span class="ni">deprecate_positional_args.&lt;locals&gt;.decorator.&lt;locals&gt;.wrapper</span><span class="nt">(*args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">177</span>     <span class="n">wanted</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">=</span><span class="si">{</span><span class="n">value</span><span class="si">!r}</span><span class="s1">&#39;</span>
+<span class="nn">    178                        for name, value</span> in <span class="ni">deprecated.items</span><span class="nt">())</span>
+<span class="g g-Whitespace">    </span><span class="mi">179</span>     <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The signature of </span><span class="si">{</span><span class="n">func_name</span><span class="si">}</span><span class="s1"> will be reduced&#39;</span>
+<span class="g g-Whitespace">    </span><span class="mi">180</span>                   <span class="sa">f</span><span class="s1">&#39; to </span><span class="si">{</span><span class="n">supported_number</span><span class="si">}</span><span class="s1"> positional arg</span><span class="si">{</span><span class="n">s_</span><span class="si">}{</span><span class="n">qualification</span><span class="si">}</span><span class="s1">&#39;</span>
+<span class="g g-Whitespace">    </span><span class="mi">181</span>                   <span class="sa">f</span><span class="s1">&#39; </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">supported</span><span class="p">)</span><span class="si">}</span><span class="s1">: pass </span><span class="si">{</span><span class="n">wanted</span><span class="si">}</span><span class="s1"> as keyword arg</span><span class="si">{</span><span class="n">s_</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">182</span>                   <span class="n">stacklevel</span><span class="o">=</span><span class="n">stacklevel</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">183</span>                   <span class="n">category</span><span class="o">=</span><span class="n">category</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">185</span> <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="nn">File D:\Python313\Lib\site-packages\graphviz\piping.py:121,</span> in <span class="ni">Pipe._pipe_legacy</span><span class="nt">(self, format, renderer, formatter, neato_no_op, quiet, engine, encoding)</span>
+<span class="g g-Whitespace">    </span><span class="mi">112</span> <span class="nd">@_tools</span><span class="o">.</span><span class="n">deprecate_positional_args</span><span class="p">(</span><span class="n">supported_number</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ignore_arg</span><span class="o">=</span><span class="s1">&#39;self&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">113</span> <span class="k">def</span><span class="w"> </span><span class="nf">_pipe_legacy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">114</span>                  <span class="nb">format</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>    <span class="mi">119</span>                  <span class="n">engine</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">120</span>                  <span class="n">encoding</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<span class="ne">--&gt; </span><span class="mi">121</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pipe_future</span><span class="p">(</span><span class="nb">format</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">122</span>                              <span class="n">renderer</span><span class="o">=</span><span class="n">renderer</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">123</span>                              <span class="n">formatter</span><span class="o">=</span><span class="n">formatter</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">124</span>                              <span class="n">neato_no_op</span><span class="o">=</span><span class="n">neato_no_op</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">125</span>                              <span class="n">quiet</span><span class="o">=</span><span class="n">quiet</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">126</span>                              <span class="n">engine</span><span class="o">=</span><span class="n">engine</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">127</span>                              <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">)</span>
+
+<span class="nn">File D:\Python313\Lib\site-packages\graphviz\piping.py:149,</span> in <span class="ni">Pipe._pipe_future</span><span class="nt">(self, format, renderer, formatter, neato_no_op, quiet, engine, encoding)</span>
+<span class="g g-Whitespace">    </span><span class="mi">146</span> <span class="k">if</span> <span class="n">encoding</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">147</span>     <span class="k">if</span> <span class="n">codecs</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="n">encoding</span><span class="p">)</span> <span class="ow">is</span> <span class="n">codecs</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">encoding</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">148</span>         <span class="c1"># common case: both stdin and stdout need the same encoding</span>
+<span class="ne">--&gt; </span><span class="mi">149</span>         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pipe_lines_string</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">150</span>     <span class="k">try</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">151</span>         <span class="n">raw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pipe_lines</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">input_encoding</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">encoding</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="nn">File D:\Python313\Lib\site-packages\graphviz\backend\piping.py:212,</span> in <span class="ni">pipe_lines_string</span><span class="nt">(engine, format, input_lines, encoding, renderer, formatter, neato_no_op, quiet)</span>
+<span class="g g-Whitespace">    </span><span class="mi">206</span> <span class="n">cmd</span> <span class="o">=</span> <span class="n">dot_command</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="nb">format</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">207</span>                           <span class="n">renderer</span><span class="o">=</span><span class="n">renderer</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">208</span>                           <span class="n">formatter</span><span class="o">=</span><span class="n">formatter</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">209</span>                           <span class="n">neato_no_op</span><span class="o">=</span><span class="n">neato_no_op</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">210</span> <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;input_lines&#39;</span><span class="p">:</span> <span class="n">input_lines</span><span class="p">,</span> <span class="s1">&#39;encoding&#39;</span><span class="p">:</span> <span class="n">encoding</span><span class="p">}</span>
+<span class="ne">--&gt; </span><span class="mi">212</span> <span class="n">proc</span> <span class="o">=</span> <span class="n">execute</span><span class="o">.</span><span class="n">run_check</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="n">quiet</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">213</span> <span class="k">return</span> <span class="n">proc</span><span class="o">.</span><span class="n">stdout</span>
+
+<span class="nn">File D:\Python313\Lib\site-packages\graphviz\backend\execute.py:81,</span> in <span class="ni">run_check</span><span class="nt">(cmd, input_lines, encoding, quiet, **kwargs)</span>
+<span class="g g-Whitespace">     </span><span class="mi">79</span> <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<span class="g g-Whitespace">     </span><span class="mi">80</span>     <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">errno</span> <span class="o">==</span> <span class="n">errno</span><span class="o">.</span><span class="n">ENOENT</span><span class="p">:</span>
+<span class="ne">---&gt; </span><span class="mi">81</span>         <span class="k">raise</span> <span class="n">ExecutableNotFound</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
+<span class="g g-Whitespace">     </span><span class="mi">82</span>     <span class="k">raise</span>
+<span class="g g-Whitespace">     </span><span class="mi">84</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">quiet</span> <span class="ow">and</span> <span class="n">proc</span><span class="o">.</span><span class="n">stderr</span><span class="p">:</span>
+
+<span class="ne">ExecutableNotFound</span>: failed to execute WindowsPath(&#39;dot&#39;), make sure the Graphviz executables are on your systems&#39; PATH
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;graphviz.sources.Source at 0x204ae3e06e0&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Another way you’ll frequently see finite automaton state diagram is with the initial state represented by an incoming arrow that doesn’t start on any node, and the  final states represented by a double circle node. Using these conventions, the state diagram above would look like:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cal2</span> <span class="o">=</span> <span class="n">Digraph</span><span class="p">()</span>
+<span class="n">cal2</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rankdir</span><span class="o">=</span><span class="s1">&#39;LR&#39;</span><span class="p">)</span> <span class="c1"># This specifies the diagram should go left to right</span>
+
+<span class="c1"># Start arrow</span>
+<span class="n">cal2</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+<span class="n">cal2</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">)</span>
+
+<span class="c1"># States</span>
+<span class="n">cal2</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span> <span class="c1"># Initial state</span>
+<span class="n">cal2</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
+<span class="n">cal2</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
+<span class="n">cal2</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;doublecircle&#39;</span><span class="p">)</span> <span class="c1"># Accept state</span>
+
+<span class="c1"># Transitions</span>
+<span class="n">cal2</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;H,T&#39;</span><span class="p">)</span>
+<span class="n">cal2</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;H&#39;</span><span class="p">)</span>
+<span class="n">cal2</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;T&#39;</span><span class="p">)</span>
+<span class="n">cal2</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;H&#39;</span><span class="p">)</span>
+<span class="n">cal2</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;T&#39;</span><span class="p">)</span>
+<span class="n">cal2</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;H,T&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Source</span><span class="p">(</span><span class="n">cal2</span><span class="o">.</span><span class="n">source</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="nn">File D:\Python313\Lib\site-packages\graphviz\backend\execute.py:76,</span> in <span class="ni">run_check</span><span class="nt">(cmd, input_lines, encoding, quiet, **kwargs)</span>
+<span class="g g-Whitespace">     </span><span class="mi">75</span>         <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;stdout&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;stderr&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span>
+<span class="ne">---&gt; </span><span class="mi">76</span>     <span class="n">proc</span> <span class="o">=</span> <span class="n">_run_input_lines</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">input_lines</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">=</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">77</span> <span class="k">else</span><span class="p">:</span>
+
+<span class="nn">File D:\Python313\Lib\site-packages\graphviz\backend\execute.py:96,</span> in <span class="ni">_run_input_lines</span><span class="nt">(cmd, input_lines, kwargs)</span>
+<span class="g g-Whitespace">     </span><span class="mi">95</span> <span class="k">def</span><span class="w"> </span><span class="nf">_run_input_lines</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">input_lines</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
+<span class="ne">---&gt; </span><span class="mi">96</span>     <span class="n">popen</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">stdin</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">98</span>     <span class="n">stdin_write</span> <span class="o">=</span> <span class="n">popen</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">write</span>
+
+<span class="nn">File D:\Python313\Lib\subprocess.py:1039,</span> in <span class="ni">Popen.__init__</span><span class="nt">(self, args, bufsize, executable, stdin, stdout, stderr, preexec_fn, close_fds, shell, cwd, env, universal_newlines, startupinfo, creationflags, restore_signals, start_new_session, pass_fds, user, group, extra_groups, encoding, errors, text, umask, pipesize, process_group)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1036</span>             <span class="bp">self</span><span class="o">.</span><span class="n">stderr</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">TextIOWrapper</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1037</span>                     <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="n">errors</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">1039</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_execute_child</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">executable</span><span class="p">,</span> <span class="n">preexec_fn</span><span class="p">,</span> <span class="n">close_fds</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1040</span>                         <span class="n">pass_fds</span><span class="p">,</span> <span class="n">cwd</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1041</span>                         <span class="n">startupinfo</span><span class="p">,</span> <span class="n">creationflags</span><span class="p">,</span> <span class="n">shell</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1042</span>                         <span class="n">p2cread</span><span class="p">,</span> <span class="n">p2cwrite</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1043</span>                         <span class="n">c2pread</span><span class="p">,</span> <span class="n">c2pwrite</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1044</span>                         <span class="n">errread</span><span class="p">,</span> <span class="n">errwrite</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1045</span>                         <span class="n">restore_signals</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1046</span>                         <span class="n">gid</span><span class="p">,</span> <span class="n">gids</span><span class="p">,</span> <span class="n">uid</span><span class="p">,</span> <span class="n">umask</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1047</span>                         <span class="n">start_new_session</span><span class="p">,</span> <span class="n">process_group</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1048</span> <span class="k">except</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1049</span>     <span class="c1"># Cleanup if the child failed starting.</span>
+
+<span class="nn">File D:\Python313\Lib\subprocess.py:1554,</span> in <span class="ni">Popen._execute_child</span><span class="nt">(self, args, executable, preexec_fn, close_fds, pass_fds, cwd, env, startupinfo, creationflags, shell, p2cread, p2cwrite, c2pread, c2pwrite, errread, errwrite, unused_restore_signals, unused_gid, unused_gids, unused_uid, unused_umask, unused_start_new_session, unused_process_group)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1553</span> <span class="k">try</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1554</span>     <span class="n">hp</span><span class="p">,</span> <span class="n">ht</span><span class="p">,</span> <span class="n">pid</span><span class="p">,</span> <span class="n">tid</span> <span class="o">=</span> <span class="n">_winapi</span><span class="o">.</span><span class="n">CreateProcess</span><span class="p">(</span><span class="n">executable</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1555</span>                              <span class="c1"># no special security</span>
+<span class="g g-Whitespace">   </span><span class="mi">1556</span>                              <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1557</span>                              <span class="nb">int</span><span class="p">(</span><span class="ow">not</span> <span class="n">close_fds</span><span class="p">),</span>
+<span class="g g-Whitespace">   </span><span class="mi">1558</span>                              <span class="n">creationflags</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1559</span>                              <span class="n">env</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1560</span>                              <span class="n">cwd</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1561</span>                              <span class="n">startupinfo</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1562</span> <span class="k">finally</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1563</span>     <span class="c1"># Child is launched. Close the parent&#39;s copy of those pipe</span>
+<span class="g g-Whitespace">   </span><span class="mi">1564</span>     <span class="c1"># handles that only the child should have open.  You need</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>   <span class="mi">1567</span>     <span class="c1"># pipe will not close when the child process exits and the</span>
+<span class="g g-Whitespace">   </span><span class="mi">1568</span>     <span class="c1"># ReadFile will hang.</span>
+
+<span class="ne">FileNotFoundError</span>: [WinError 2] The system cannot find the file specified
+
+<span class="n">The</span> <span class="n">above</span> <span class="n">exception</span> <span class="n">was</span> <span class="n">the</span> <span class="n">direct</span> <span class="n">cause</span> <span class="n">of</span> <span class="n">the</span> <span class="n">following</span> <span class="n">exception</span><span class="p">:</span>
+
+<span class="ne">ExecutableNotFound</span><span class="g g-Whitespace">                        </span>Traceback (most recent call last)
+<span class="nn">File D:\Python313\Lib\site-packages\IPython\core\formatters.py:1036,</span> in <span class="ni">MimeBundleFormatter.__call__</span><span class="nt">(self, obj, include, exclude)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1033</span>     <span class="n">method</span> <span class="o">=</span> <span class="n">get_real_method</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">print_method</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1035</span>     <span class="k">if</span> <span class="n">method</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1036</span>         <span class="k">return</span> <span class="n">method</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="n">include</span><span class="p">,</span> <span class="n">exclude</span><span class="o">=</span><span class="n">exclude</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1037</span>     <span class="k">return</span> <span class="kc">None</span>
+<span class="g g-Whitespace">   </span><span class="mi">1038</span> <span class="k">else</span><span class="p">:</span>
+
+<span class="nn">File D:\Python313\Lib\site-packages\graphviz\jupyter_integration.py:98,</span> in <span class="ni">JupyterIntegration._repr_mimebundle_</span><span class="nt">(self, include, exclude, **_)</span>
+<span class="g g-Whitespace">     </span><span class="mi">96</span> <span class="n">include</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">include</span><span class="p">)</span> <span class="k">if</span> <span class="n">include</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_jupyter_mimetype</span><span class="p">}</span>
+<span class="g g-Whitespace">     </span><span class="mi">97</span> <span class="n">include</span> <span class="o">-=</span> <span class="nb">set</span><span class="p">(</span><span class="n">exclude</span> <span class="ow">or</span> <span class="p">[])</span>
+<span class="ne">---&gt; </span><span class="mi">98</span> <span class="k">return</span> <span class="p">{</span><span class="n">mimetype</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method_name</span><span class="p">)()</span>
+<span class="nn">     99         for mimetype, method_name</span> in <span class="ni">MIME_TYPES.items</span><span class="nt">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">100</span>         <span class="k">if</span> <span class="n">mimetype</span> <span class="ow">in</span> <span class="n">include</span><span class="p">}</span>
+
+<span class="nn">File D:\Python313\Lib\site-packages\graphviz\jupyter_integration.py:112,</span> in <span class="ni">JupyterIntegration._repr_image_svg_xml</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">    </span><span class="mi">110</span> <span class="k">def</span><span class="w"> </span><span class="nf">_repr_image_svg_xml</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">111</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;Return the rendered graph as SVG string.&quot;&quot;&quot;</span>
+<span class="ne">--&gt; </span><span class="mi">112</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;svg&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="n">SVG_ENCODING</span><span class="p">)</span>
+
+<span class="nn">File D:\Python313\Lib\site-packages\graphviz\piping.py:104,</span> in <span class="ni">Pipe.pipe</span><span class="nt">(self, format, renderer, formatter, neato_no_op, quiet, engine, encoding)</span>
+<span class="g g-Whitespace">     </span><span class="mi">55</span> <span class="k">def</span><span class="w"> </span><span class="nf">pipe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">56</span>          <span class="nb">format</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">57</span>          <span class="n">renderer</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>     <span class="mi">61</span>          <span class="n">engine</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">62</span>          <span class="n">encoding</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<span class="g g-Whitespace">     </span><span class="mi">63</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;Return the source piped through the Graphviz layout command.</span>
+<span class="g g-Whitespace">     </span><span class="mi">64</span><span class="sd"> </span>
+<span class="g g-Whitespace">     </span><span class="mi">65</span><span class="sd">     Args:</span>
+<span class="sd">   (...)    102         &#39;&lt;?xml version=&#39;</span>
+<span class="g g-Whitespace">    </span><span class="mi">103</span><span class="sd">     &quot;&quot;&quot;</span>
+<span class="ne">--&gt; </span><span class="mi">104</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pipe_legacy</span><span class="p">(</span><span class="nb">format</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">105</span>                              <span class="n">renderer</span><span class="o">=</span><span class="n">renderer</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">106</span>                              <span class="n">formatter</span><span class="o">=</span><span class="n">formatter</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">107</span>                              <span class="n">neato_no_op</span><span class="o">=</span><span class="n">neato_no_op</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">108</span>                              <span class="n">quiet</span><span class="o">=</span><span class="n">quiet</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">109</span>                              <span class="n">engine</span><span class="o">=</span><span class="n">engine</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">110</span>                              <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">)</span>
+
+<span class="nn">File D:\Python313\Lib\site-packages\graphviz\_tools.py:185,</span> in <span class="ni">deprecate_positional_args.&lt;locals&gt;.decorator.&lt;locals&gt;.wrapper</span><span class="nt">(*args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">177</span>     <span class="n">wanted</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">=</span><span class="si">{</span><span class="n">value</span><span class="si">!r}</span><span class="s1">&#39;</span>
+<span class="nn">    178                        for name, value</span> in <span class="ni">deprecated.items</span><span class="nt">())</span>
+<span class="g g-Whitespace">    </span><span class="mi">179</span>     <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The signature of </span><span class="si">{</span><span class="n">func_name</span><span class="si">}</span><span class="s1"> will be reduced&#39;</span>
+<span class="g g-Whitespace">    </span><span class="mi">180</span>                   <span class="sa">f</span><span class="s1">&#39; to </span><span class="si">{</span><span class="n">supported_number</span><span class="si">}</span><span class="s1"> positional arg</span><span class="si">{</span><span class="n">s_</span><span class="si">}{</span><span class="n">qualification</span><span class="si">}</span><span class="s1">&#39;</span>
+<span class="g g-Whitespace">    </span><span class="mi">181</span>                   <span class="sa">f</span><span class="s1">&#39; </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">supported</span><span class="p">)</span><span class="si">}</span><span class="s1">: pass </span><span class="si">{</span><span class="n">wanted</span><span class="si">}</span><span class="s1"> as keyword arg</span><span class="si">{</span><span class="n">s_</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">182</span>                   <span class="n">stacklevel</span><span class="o">=</span><span class="n">stacklevel</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">183</span>                   <span class="n">category</span><span class="o">=</span><span class="n">category</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">185</span> <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="nn">File D:\Python313\Lib\site-packages\graphviz\piping.py:121,</span> in <span class="ni">Pipe._pipe_legacy</span><span class="nt">(self, format, renderer, formatter, neato_no_op, quiet, engine, encoding)</span>
+<span class="g g-Whitespace">    </span><span class="mi">112</span> <span class="nd">@_tools</span><span class="o">.</span><span class="n">deprecate_positional_args</span><span class="p">(</span><span class="n">supported_number</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ignore_arg</span><span class="o">=</span><span class="s1">&#39;self&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">113</span> <span class="k">def</span><span class="w"> </span><span class="nf">_pipe_legacy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">114</span>                  <span class="nb">format</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>    <span class="mi">119</span>                  <span class="n">engine</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">120</span>                  <span class="n">encoding</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<span class="ne">--&gt; </span><span class="mi">121</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pipe_future</span><span class="p">(</span><span class="nb">format</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">122</span>                              <span class="n">renderer</span><span class="o">=</span><span class="n">renderer</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">123</span>                              <span class="n">formatter</span><span class="o">=</span><span class="n">formatter</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">124</span>                              <span class="n">neato_no_op</span><span class="o">=</span><span class="n">neato_no_op</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">125</span>                              <span class="n">quiet</span><span class="o">=</span><span class="n">quiet</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">126</span>                              <span class="n">engine</span><span class="o">=</span><span class="n">engine</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">127</span>                              <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">)</span>
+
+<span class="nn">File D:\Python313\Lib\site-packages\graphviz\piping.py:149,</span> in <span class="ni">Pipe._pipe_future</span><span class="nt">(self, format, renderer, formatter, neato_no_op, quiet, engine, encoding)</span>
+<span class="g g-Whitespace">    </span><span class="mi">146</span> <span class="k">if</span> <span class="n">encoding</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">147</span>     <span class="k">if</span> <span class="n">codecs</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="n">encoding</span><span class="p">)</span> <span class="ow">is</span> <span class="n">codecs</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">encoding</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">148</span>         <span class="c1"># common case: both stdin and stdout need the same encoding</span>
+<span class="ne">--&gt; </span><span class="mi">149</span>         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pipe_lines_string</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">150</span>     <span class="k">try</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">151</span>         <span class="n">raw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pipe_lines</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">input_encoding</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">encoding</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="nn">File D:\Python313\Lib\site-packages\graphviz\backend\piping.py:212,</span> in <span class="ni">pipe_lines_string</span><span class="nt">(engine, format, input_lines, encoding, renderer, formatter, neato_no_op, quiet)</span>
+<span class="g g-Whitespace">    </span><span class="mi">206</span> <span class="n">cmd</span> <span class="o">=</span> <span class="n">dot_command</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="nb">format</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">207</span>                           <span class="n">renderer</span><span class="o">=</span><span class="n">renderer</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">208</span>                           <span class="n">formatter</span><span class="o">=</span><span class="n">formatter</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">209</span>                           <span class="n">neato_no_op</span><span class="o">=</span><span class="n">neato_no_op</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">210</span> <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;input_lines&#39;</span><span class="p">:</span> <span class="n">input_lines</span><span class="p">,</span> <span class="s1">&#39;encoding&#39;</span><span class="p">:</span> <span class="n">encoding</span><span class="p">}</span>
+<span class="ne">--&gt; </span><span class="mi">212</span> <span class="n">proc</span> <span class="o">=</span> <span class="n">execute</span><span class="o">.</span><span class="n">run_check</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="n">quiet</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">213</span> <span class="k">return</span> <span class="n">proc</span><span class="o">.</span><span class="n">stdout</span>
+
+<span class="nn">File D:\Python313\Lib\site-packages\graphviz\backend\execute.py:81,</span> in <span class="ni">run_check</span><span class="nt">(cmd, input_lines, encoding, quiet, **kwargs)</span>
+<span class="g g-Whitespace">     </span><span class="mi">79</span> <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<span class="g g-Whitespace">     </span><span class="mi">80</span>     <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">errno</span> <span class="o">==</span> <span class="n">errno</span><span class="o">.</span><span class="n">ENOENT</span><span class="p">:</span>
+<span class="ne">---&gt; </span><span class="mi">81</span>         <span class="k">raise</span> <span class="n">ExecutableNotFound</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
+<span class="g g-Whitespace">     </span><span class="mi">82</span>     <span class="k">raise</span>
+<span class="g g-Whitespace">     </span><span class="mi">84</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">quiet</span> <span class="ow">and</span> <span class="n">proc</span><span class="o">.</span><span class="n">stderr</span><span class="p">:</span>
+
+<span class="ne">ExecutableNotFound</span>: failed to execute WindowsPath(&#39;dot&#39;), make sure the Graphviz executables are on your systems&#39; PATH
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;graphviz.sources.Source at 0x204ae1e3ed0&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, let’s create a finite automaton Python class. In order to define a finite automaton, we need to provide the tuple described in the definition from section 1.3.1.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">FA</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">states</span><span class="p">,</span> <span class="n">alphabet</span><span class="p">,</span> <span class="n">transition_function</span><span class="p">,</span> <span class="n">start_state</span><span class="p">,</span> <span class="n">accept_states</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">states</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">states</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alphabet</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">alphabet</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transition_function</span> <span class="o">=</span> <span class="n">transition_function</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start_state</span> <span class="o">=</span> <span class="n">start_state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">accept_states</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">accept_states</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This initializes a DFA class, with a set of states, an alphabet (set of characters), transition functions, a start state, and a set of accept states. It also runs a <em>validate</em> method to make sure it’s a proper tuple and the definition makes sense. This validate method is provided below:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+  <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_state</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">states</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Start state must be in states.&quot;</span><span class="p">)</span>
+  <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">accept_states</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">states</span><span class="p">):</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Accept states must be a subset of states.&quot;</span><span class="p">)</span>
+
+  <span class="c1"># Ensure total transition function</span>
+  <span class="k">for</span> <span class="n">state</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">states</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">symbol</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">alphabet</span><span class="p">:</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">symbol</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">transition_function</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Missing transition for state &#39;</span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s2">&#39; on symbol &#39;</span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+
+  <span class="c1"># Ensure all transitions are to valid states and symbols</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">symbol</span><span class="p">),</span> <span class="n">next_state</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">transition_function</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">state</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">states</span> <span class="ow">or</span> <span class="n">next_state</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">states</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid transition: (</span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">) → </span><span class="si">{</span><span class="n">next_state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">symbol</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">alphabet</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Symbol &#39;</span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">&#39; not in alphabet.&quot;</span><span class="p">)</span>
+
+<span class="n">FA</span><span class="o">.</span><span class="n">validate</span> <span class="o">=</span> <span class="n">validate</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This method makes sure that:</p>
+<ul class="simple">
+<li><p>The specified start states is in the set of states.</p></li>
+<li><p>The specified end states are a subset of the set of states.</p></li>
+<li><p>There is a transition for every state and character in the alphabet.</p></li>
+<li><p>All transitions are to and from states within the set of states.</p></li>
+</ul>
+<p>We can test this by creating the Chutes and Ladders FA from above:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cal</span> <span class="o">=</span> <span class="n">FA</span><span class="p">(</span>
+    <span class="n">states</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;4&#39;</span><span class="p">},</span>
+    <span class="n">alphabet</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span><span class="p">},</span>
+    <span class="n">transition_function</span><span class="o">=</span><span class="p">{</span>
+        <span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;H&#39;</span><span class="p">):</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span><span class="p">):</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;H&#39;</span><span class="p">):</span> <span class="s1">&#39;3&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span><span class="p">):</span> <span class="s1">&#39;4&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;H&#39;</span><span class="p">):</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span><span class="p">):</span> <span class="s1">&#39;4&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;H&#39;</span><span class="p">):</span> <span class="s1">&#39;4&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span><span class="p">):</span> <span class="s1">&#39;4&#39;</span>
+    <span class="p">},</span>
+    <span class="n">start_state</span><span class="o">=</span><span class="s1">&#39;1&#39;</span><span class="p">,</span>
+    <span class="n">accept_states</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;4&#39;</span><span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>If we were to change this by specifying the start state to be “42”, the validate method will raise an error, as “42” is not in the set of states.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adams</span> <span class="o">=</span> <span class="n">FA</span><span class="p">(</span>
+    <span class="n">states</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;4&#39;</span><span class="p">},</span>
+    <span class="n">alphabet</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span><span class="p">},</span>
+    <span class="n">transition_function</span><span class="o">=</span><span class="p">{</span>
+        <span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;H&#39;</span><span class="p">):</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span><span class="p">):</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;H&#39;</span><span class="p">):</span> <span class="s1">&#39;3&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span><span class="p">):</span> <span class="s1">&#39;4&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;H&#39;</span><span class="p">):</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span><span class="p">):</span> <span class="s1">&#39;4&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;H&#39;</span><span class="p">):</span> <span class="s1">&#39;4&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span><span class="p">):</span> <span class="s1">&#39;4&#39;</span>
+    <span class="p">},</span>
+    <span class="n">start_state</span><span class="o">=</span><span class="s1">&#39;42&#39;</span><span class="p">,</span>
+    <span class="n">accept_states</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;4&#39;</span><span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">9</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">adams</span> <span class="o">=</span> <span class="n">FA</span><span class="p">(</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span>     <span class="n">states</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;4&#39;</span><span class="p">},</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span>     <span class="n">alphabet</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span><span class="p">},</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span>     <span class="n">transition_function</span><span class="o">=</span><span class="p">{</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span>         <span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;H&#39;</span><span class="p">):</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span>         <span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span><span class="p">):</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span>         <span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;H&#39;</span><span class="p">):</span> <span class="s1">&#39;3&#39;</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span>         <span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span><span class="p">):</span> <span class="s1">&#39;4&#39;</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span>         <span class="p">(</span><span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;H&#39;</span><span class="p">):</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span>         <span class="p">(</span><span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span><span class="p">):</span> <span class="s1">&#39;4&#39;</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span>         <span class="p">(</span><span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;H&#39;</span><span class="p">):</span> <span class="s1">&#39;4&#39;</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span>         <span class="p">(</span><span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span><span class="p">):</span> <span class="s1">&#39;4&#39;</span>
+<span class="g g-Whitespace">     </span><span class="mi">13</span>     <span class="p">},</span>
+<span class="g g-Whitespace">     </span><span class="mi">14</span>     <span class="n">start_state</span><span class="o">=</span><span class="s1">&#39;42&#39;</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">15</span>     <span class="n">accept_states</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;4&#39;</span><span class="p">}</span>
+<span class="g g-Whitespace">     </span><span class="mi">16</span> <span class="p">)</span>
+
+<span class="nn">Cell In[6], line 9,</span> in <span class="ni">FA.__init__</span><span class="nt">(self, states, alphabet, transition_function, start_state, accept_states)</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_state</span> <span class="o">=</span> <span class="n">start_state</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="bp">self</span><span class="o">.</span><span class="n">accept_states</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">accept_states</span><span class="p">)</span>
+<span class="ne">----&gt; </span><span class="mi">9</span> <span class="bp">self</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span>
+
+<span class="nn">Cell In[7], line 3,</span> in <span class="ni">validate</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="k">def</span><span class="w"> </span><span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span>   <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_state</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">states</span><span class="p">:</span>
+<span class="ne">----&gt; </span><span class="mi">3</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Start state must be in states.&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span>   <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">accept_states</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">states</span><span class="p">):</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Accept states must be a subset of states.&quot;</span><span class="p">)</span>
+
+<span class="ne">ValueError</span>: Start state must be in states.
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s also create a method that builds and returns the Digraph for the state diagram of the finite automaton. We’ll use the second convention above, with the initial state represented with an incoming arrow without a source node, and the finial states represented by double circles.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">build_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+  <span class="n">dot</span> <span class="o">=</span> <span class="n">Digraph</span><span class="p">()</span>
+  <span class="n">dot</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rankdir</span><span class="o">=</span><span class="s1">&#39;LR&#39;</span><span class="p">)</span>
+  <span class="n">dot</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+  <span class="n">dot</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_state</span><span class="p">)</span>
+
+  <span class="k">for</span> <span class="n">state</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">states</span><span class="p">:</span>
+    <span class="n">shape</span> <span class="o">=</span> <span class="s1">&#39;doublecircle&#39;</span> <span class="k">if</span> <span class="n">state</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">accept_states</span> <span class="k">else</span> <span class="s1">&#39;circle&#39;</span>
+    <span class="n">dot</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">shape</span><span class="p">)</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">symbol</span><span class="p">),</span> <span class="n">dst</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">transition_function</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">dot</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">symbol</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">dot</span>
+
+<span class="n">FA</span><span class="o">.</span><span class="n">build_graph</span> <span class="o">=</span> <span class="n">build_graph</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We’ll also add a method for building and then displaying the state diagram.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+  <span class="n">dot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_graph</span><span class="p">()</span>
+  <span class="n">display</span><span class="p">(</span><span class="n">Source</span><span class="p">(</span><span class="n">dot</span><span class="o">.</span><span class="n">source</span><span class="p">))</span>
+
+<span class="n">FA</span><span class="o">.</span><span class="n">show</span> <span class="o">=</span> <span class="n">show</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s use these methods to display the state diagram for the Chutes and Ladders finite automaton.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cal</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note that here we haven’t simplified things by having, for example, a single arrow from <em>1</em> to <em>2</em> with <span class="math notranslate nohighlight">\(H,T\)</span> above it, and have instead explicitly separated the <span class="math notranslate nohighlight">\(H\)</span> and <span class="math notranslate nohighlight">\(T\)</span> transitions.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">DFA</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">states</span><span class="p">,</span> <span class="n">alphabet</span><span class="p">,</span> <span class="n">transition_function</span><span class="p">,</span> <span class="n">start_state</span><span class="p">,</span> <span class="n">accept_states</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">states</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">states</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alphabet</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">alphabet</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transition_function</span> <span class="o">=</span> <span class="n">transition_function</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start_state</span> <span class="o">=</span> <span class="n">start_state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">accept_states</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">accept_states</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_validate</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_validate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_state</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">states</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Start state must be in states.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">accept_states</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">states</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Accept states must be a subset of states.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Ensure total transition function</span>
+        <span class="k">for</span> <span class="n">state</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">states</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">symbol</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">alphabet</span><span class="p">:</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">symbol</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">transition_function</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Missing transition for state &#39;</span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s2">&#39; on symbol &#39;</span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Ensure all transitions are to valid states and symbols</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">symbol</span><span class="p">),</span> <span class="n">next_state</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">transition_function</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">state</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">states</span> <span class="ow">or</span> <span class="n">next_state</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">states</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid transition: (</span><span class="si">{</span><span class="n">state</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">) → </span><span class="si">{</span><span class="n">next_state</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">symbol</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">alphabet</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Symbol &#39;</span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">&#39; not in alphabet.&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">accepts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_string</span><span class="p">):</span>
+        <span class="n">current_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_state</span>
+        <span class="k">for</span> <span class="n">symbol</span> <span class="ow">in</span> <span class="n">input_string</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">symbol</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">alphabet</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Symbol &#39;</span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">&#39; not in DFA alphabet.&quot;</span><span class="p">)</span>
+            <span class="n">current_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transition_function</span><span class="p">[(</span><span class="n">current_state</span><span class="p">,</span> <span class="n">symbol</span><span class="p">)]</span>
+        <span class="k">return</span> <span class="n">current_state</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">accept_states</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">trace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_string</span><span class="p">):</span>
+        <span class="n">trace</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">start_state</span><span class="p">]</span>
+        <span class="n">current_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_state</span>
+        <span class="k">for</span> <span class="n">symbol</span> <span class="ow">in</span> <span class="n">input_string</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">current_state</span><span class="p">,</span> <span class="n">symbol</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">transition_function</span><span class="p">:</span>
+                <span class="n">trace</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+                <span class="k">break</span>
+            <span class="n">current_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transition_function</span><span class="p">[(</span><span class="n">current_state</span><span class="p">,</span> <span class="n">symbol</span><span class="p">)]</span>
+            <span class="n">trace</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">current_state</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">trace</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">visualize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;dfa&#39;</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;png&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Save DFA visualization to a file.&quot;&quot;&quot;</span>
+        <span class="n">dot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_graph</span><span class="p">()</span>
+        <span class="n">dot</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="nb">format</span><span class="p">,</span> <span class="n">cleanup</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;DFA visualization saved as </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="nb">format</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Display DFA inline in a Jupyter notebook.&quot;&quot;&quot;</span>
+        <span class="n">dot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_graph</span><span class="p">()</span>
+        <span class="n">display</span><span class="p">(</span><span class="n">Source</span><span class="p">(</span><span class="n">dot</span><span class="o">.</span><span class="n">source</span><span class="p">))</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_build_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">dot</span> <span class="o">=</span> <span class="n">Digraph</span><span class="p">()</span>
+        <span class="n">dot</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rankdir</span><span class="o">=</span><span class="s1">&#39;LR&#39;</span><span class="p">)</span>
+        <span class="n">dot</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+        <span class="n">dot</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_state</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">state</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">states</span><span class="p">:</span>
+            <span class="n">shape</span> <span class="o">=</span> <span class="s1">&#39;doublecircle&#39;</span> <span class="k">if</span> <span class="n">state</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">accept_states</span> <span class="k">else</span> <span class="s1">&#39;circle&#39;</span>
+            <span class="n">dot</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">shape</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">symbol</span><span class="p">),</span> <span class="n">dst</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">transition_function</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">dot</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">symbol</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">dot</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="finite-automata-and-languages">
+<h2>4. Finite Automata and Languages<a class="headerlink" href="#finite-automata-and-languages" title="Link to this heading">#</a></h2>
+<p>For the simple game above we can ask, for a given sequence of flips, whether the player wins the game - meaning whether at the end of the sequence the player is on the final state. For the sequence <span class="math notranslate nohighlight">\(HHHT\)</span> the answer would be <em>no</em>. For the sequence <span class="math notranslate nohighlight">\(THT\)</span>, the answer would be <em>yes</em>. We can view the set of winning sequences of flips as a <em>language</em>, and we say the game - or finite automaton - above <em>accepts</em> this language.</p>
+<p>For any finite automaton with input alphabet <span class="math notranslate nohighlight">\(\Sigma\)</span>, we can view a sequence of characters from <span class="math notranslate nohighlight">\(\Sigma\)</span> as corresponding with a sequence of transitions in the finite automaton. The automaton begins at its start state, reads the first character in the string, transitions to one of its states according to the character and its transition function, and then repeats. This process continues until the finite automaton has read every character in the string. If at this point the finite automaton is in a final state, the string is accepted. If not, the string is rejected. We say a string that is accepted by a finite automaton is <em>recognized</em> by that finite automaton.</p>
+<hr class="docutils" />
+<p><strong>Definition</strong></p>
+<p>For a finite automaton with an input alphabet <span class="math notranslate nohighlight">\(\Sigma\)</span>, the set of strings over <span class="math notranslate nohighlight">\(\Sigma\)</span> that are recognized by that finite automaton is the language defined by that finite automaton.</p>
+<hr class="docutils" />
+<p><strong>Example 1</strong> - Build a finite automaton with input alphabet <span class="math notranslate nohighlight">\(\Sigma = \{0,1\}\)</span> that accepts any bitstring (a string of <span class="math notranslate nohighlight">\(0\)</span>s and <span class="math notranslate nohighlight">\(1\)</span>s) that ends in a <span class="math notranslate nohighlight">\(1\)</span>.</p>
+<p><strong>Example 1 Solution</strong> - The language defined by the finite automaton below is the requested language.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lastone</span> <span class="o">=</span> <span class="n">FA</span><span class="p">(</span>
+    <span class="n">states</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;q0&#39;</span><span class="p">,</span> <span class="s1">&#39;q1&#39;</span><span class="p">},</span>
+    <span class="n">alphabet</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">},</span>
+    <span class="n">transition_function</span><span class="o">=</span><span class="p">{</span>
+        <span class="p">(</span><span class="s1">&#39;q0&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">):</span> <span class="s1">&#39;q0&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;q0&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">):</span> <span class="s1">&#39;q1&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;q1&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">):</span> <span class="s1">&#39;q0&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;q1&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">):</span> <span class="s1">&#39;q1&#39;</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="n">start_state</span><span class="o">=</span><span class="s1">&#39;q0&#39;</span><span class="p">,</span>
+    <span class="n">accept_states</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;q1&#39;</span><span class="p">}</span>
+<span class="p">)</span>
+
+<span class="n">lastone</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Example 2</strong>: Build an FA that accepts only those words that begin or end with a double letter.</p>
+<p><strong>Example 2 Solution</strong> -</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">doubleletter</span> <span class="o">=</span> <span class="n">FA</span><span class="p">(</span>
+    <span class="n">states</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;q0&#39;</span><span class="p">,</span> <span class="s1">&#39;q1&#39;</span><span class="p">,</span> <span class="s1">&#39;q2&#39;</span><span class="p">,</span> <span class="s1">&#39;q3&#39;</span><span class="p">,</span> <span class="s1">&#39;q4&#39;</span><span class="p">,</span> <span class="s1">&#39;q5&#39;</span><span class="p">,</span> <span class="s1">&#39;q6&#39;</span><span class="p">,</span> <span class="s1">&#39;q7&#39;</span><span class="p">,</span> <span class="s1">&#39;q8&#39;</span><span class="p">},</span>
+    <span class="n">alphabet</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">},</span>
+    <span class="n">transition_function</span><span class="o">=</span><span class="p">{</span>
+        <span class="p">(</span><span class="s1">&#39;q0&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">):</span> <span class="s1">&#39;q3&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;q0&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">):</span> <span class="s1">&#39;q1&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;q1&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">):</span> <span class="s1">&#39;q5&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;q1&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">):</span> <span class="s1">&#39;q2&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;q2&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">):</span> <span class="s1">&#39;q2&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;q2&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">):</span> <span class="s1">&#39;q2&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;q3&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">):</span> <span class="s1">&#39;q4&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;q3&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">):</span> <span class="s1">&#39;q6&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;q4&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">):</span> <span class="s1">&#39;q4&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;q4&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">):</span> <span class="s1">&#39;q4&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;q5&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">):</span> <span class="s1">&#39;q7&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;q5&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">):</span> <span class="s1">&#39;q6&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;q6&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">):</span> <span class="s1">&#39;q5&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;q6&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">):</span> <span class="s1">&#39;q8&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;q7&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">):</span> <span class="s1">&#39;q7&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;q7&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">):</span> <span class="s1">&#39;q6&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;q8&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">):</span> <span class="s1">&#39;q5&#39;</span><span class="p">,</span>
+        <span class="p">(</span><span class="s1">&#39;q8&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">):</span> <span class="s1">&#39;q8&#39;</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="n">start_state</span><span class="o">=</span><span class="s1">&#39;q0&#39;</span><span class="p">,</span>
+    <span class="n">accept_states</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;q2&#39;</span><span class="p">,</span> <span class="s1">&#39;q4&#39;</span><span class="p">,</span> <span class="s1">&#39;q7&#39;</span><span class="p">,</span> <span class="s1">&#39;q8&#39;</span><span class="p">}</span>
+<span class="p">)</span>
+
+<span class="n">doubleletter</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="using-finite-automata-in-python">
+<h2>5. Using Finite Automata In Python<a class="headerlink" href="#using-finite-automata-in-python" title="Link to this heading">#</a></h2>
+<p>In Section 1.3.3 we created some classes for implementing finite automata in Python and for visualizing their state diagram. We may now want to know for a given finite automaton whether it accepts a given string over its input alphabet. Let’s build a method for answering this question, and for tracing through the states encountered by the finite automaton as it processes an input string.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Method for determining whether an input string is accepted by the finite automaton.</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">accepts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_string</span><span class="p">):</span>
+  <span class="n">current_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_state</span>
+  <span class="k">for</span> <span class="n">symbol</span> <span class="ow">in</span> <span class="n">input_string</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">symbol</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">alphabet</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Symbol &#39;</span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s2">&#39; not in FA alphabet.&quot;</span><span class="p">)</span>
+    <span class="n">current_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transition_function</span><span class="p">[(</span><span class="n">current_state</span><span class="p">,</span> <span class="n">symbol</span><span class="p">)]</span>
+  <span class="k">return</span> <span class="n">current_state</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">accept_states</span>
+
+<span class="n">FA</span><span class="o">.</span><span class="n">accepts</span> <span class="o">=</span> <span class="n">accepts</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Method for tracing through the sequence of states of the finite automaton as it processes an input string.</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">trace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_string</span><span class="p">):</span>
+  <span class="n">trace</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">start_state</span><span class="p">]</span>
+  <span class="n">current_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_state</span>
+  <span class="k">for</span> <span class="n">symbol</span> <span class="ow">in</span> <span class="n">input_string</span><span class="p">:</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">current_state</span><span class="p">,</span> <span class="n">symbol</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">transition_function</span><span class="p">:</span>
+      <span class="n">trace</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+      <span class="k">break</span>
+    <span class="n">current_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transition_function</span><span class="p">[(</span><span class="n">current_state</span><span class="p">,</span> <span class="n">symbol</span><span class="p">)]</span>
+    <span class="n">trace</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">current_state</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">trace</span>
+
+<span class="n">FA</span><span class="o">.</span><span class="n">trace</span> <span class="o">=</span> <span class="n">trace</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can try these methods out on the finite <em>doubleletter</em> finite automaton we created above.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">doubleletter</span><span class="o">.</span><span class="n">accepts</span><span class="p">(</span><span class="s1">&#39;abbabaab&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">doubleletter</span><span class="o">.</span><span class="n">accepts</span><span class="p">(</span><span class="s1">&#39;abbabaabb&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">doubleletter</span><span class="o">.</span><span class="n">accepts</span><span class="p">(</span><span class="s1">&#39;aabbabaab&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The first string neither begins nor ends with a double letter, and so is not accepted. The second string ends with a double letter, and so is accepted. The third string begins with a double letter, and so is accepted.</p>
+<p>If we wanted to trace out the sequence of states of the <em>doubleletter</em> finite automaton as it reads the string “abbabaab” we can use the <em>trace</em> method.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">doubleletter</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s1">&#39;abbabaab&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Example 3</strong> - What is the sequence of states visited by the <em>doubleletter</em> finite automaton for the input string “abbabbaab”?</p>
+<p><strong>Example 3 Solution</strong> -</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">doubleletter</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s1">&#39;abbabbaab&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>It’s last state, ‘q6’, is not an accepting state, and so the string would not be accepted.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">doubleletter</span><span class="o">.</span><span class="n">accepts</span><span class="p">(</span><span class="s1">&#39;abbabbaab&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>NOTE</strong> - The way we’ve designed the finite automaton class, by first specifying the class and its constructor, and then adding methods in later cells, is not best practice. We’d usually want to build all the methods we need into the initial class definition. We chose to introduce the methods one at a time for teaching purposes, but an implementation of the FA class with all the methods included in its initial definition can be found in the appendix at the end of this notebook (Section 1.3.8).</p>
+</section>
+<section id="practice-exercises">
+<h2>6. Practice Exercises<a class="headerlink" href="#practice-exercises" title="Link to this heading">#</a></h2>
+<p><strong>NOTE</strong> - For the following exercises the input alphabet is always <span class="math notranslate nohighlight">\(\Sigma = \{a,b\}\)</span>. For each of these you should create the state diagram and / or transition table on your own, then create the corresponding finite automaton as an FA object in Python, then verify the given word is accepted by the FA object.</p>
+<p><strong>Exercise 1</strong>: Create a state diagram <em>and</em> a transition table for an FA that accepts only the words <span class="math notranslate nohighlight">\(baa\)</span>, <span class="math notranslate nohighlight">\(ab\)</span>, and <span class="math notranslate nohighlight">\(abb\)</span> and no other words.</p>
+<p><em>Word</em> - “abb”.</p>
+<p><strong>Exercise 2</strong>: Create a state diagram for an FA that accepts only those words that have more than four letters.</p>
+<p><em>Word</em> - “abbaba”.</p>
+<p><strong>Exercise 3:</strong> Create a state diagram for an FA that accepts only those words that have fewer than four letters.</p>
+<p><em>Word</em> - “bab”.</p>
+<p><strong>Exercise 4:</strong> Create a state diagram for an FA that accepts only those words with <em>exactly</em> four letters.</p>
+<p><em>Word</em> - “abba”.</p>
+</section>
+<section id="further-reading">
+<h2>7. Further Reading<a class="headerlink" href="#further-reading" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>“Introduction to Computer Theory” by Daniel I.A. Cohen <em>Chapter 5 - Finite Automata</em></p></li>
+<li><p>“Introduction to the Theory of Computation” by Michael Sipser <em>Section 1.1 - Finite Automata</em></p></li>
+<li><p>“Automata Theory, Languages, and Computation” by Hopcroft, Motwani, and Ullman <em>Chapter 2 - Finite Automata</em></p></li>
+<li><p>More on <a class="reference external" href="https://graphviz.org/">graphviz</a></p></li>
+</ul>
+</section>
+<section id="appendix-the-fa-class-with-all-methods">
+<h2>8. Appendix: The FA Class with All Methods<a class="headerlink" href="#appendix-the-fa-class-with-all-methods" title="Link to this heading">#</a></h2>
+<p>To use and run, remove the comments.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">class FA:</span>
+<span class="sd">    def __init__(self, states, alphabet, transition_function, start_state, accept_states):</span>
+<span class="sd">        self.states = set(states)</span>
+<span class="sd">        self.alphabet = set(alphabet)</span>
+<span class="sd">        self.transition_function = transition_function</span>
+<span class="sd">        self.start_state = start_state</span>
+<span class="sd">        self.accept_states = set(accept_states)</span>
+
+<span class="sd">        self._validate()</span>
+
+<span class="sd">    def _validate(self):</span>
+<span class="sd">        if self.start_state not in self.states:</span>
+<span class="sd">            raise ValueError(&quot;Start state must be in states.&quot;)</span>
+<span class="sd">        if not self.accept_states.issubset(self.states):</span>
+<span class="sd">            raise ValueError(&quot;Accept states must be a subset of states.&quot;)</span>
+
+<span class="sd">        # Ensure total transition function</span>
+<span class="sd">        for state in self.states:</span>
+<span class="sd">            for symbol in self.alphabet:</span>
+<span class="sd">                if (state, symbol) not in self.transition_function:</span>
+<span class="sd">                    raise ValueError(f&quot;Missing transition for state &#39;{state}&#39; on symbol &#39;{symbol}&#39;.&quot;)</span>
+
+<span class="sd">        # Ensure all transitions are to valid states and symbols</span>
+<span class="sd">        for (state, symbol), next_state in self.transition_function.items():</span>
+<span class="sd">            if state not in self.states or next_state not in self.states:</span>
+<span class="sd">                raise ValueError(f&quot;Invalid transition: ({state}, {symbol}) → {next_state}&quot;)</span>
+<span class="sd">            if symbol not in self.alphabet:</span>
+<span class="sd">                raise ValueError(f&quot;Symbol &#39;{symbol}&#39; not in alphabet.&quot;)</span>
+
+<span class="sd">    def accepts(self, input_string):</span>
+<span class="sd">        current_state = self.start_state</span>
+<span class="sd">        for symbol in input_string:</span>
+<span class="sd">            if symbol not in self.alphabet:</span>
+<span class="sd">                raise ValueError(f&quot;Symbol &#39;{symbol}&#39; not in DFA alphabet.&quot;)</span>
+<span class="sd">            current_state = self.transition_function[(current_state, symbol)]</span>
+<span class="sd">        return current_state in self.accept_states</span>
+
+<span class="sd">    def trace(self, input_string):</span>
+<span class="sd">        trace = [self.start_state]</span>
+<span class="sd">        current_state = self.start_state</span>
+<span class="sd">        for symbol in input_string:</span>
+<span class="sd">            if (current_state, symbol) not in self.transition_function:</span>
+<span class="sd">                trace.append(None)</span>
+<span class="sd">                break</span>
+<span class="sd">            current_state = self.transition_function[(current_state, symbol)]</span>
+<span class="sd">            trace.append(current_state)</span>
+<span class="sd">        return trace</span>
+
+<span class="sd">    def show(self):</span>
+<span class="sd">        &quot;&quot;&quot;Display DFA inline in a Jupyter notebook.&quot;&quot;&quot;</span>
+<span class="sd">        dot = self._build_graph()</span>
+<span class="sd">        display(Source(dot.source))</span>
+
+<span class="sd">    def _build_graph(self):</span>
+<span class="sd">        dot = Digraph()</span>
+<span class="sd">        dot.attr(rankdir=&#39;LR&#39;)</span>
+<span class="sd">        dot.node(&#39;&#39;, shape=&#39;none&#39;)</span>
+<span class="sd">        dot.edge(&#39;&#39;, self.start_state)</span>
+
+<span class="sd">        for state in self.states:</span>
+<span class="sd">            shape = &#39;doublecircle&#39; if state in self.accept_states else &#39;circle&#39;</span>
+<span class="sd">            dot.node(state, shape=shape)</span>
+
+<span class="sd">        for (src, symbol), dst in self.transition_function.items():</span>
+<span class="sd">            dot.edge(src, dst, label=symbol)</span>
+
+<span class="sd">        return dot</span>
+<span class="sd">&#39;&#39;&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content\Part_1_Regular_Languages"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Chapter02_Regular_Expressions.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">2. </span>Regular Expressions</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Chapter04_Nondeterministic_Finite_Automata.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">4. </span>Nondeterministic Finite Automata</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-concepts-and-definitions">1. Basic Concepts and Definitions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#representing-finite-automata">2. Representing Finite Automata</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#representing-finite-automata-in-python">3. Representing Finite Automata in Python</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#finite-automata-and-languages">4. Finite Automata and Languages</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-finite-automata-in-python">5. Using Finite Automata In Python</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-exercises">6. Practice Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">7. Further Reading</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#appendix-the-fa-class-with-all-methods">8. Appendix: The FA Class with All Methods</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Yong Zhang, Dylan Zwick
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

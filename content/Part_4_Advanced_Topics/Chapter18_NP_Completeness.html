@@ -1,0 +1,617 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>16. NP-Completeness &#8212; Decode Computation:Hands-On Formal Languages and Algorithms</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/Part_4_Advanced_Topics/Chapter18_NP_Completeness';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="15. P and NP Problems" href="Chapter17_P_and_NP_Problems.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Decode Computation:Hands-On Formal Languages and Algorithms - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Decode Computation:Hands-On Formal Languages and Algorithms - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Decode Computation︰ Hands-On Formal Languages and Algorithms
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Regular Languages</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Part_1_Regular_Languages/Chapter01_Languages.html">1. Languages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_1_Regular_Languages/Chapter02_Regular_Expressions.html">2. Regular Expressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_1_Regular_Languages/Chapter03_Finite_Automata.html">3. Finite Automata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_1_Regular_Languages/Chapter04_Nondeterministic_Finite_Automata.html">4. Nondeterministic Finite Automata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_1_Regular_Languages/Chapter05_Nonregular_Languages.html">5. Nonregular Languages</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Context Free Languages</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Part_2_Context_Free_Languages/Chapter_08/Chapter08_Fundamentals_of_CFG.html">6. Fundamentals of Context-Free Grammar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_2_Context_Free_Languages/Chapter_09/Chapter09_CFG_Normal_Forms_and_Transformations.html">7. Normal Forms and Transformations in Context-Free Grammars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_2_Context_Free_Languages/Chapter_10/Chapter10_PDA.html">8. Pushdown Automata (PDA)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_2_Context_Free_Languages/Chapter_11/Chapter11_Properties_of_Context_free%20Languages.html">9. Properties of Context-free Languages (CFL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_2_Context_Free_Languages/Chapter_12/Chapter12_Decidability_in_CFG.html">10. Decidability in Context-Free Grammars (CFGs)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Turing Machines</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Part_3_Turing_Machines/Chapter_13/Chapter13_Introduction_to_Turing_Machines.html">11. Introduction to Turing Machines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_3_Turing_Machines/Chapter_14/Chapter14_Turing_Machine_Languages.html">12. Turing Machine Languages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_3_Turing_Machines/Chapter_15/Chapter15_Turing_Machine_Encoding.html">13. Turing Machine Encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_3_Turing_Machines/Chapter_16/Chapter16_Universal_Turing_Machine.html">14. The Universal Turing Machine</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced Topics</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Chapter17_P_and_NP_Problems.html">15. P and NP Problems</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">16. NP-Completeness</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontent/Part_4_Advanced_Topics/Chapter18_NP_Completeness.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/content/Part_4_Advanced_Topics/Chapter18_NP_Completeness.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>NP-Completeness</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metric-graphs">1. Metric Graphs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-traveling-salesman-problem">2. The Traveling Salesman Problem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-hamilton-path-problem-and-the-traveling-salesman-problem">3. The Hamilton Path Problem and the Traveling Salesman Problem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logical-satisfiability">4. Logical Satisfiability</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">5. NP-Completeness</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#does-p-np">6. Does P = NP?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-exercises">7. Practice Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">8. Further Reading</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="np-completeness">
+<h1><span class="section-number">16. </span>NP-Completeness<a class="headerlink" href="#np-completeness" title="Link to this heading">#</a></h1>
+<section id="learning-objectives">
+<h2>Learning Objectives<a class="headerlink" href="#learning-objectives" title="Link to this heading">#</a></h2>
+<p>After completing this chapter, you will be able to:</p>
+<ul class="simple">
+<li><p>Define a metric graph.</p></li>
+<li><p>State the traveling salesman problem and know how to check solutions.</p></li>
+<li><p>Understand the idea of a polynomial time reduction from one problem to another.</p></li>
+<li><p>Recall the satisfiability (SAT) problem.</p></li>
+<li><p>Conceptually understand the idea of NP-completeness.</p></li>
+</ul>
+</section>
+<section id="metric-graphs">
+<h2>1. Metric Graphs<a class="headerlink" href="#metric-graphs" title="Link to this heading">#</a></h2>
+<p>In the previous section we introduced the idea of a graph, and mentioned the idea of a <em>metric graph</em>. A metric graph is a graph where there is a number assigned to each edge. Sometimes these numbers are restricted to be non-negative, and could be viewed as distances or costs.</p>
+<p>For example, below is a diagram representation of a metric graph, where the vertices are labeled with letters and the edges are assigned numbers. You could interpret these numbers as distances, and say, for example, the distance between <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span> is <span class="math notranslate nohighlight">\(4\)</span>, while the distance between <span class="math notranslate nohighlight">\(e\)</span> and <span class="math notranslate nohighlight">\(z\)</span> is <span class="math notranslate nohighlight">\(1\)</span>.</p>
+<center>
+  <img src="https://drive.google.com/uc?export=view&id=1WFYDFexcpiMsZOA96rolA_I8seSS1P0o" height = "400" alt="Metric Graph">
+</center></section>
+<section id="the-traveling-salesman-problem">
+<h2>2. The Traveling Salesman Problem<a class="headerlink" href="#the-traveling-salesman-problem" title="Link to this heading">#</a></h2>
+<p>Suppose you were a salesman and there were a number of cities where you needed to make your sales calls. Some of these cities are connected by roads, and each of these connecting roads has some corresponding distance. Assume it’s always possible to find a sequence of roads from one city to another. You could formulate this as a connected metric graph, with the cities being vertices and the edges being roads with their numbers being distances. The <em>traveling salesman problem</em> is the problem of figuring out the optimal circuit through the connected graph, where “optimal” here means the path that minimizes the total distance traveled. Note that the metric doesn’t necessarily need to be distance, ande could easily be something like transit time or cost that you might also want to minimize.</p>
+<p>A variant on this problem is the question of whether there’s a circuit below a certain distance or cost. For example, suppose your metric is cost, your travel budget is \<span class="math notranslate nohighlight">\(2,000, and you want to know whether there is a circuit that hits every city that costs less than your budget. Note this circuit doesn't necessarily need to be the overall most cost efficient circuit - it just needs to be one under \\\)</span>2,000.</p>
+<p>This problem of determining whether, for a given metric graph and value, there is a circuit through the graph with distance less than that value, is in NP. This is pretty straightforward. If you’re provided with a metric graph, a value, and a sequence of vertices in the metric graph, you can quickly check whether that sequence is a circuit and if the total distance of that circuit is below that value. So, it’s quick to <em>verify</em> whether the solution is correct. However, just given a metric graph and a value determining whether there is a circuit with total distance less than that value has no known polynomial time solution. So, it’s not known whether the problem is in <span class="math notranslate nohighlight">\(P\)</span>, and strongly suspected it is not.</p>
+</section>
+<section id="the-hamilton-path-problem-and-the-traveling-salesman-problem">
+<h2>3. The Hamilton Path Problem and the Traveling Salesman Problem<a class="headerlink" href="#the-hamilton-path-problem-and-the-traveling-salesman-problem" title="Link to this heading">#</a></h2>
+<p>In the previous section we discussed the Hamilton circuit problem, which is the problem of finding a circuit in a connected graph that visits each vertex (except the first and last one) exactly once. This problem, like the traveling salesman problem, is in <span class="math notranslate nohighlight">\(NP\)</span>, but it’s not known if this problem is in <span class="math notranslate nohighlight">\(P\)</span>, and strongly suspected it is not.</p>
+<p>Suppose by some miracle you figured out a polynomial time solution to the traveling salesman problem. In other words, suppose you had a polynomial time algorithm that could determine for a given connected metric graph and value whether there is a circuit in that graph with total distance less than that value. Well, in that case you’d also have a polynomial time solution to the Hamilton circuit problem!</p>
+<p>The reason for this is that you can translate the Hamilton circuit problem into the traveling salesman problem in a polynomial amount of time. The way you’d do this is you’d take your connected graph and convert it to a metric graph by assigning to each edge the length of <span class="math notranslate nohighlight">\(1\)</span>. This can be done in an amount of time proportional to the number of edges, which is linear, and so definitely polynomial. Then, if there were <span class="math notranslate nohighlight">\(n\)</span> vertices in the graph, you’d just check whether there is any circuit in the metric graph you created of length less than <span class="math notranslate nohighlight">\(n+1\)</span>. If the answer is yes, then that circuit would be a solution to the Hamilton path problem. If the answer is no, that would mean the original graph does not have a Hamilton circuit. As this last problem is the traveling salesman problem, if we can solve it in a polynomial amount of time, then we have a polynomial time solution to the Hamilton circuit problem.</p>
+<p>We call this process of converting one problem into another a <em>reduction</em>, and if there is a polynomial time reduction from one problem a second problem, and a polynomial time solution to the second problem, then a polynomial time solution to the first problem is to reduce it to the second and solve the second. So, if you can find a polynomial time solution to a problem, you’ve not only found an efficient solution for that problem, you’ve found a solution for any other problem that can be efficiently reduced to it.</p>
+</section>
+<section id="logical-satisfiability">
+<h2>4. Logical Satisfiability<a class="headerlink" href="#logical-satisfiability" title="Link to this heading">#</a></h2>
+<p>We’re going to briefly introduce the problem of logical satisfiability here. It’s expected this is something you’ve seen before, and so this will be a somewhat terse review.</p>
+<p>A <em>propositional variable</em> is a variable that can have two possible values - “true” and “false”, donoted <span class="math notranslate nohighlight">\(T\)</span> and <span class="math notranslate nohighlight">\(F\)</span>. There are three operators on propositional variables, and their rules are:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\neg\)</span> means <em>negation</em> or “not”, and the rule is that if <span class="math notranslate nohighlight">\(P\)</span> is true, then <span class="math notranslate nohighlight">\(\neg P\)</span> is false and vice-versa.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\land\)</span> means <em>conjunction</em> or “and”, and it combines two logical propositions into one with the rule that <span class="math notranslate nohighlight">\(P \land Q\)</span> is true if and only if both <span class="math notranslate nohighlight">\(P\)</span> and <span class="math notranslate nohighlight">\(Q\)</span> are true, and false otherwise.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\lor\)</span> means <em>disjunction</em> or “or”, and it combines two logical propositions into one with the rule that <span class="math notranslate nohighlight">\(P \lor Q\)</span> is true if and only if either <span class="math notranslate nohighlight">\(P\)</span> or <span class="math notranslate nohighlight">\(Q\)</span>, or both, are true, and false otherwise.</p></li>
+</ul>
+<p>Propositional logic statements are formed by combining propositional variables using the operators above and the rule that substatements within parentheses are evaluated first. Note you may have seen other logical operators like the implication <span class="math notranslate nohighlight">\(\rightarrow\)</span>, but these other operators can all be translated into equivalent statements using just the three operators above. For example, the implication <span class="math notranslate nohighlight">\(P \rightarrow Q\)</span> is equivalent to <span class="math notranslate nohighlight">\((\neg P \lor Q)\)</span>.</p>
+<p>A logical statement is <em>satisfiable</em> if there is some assignment of truth values to its propositional variables that makes the entire statement true. We say such an assignment <em>satisfied</em> the statement. For example, the logical statement:</p>
+<center>
+  $(P \lor Q) \land (P \lor \neg Q) \land (\neg P \lor Q)$
+</center>
+<p>is satisfied by the truth assignment <span class="math notranslate nohighlight">\(P = T, Q = T\)</span>. However, there is no assignment of truth values to <span class="math notranslate nohighlight">\(P\)</span> and <span class="math notranslate nohighlight">\(Q\)</span> that make the statement:</p>
+<center>
+  $(P \lor Q) \land (P \lor \neg Q) \land (\neg P \lor Q) \land (\neg P \lor \neg Q)$
+</center>
+<p>true. Therefore, the second statement above is not satisfiable.</p>
+<p>If we’re given a logical statement and a truth assignment for its variables, it’s easy (can be done in polynomial time) to verify whether the truth assignment works to make the entire statement true. If we’re given a logical statement we can check if it’s satisfiable by checking every possible truth assignment. However, if there are <span class="math notranslate nohighlight">\(N\)</span> propositional variables in the statement, then there are <span class="math notranslate nohighlight">\(2^{N}\)</span> possible truth assignments, and checking them all one-by-one requires an amount of time that is exponential (beyond polynomial) in the number of propositional variables. In other words, whether a logical statement is satisfiable (a problem called SAT) can be verified in a polynomial amount of time, but there is no known algorithm for determining whether any solution exists that runs in a polynomial amount of time, and it’s strongly suspected no such algorithm exists. This is like the Hamilton circuit and traveling salesman problems.</p>
+</section>
+<section id="id1">
+<h2>5. NP-Completeness<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<p>A remarkable result discovered in the early 1970s was that <em>every</em> NP problem (every problem for which a solution can be verified in a polynomial amount of time) can be reduced to a problem in SAT in a polynomial amount of time. This result is known as the Cook-Levin theroem, and it means that SAT is at least as “hard” as any other NP problem.</p>
+<p>Now, any NP problem can be reduced in a polynomial amount of time to a problem in SAT. If SAT can also be reduced to an NP problem (like the Hamilton circuit problem on the traveling salesman problem) in a polynomial amount of time, then that means the other problem is also at least as “hard” as any other NP problem. This gives us an entire set of problems in NP that are at least as hard as any other problem in NP, and these problems are called NP-complete.</p>
+<p>A great many NP-complete problems have been discovered, including SAT, the Hamilton path problem, and the traveling salesman problem, and more are discovered every year.</p>
+</section>
+<section id="does-p-np">
+<h2>6. Does P = NP?<a class="headerlink" href="#does-p-np" title="Link to this heading">#</a></h2>
+<p>Finding a polynomial time solution to any NP-complete problem would provide a polynomial time solution to all of them. It is strongly suspected that none exist. However, to date, nobody has been able to prove this, and it’s the most significant open problem in theoretical computer science. In fact, it’s such a significant open problem that when the Clay Mathematics Institute put forth a list of 7 problems for the 21st century, and placed a $1,000,000 prize on each of them, one of the seven problems was the question of whether <span class="math notranslate nohighlight">\(P\)</span> equals <span class="math notranslate nohighlight">\(NP\)</span>. To date the 21st century is about a quarter of the way done, and only one of the seven problems (the Poincaré conjecture) has been solved.</p>
+</section>
+<section id="practice-exercises">
+<h2>7. Practice Exercises<a class="headerlink" href="#practice-exercises" title="Link to this heading">#</a></h2>
+<p>TK</p>
+</section>
+<section id="further-reading">
+<h2>8. Further Reading<a class="headerlink" href="#further-reading" title="Link to this heading">#</a></h2>
+<p>TK</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content\Part_4_Advanced_Topics"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Chapter17_P_and_NP_Problems.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">15. </span>P and NP Problems</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metric-graphs">1. Metric Graphs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-traveling-salesman-problem">2. The Traveling Salesman Problem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-hamilton-path-problem-and-the-traveling-salesman-problem">3. The Hamilton Path Problem and the Traveling Salesman Problem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logical-satisfiability">4. Logical Satisfiability</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">5. NP-Completeness</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#does-p-np">6. Does P = NP?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-exercises">7. Practice Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">8. Further Reading</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Yong Zhang, Dylan Zwick
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

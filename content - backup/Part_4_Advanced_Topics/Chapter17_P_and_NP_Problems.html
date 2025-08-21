@@ -1,0 +1,692 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>P and NP Problems &#8212; Decode Computation:Hands-On Formal Languages and Algorithms</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content - backup/Part_4_Advanced_Topics/Chapter17_P_and_NP_Problems';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Decode Computation:Hands-On Formal Languages and Algorithms - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Decode Computation:Hands-On Formal Languages and Algorithms - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Decode Computation︰ Hands-On Formal Languages and Algorithms
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Regular Languages</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../content/Part_1_Regular_Languages/Chapter01_Languages.html">1. Languages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../content/Part_1_Regular_Languages/Chapter02_Regular_Expressions.html">2. Regular Expressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../content/Part_1_Regular_Languages/Chapter03_Finite_Automata.html">3. Finite Automata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../content/Part_1_Regular_Languages/Chapter04_Nondeterministic_Finite_Automata.html">4. Nondeterministic Finite Automata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../content/Part_1_Regular_Languages/Chapter05_Nonregular_Languages.html">5. Nonregular Languages</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Context Free Languages</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../content/Part_2_Context_Free_Languages/Chapter_08/Chapter08_Fundamentals_of_CFG.html">6. Fundamentals of Context-Free Grammar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../content/Part_2_Context_Free_Languages/Chapter_09/Chapter09_CFG_Normal_Forms_and_Transformations.html">7. Normal Forms and Transformations in Context-Free Grammars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../content/Part_2_Context_Free_Languages/Chapter_10/Chapter10_PDA.html">8. Pushdown Automata (PDA)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../content/Part_2_Context_Free_Languages/Chapter_11/Chapter11_Properties_of_Context_free%20Languages.html">9. Properties of Context-free Languages (CFL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../content/Part_2_Context_Free_Languages/Chapter_12/Chapter12_Decidability_in_CFG.html">10. Decidability in Context-Free Grammars (CFGs)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Turing Machines</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../content/Part_3_Turing_Machines/Chapter_13/Chapter13_Introduction_to_Turing_Machines.html">11. Introduction to Turing Machines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../content/Part_3_Turing_Machines/Chapter_14/Chapter14_Turing_Machine_Languages.html">12. Turing Machine Languages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../content/Part_3_Turing_Machines/Chapter_15/Chapter15_Turing_Machine_Encoding.html">13. Turing Machine Encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../content/Part_3_Turing_Machines/Chapter_16/Chapter16_Universal_Turing_Machine.html">14. The Universal Turing Machine</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced Topics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../content/Part_4_Advanced_Topics/Chapter17_P_and_NP_Problems.html">15. P and NP Problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../content/Part_4_Advanced_Topics/Chapter18_NP_Completeness.html">16. NP-Completeness</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontent - backup/Part_4_Advanced_Topics/Chapter17_P_and_NP_Problems.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/content - backup/Part_4_Advanced_Topics/Chapter17_P_and_NP_Problems.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>P and NP Problems</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#graphs">1. Graphs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-konigsberg-bridge-problem">2. The Königsberg Bridge Problem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#polynomial-time-p-complexity">3. Polynomial Time (P) Complexity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nondeterministic-polynomial-time-np-complexity">4. Nondeterministic Polynomial Time (NP) Complexity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-exercises">5. Practice Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">6. Further Reading</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="p-and-np-problems">
+<h1>P and NP Problems<a class="headerlink" href="#p-and-np-problems" title="Link to this heading">#</a></h1>
+<section id="learning-objectives">
+<h2>Learning Objectives<a class="headerlink" href="#learning-objectives" title="Link to this heading">#</a></h2>
+<p>After completing this chapter, you will be able to:</p>
+<ul class="simple">
+<li><p>Understand the mathematical concept of a graph consisting of a set of nodes and edges.</p></li>
+<li><p>Understand what is meant by a problem that is solvable in <em>polynomial time</em>, a.k.a. in <em>P</em>.</p></li>
+<li><p>Understand what it means for a problem to be solvable in <em>nondeterministic polynomial time</em>, a.k.a. in <em>NP</em>.</p></li>
+</ul>
+</section>
+<section id="graphs">
+<h2>1. Graphs<a class="headerlink" href="#graphs" title="Link to this heading">#</a></h2>
+<p><em>Graph</em> is a word that might be overused in mathematics, in that it is used to describe multiple distinct ideas. But, unfortunately, natural language can be like that.</p>
+<p>You’ve likely seen the term <em>graph</em> used primarily to describe a visualization of the relation between the input and the output of a function. For example, the graph of the function</p>
+<center>
+  $f(x) = x^{2} - 3x + 2$
+</center>
+<p>looks like</p>
+<center>
+  <img src="https://drive.google.com/uc?export=view&id=16uzALIpKTYY9GSpJ5XagFT7NwCOoRQdB" height = "400" alt="Quadratic Graph">
+</center>
+<p>However, the term <em>graph</em> is also used for a mathematical structure used to represents objects and their connections. This type of graph consists of objects called <em>vertices</em> or sometimes <em>nodes</em>, and connections between these vertices called <em>edges</em>. Stated more formally</p>
+<p><strong>Definition</strong> - A <em>graph</em> is a pair <span class="math notranslate nohighlight">\((V,E)\)</span> where <span class="math notranslate nohighlight">\(V\)</span> is a set whose elements are called <em>vertices</em>, and <span class="math notranslate nohighlight">\(E\)</span> is a set of unordered pairs <span class="math notranslate nohighlight">\(\{v_{i},v_{j}\}\)</span> of vertices whose elements are called <em>edges</em>.</p>
+<p>It’s possible to also have graphs where the edges are ordered, so an edge “points” from one vertex to another. These are called <em>directed graphs</em>. It’s also possible to have graphs where there can be more than one edge between two vertices, and these are called <em>multigraphs</em>. Sometimes the edges are assigned numbers, and these are called <em>weighted graphs</em>. For the purposes of this section we won’t deal with any of these.</p>
+<p>Graphs are frequently displayed as a collection of dots (the vertices) and lines between them (the edges). For example, the graph below has three vertices, and an edge connecting each pair.</p>
+<center>
+  <img src="https://drive.google.com/uc?export=view&id=1BMPuSziGGrIB0M5crpq5Xu2ndLLHzaaU" height = "400" alt="Complete Graph K3">
+</center>
+<p>This is called the complete graph on three vertices, and is sometimes written <span class="math notranslate nohighlight">\(K_{3}\)</span>. If we label the vertices <span class="math notranslate nohighlight">\(v_{1}, v_{2}, v_{3}\)</span> then we could specify the graph as:</p>
+<center>
+  $V = \{v_{1},v_{2},v_{3}\}$
+<p><span class="math notranslate nohighlight">\(E = \{\{v_{1},v_{2}\}, \{v_{1},v_{3}\}, \{v_{2},v_{3}\}\}\)</span></p>
+</center>
+<p><em>Example</em> - The graph represented by the image</p>
+<center>
+  <img src="https://drive.google.com/uc?export=view&id=15Q7a4yvMuTLwO4IvdAxGBD3C-diG95mr" height = "400" alt="Complete Bipartite Graph K3-4">
+</center>
+<p>has the set of vertices</p>
+<center>
+  $V = \{u_{1}, u_{2}, u_{3}, v_{1}, v_{2}, v_{3}, v_{4}\}$
+</center>
+<p>and the set of edges</p>
+<center>
+    $E = \{\{u_{1},v_{1}\}, \{u_{1},v_{2}\}, \{u_{1},v_{3}\}, \{u_{1},v_{4}\}, \{u_{2},v_{1}\}, \{u_{2},v_{2}\}, \{u_{2},v_{3}\}, \{u_{2},v_{4}\}, \{u_{3},v_{1}\}, \{u_{3},v_{2}\}, \{u_{3},v_{3}\}, \{u_{3},v_{4}\}$
+</center>
+<p>All the nodes at the “top” of this graph are connected to the nodes at the “bottom”, but none of the nodes at the “top” are connected to any of the others at the “top”, and same with the nodes at the “bottom”. This is an example of a type of graph called a <em>complete bipartite graph</em>, and this particular one is called the complete bipartite graph on <span class="math notranslate nohighlight">\((4,3)\)</span> nodes, and abbreviated <span class="math notranslate nohighlight">\(K_{3,4}\)</span>.</p>
+<br>
+<p>The <em>degree</em> of a vertex is the number of edges connected to it. For example, in the graph <span class="math notranslate nohighlight">\(K_{3,4}\)</span> above the degree of <span class="math notranslate nohighlight">\(u_{2}\)</span> is <span class="math notranslate nohighlight">\(4\)</span>, while the degree of <span class="math notranslate nohighlight">\(v_{1}\)</span> is <span class="math notranslate nohighlight">\(3\)</span>.</p>
+<br>
+<p>A <em>path</em> in a graph is a sequence of nodes where there is an edge between any node and the next one in the sequence. For example, the sequence:</p>
+<center>
+  $v_{1} \rightarrow u_{2} \rightarrow v_{4} \rightarrow u_{3}$
+</center>
+<p>would be a path in <span class="math notranslate nohighlight">\(K_{3,4}\)</span> above, but the sequence:</p>
+<center>
+  $v_{1} \rightarrow u_{2} \rightarrow u_{3} \rightarrow v_{4}$
+</center>
+<p>would not be, as there is no edge connecting <span class="math notranslate nohighlight">\(u_{2}\)</span> and <span class="math notranslate nohighlight">\(u_{3}\)</span>. A path that begins and ends on the same vertex is called a <em>circuit</em>.</p>
+<p>We say two nodes are <em>connected</em> if there is a path in the graph that starts at one and ends at the other. A graph is <em>connected</em> if every pair of nodes within the graph are connected. Both of the graphs <span class="math notranslate nohighlight">\(K_{3}\)</span> and <span class="math notranslate nohighlight">\(K_{3,4}\)</span> above are connected. The graph below would not be, as there is no path from the node labeled <span class="math notranslate nohighlight">\(0\)</span> to any of the other nodes. Note the labels of each node indicate that node’s degree.</p>
+<center>
+  <img src="https://drive.google.com/uc?export=view&id=1HO0YKIBaha64J0NyErgrXrF70TJdMUPX" height = "400" alt="Disconnected Graph">
+</center></section>
+<section id="the-konigsberg-bridge-problem">
+<h2>2. The Königsberg Bridge Problem<a class="headerlink" href="#the-konigsberg-bridge-problem" title="Link to this heading">#</a></h2>
+<p>In the 18th century the city of Königsberg in Prussia (now Kaliningrad, Russia) was set on both sides of the Pregel River, and included two large islands—Kneiphof and Lomse—which were connected to each other, and to the two mainland portions of the city, by seven bridges.</p>
+<center>
+  <img src="https://drive.google.com/uc?export=view&id=1Of3u4g4lImG7xvCnAkoCPz7RTFmG7dCE" height = "300" alt="The Bridges of Konigsberg">
+</center>
+<p>The Königsberg bridge problem was whether it was possible to devise a walk through the city that crossed each bridge only once. Many people played around with this problem and nobody was able to find a solution.</p>
+<p>In 1736 the great mathematician Leonhard Euler published a mathematical proof that the problem was, in fact, impossible to solve. He did this by first formulating the problem as a question about a graph, where the nodes of the graph were the land masses of Königsberg, and the edges were the bridges.</p>
+<center>
+  <img src="https://drive.google.com/uc?export=view&id=1kwwgiQCFLHmQxTcDbDk8-LSa7GJhuxSk" height = "200" alt="Konigsberg as Graph">
+</center>
+<p>The problem then became whether it was possible to find a path in the graph that traversed each edge exactly once. Euler proved that for any connected graph this is possible if and only if no more than two vertices have an odd degree. Such a traversal is now called an <em>Euler path</em>, and if the path begins and ends on the same vertex, it is called an <em>Euler circuit</em>.</p>
+<p><strong>Theorem</strong> - For any connected graph</p>
+<ul class="simple">
+<li><p>An Euler path exists if no more than two nodes have an odd degree.</p></li>
+<li><p>An Euler circuit exists if no nodes have an odd degree, a.k.a. every nodes has an even degree.</p></li>
+</ul>
+<p>For the graph corresponding with the bridges of Königsberg, all four nodes have an odd number of incident edges, and so no Euler circuit or Euler path exists.</p>
+</section>
+<section id="polynomial-time-p-complexity">
+<h2>3. Polynomial Time (P) Complexity<a class="headerlink" href="#polynomial-time-p-complexity" title="Link to this heading">#</a></h2>
+<p>To create an algorithm to check whether a connected graph has an Euler circuit, we could try to list off all paths within the graph that don’t traverse an edge more than once, and then check whether any of them traverse each edge. This is possible, and would work, but it would be a very inefficient way to do it.</p>
+<p>On the other hand, using the theorem above we could create a much more efficient algorithm for answering the question. If we had a connected graph represented by a set of vertices <span class="math notranslate nohighlight">\(V\)</span> and a set of edges <span class="math notranslate nohighlight">\(E\)</span> we could determine whether the graph contained an Euler circuit with an algorithm that:</p>
+<ul class="simple">
+<li><p>Read in the vertices and created a list of these vertices where each element of the list had a corresponding count, with counts all initialized to <span class="math notranslate nohighlight">\(0\)</span>.</p></li>
+<li><p>Read in the edges and for each edge incemented the count of both its vertices by <span class="math notranslate nohighlight">\(1\)</span>.</p></li>
+<li><p>Checked whether all the vertices in the list had an even count.</p></li>
+</ul>
+<p>For example, for the graph <span class="math notranslate nohighlight">\(K_{3}\)</span> above the algorithm would be given the vertices and edges as input:</p>
+<center>
+  $V = \{v_{1},v_{2},v_{3}\}$
+<p><span class="math notranslate nohighlight">\(E = \{\{v_{1},v_{2}\}, \{v_{1},v_{3}\}, \{v_{2},v_{3}\}\}\)</span></p>
+</center>
+<p>It would then read in the list of vertices and created a list of these vertices with corresponding counts, all initialized to <span class="math notranslate nohighlight">\(0\)</span>:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(v_{1}: 0\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(v_{2}: 0\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(v_{3}: 0\)</span></p></li>
+</ul>
+<p>It would then read the first edge in <span class="math notranslate nohighlight">\(E\)</span>, <span class="math notranslate nohighlight">\(\{v_{1},v_{2}\}\)</span>, and increment the counts for both <span class="math notranslate nohighlight">\(v_{1}\)</span> and <span class="math notranslate nohighlight">\(v_{2}\)</span> by <span class="math notranslate nohighlight">\(1\)</span>:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(v_{1}: 1\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(v_{2}: 1\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(v_{3}: 0\)</span></p></li>
+</ul>
+<p>It would then continue this process for every edge in <span class="math notranslate nohighlight">\(E\)</span> and at the end the list would be:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(v_{1}: 2\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(v_{2}: 2\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(v_{3}: 2\)</span></p></li>
+</ul>
+<p>As the counts are all even, the algorithm would return that, <em>yes</em>, an Euler circuit exists. Note that it wouldn’t explicitly find a circuit, but one examle for this graph would be <span class="math notranslate nohighlight">\(v_{1} \rightarrow v_{2} \rightarrow v_{3} \rightarrow v_{1}\)</span>.</p>
+<p>How much time would this algorithm take to run? Well, it would need to create an element in the list for every vertex in the graph, and then it would need to read in every edge and increment the count for two vertices, it would then need to whether each count is even. The amount of time required for the first part would be a constant multiple of the number of vertices, for the second part a constant multiple of the number of edges, and for the third part a constant multiple of the number of vertices. We could express this as:</p>
+<center>
+  $k_{1}|V| + k_{2}|E| + k_{3}|V| = (k_{1}+k_{2})|V| + k_{2}|E|$
+</center>
+<p>So, the amount of time required for this algorithm would be linear (a degree one polynomial) in the number of vertices and the number of edges. We could say the complexity of the algorithm is <em>polynomial</em> (or, even stronger, <em>linear</em>) is the size (the number of vertices and number of edges) of the graph. This is an example of a polynomial time algorithm, and so we would say the complexity of the problem of determining whether a connected graph has an Euler circuit is in polynomial time, which we abbreviate as <span class="math notranslate nohighlight">\(P\)</span>.</p>
+</section>
+<section id="nondeterministic-polynomial-time-np-complexity">
+<h2>4. Nondeterministic Polynomial Time (NP) Complexity<a class="headerlink" href="#nondeterministic-polynomial-time-np-complexity" title="Link to this heading">#</a></h2>
+<p>An Euler path is one that traverses every edge of the graph exactly once. A natural analog of this would be a path that visits every vertex of the graph exactly once. A path like this is called a Hamilton path, after the great 19th century British mathematician William Rowan Hamilton.</p>
+<p>More precisely, a <em>Hamilton path</em> in a graph is a path that contains each vertex of the graph exactly once. A <em>Hamilton circuit</em> is a circuit that contains each vertex of the graph exactly once except the first one in the path, which is also the last one.</p>
+<p>For example, the graph <span class="math notranslate nohighlight">\(K_{3}\)</span> has a Hamilton circuit (which also happens to be an Euler circuit):</p>
+<center>
+  $v_{1} \rightarrow v_{2} \rightarrow v_{3} \rightarrow v_{1}$.
+</center>
+<p>On the other hand, the graph <span class="math notranslate nohighlight">\(K_{3,4}\)</span> has a Hamilton path, for example:</p>
+<center>
+  $v_{1} \rightarrow u_{1} \rightarrow v_{2} \rightarrow u_{2} \rightarrow v_{3} \rightarrow u_{3} \rightarrow v_{4}$.
+</center>
+<p>However, it does <em>not</em> contain a Hamilton circuit.</p>
+<p>You might hope a simple algorithm like the one above for Euler circuits exists for determining whether a connected graph contains a Hamilton circuit. Perhaps surprisingly, no such algorithm is known, and its <em>very</em> strong suspected (but not proven!) that no such algorithm exists. More precisely, there is no known algorithm that can check whether a connected graph contains a Hamilton circuit in an amount of time that is polynomial in the size (the number of vertices and edges) of the graph. The best general algorithms all must, essentially, just go through all the possible curcuits that don’t repeat a vertex (except at the beginning and end) and check each one to see if it’s a Hamilton circuit. This isn’t very efficient, and the amount of time this takes is exponential in the size of the graph.</p>
+<p>Now, suppose instead of determining whether a graph contains a Hamilton circuit, you instead just want to check whether a given sequence of vertices is, indeed, a Hamilton circuit. In other words, you want to <em>verify</em> whether a proposed solution is correct. For example, suppose you have the graph <span class="math notranslate nohighlight">\(K_{5}\)</span> (the complete graph on 5 vertices) below:</p>
+<center>
+  <img src="https://drive.google.com/uc?export=view&id=1DCqqxEaeiaOrvJ5X1_5mXoaSF5rARrH6" height = "300" alt="Complete Graph on 5 Vertices K5">
+</center>
+<p>and you’re given the path:</p>
+<center>
+  $v_{1} \rightarrow v_{4} \rightarrow v_{2} \rightarrow v_{5} \rightarrow v_{3} \rightarrow v_{1}$.
+</center>
+<p>How would you check whether this was a Hamilton path? Well, an algorithm for doing so might be to go through the sequence of vertices in the path, and confirm that every vertex in the graph is in the sequence, no vertex in the sequnce repeats (except at the start and end), and every arrow in the sequence corresponds with an edge in the graph. How long would this take? It would be a constant multiple of the length of the path, which would be one more than the number of vertices in the graph. In other words, the amount of time required to check whether a solution is correct would be a polynomial (linear) function of the size of the graph. So, even though we might not be able to always determine if a solution exists in a polynomial amount of time, we are able to <em>verify</em> whether a proposed solution is valid in a polynomial amount of time. Problems for which this is the case are in <em>nondeterministic polynomial time</em> (NP) complexity. Stated more formally, a problem is in NP if you can determine in a polynomial amount of time whether a solution exists if you are provided with a correct solution.</p>
+<p>Why do we call problems where a solution can be verified in a polynomial amount of time “nondeterministic” polynomial time? Well, the basic idea is that suppose we’re using the “brute force” method of just listing out all the possible solutions and checking them one by one. As we list out possible solutions, we need to make choices. For example, suppose in the graph <span class="math notranslate nohighlight">\(K_{5}\)</span> above we’re trying to generate possible solutions, and we start on vertex <span class="math notranslate nohighlight">\(v_{1}\)</span>. Where do we go from there? We could go to <span class="math notranslate nohighlight">\(v_{2}\)</span> or <span class="math notranslate nohighlight">\(v_{3}\)</span> or <span class="math notranslate nohighlight">\(v_{4}\)</span> or <span class="math notranslate nohighlight">\(v_{5}\)</span>. We need to <em>determine</em> the next step, and if we want to explore all the possibilities, we would need to do so <em>sequentially</em>. On the other hand, suppose we didn’t need to determine the next step, and could explore all the possibilities <em>simultanously</em>. In this nondeterministic case we’d be able to list out all the possible paths much more quickly, and checking them all simultanously would only require a polynomial amount of time. In other words, if we could explore the set of possibilites nondeterministically (simultaneously) then we could determine whether a solution exists in a polynomial amount of time. If this is a bit confusing to you, don’t worry about it, just remember than NP means a proposed solution can be verified in a polynomial amount of time.</p>
+</section>
+<section id="practice-exercises">
+<h2>5. Practice Exercises<a class="headerlink" href="#practice-exercises" title="Link to this heading">#</a></h2>
+<p><strong>Exercise 1</strong>: Prove that the graph <span class="math notranslate nohighlight">\(K_{5}\)</span> above has an Euler circuit and provide an example of such a circuit.</p>
+<p><strong>Exercise 2</strong>: Prove that any problem in <span class="math notranslate nohighlight">\(P\)</span> must also be in <span class="math notranslate nohighlight">\(NP\)</span>.</p>
+<p><strong>Exercise 3</strong>: (Challenge) Suppose you’re given a graph as a set of vertices <span class="math notranslate nohighlight">\(V\)</span> and a set of edges <span class="math notranslate nohighlight">\(E\)</span>. You want to determine whether the graph is connected. Prove that the problem of determining whether a graph is connected is in <span class="math notranslate nohighlight">\(P\)</span>.</p>
+</section>
+<section id="further-reading">
+<h2>6. Further Reading<a class="headerlink" href="#further-reading" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>“Introduction to the Theory of Computation” (Third Edition) by Michael Sipser: <em>Sections 7.1-7.3 - Measuring Complexity, The Class P, The Class NP</em></p></li>
+<li><p>“Automata Theory, Languages, and Computation” (Third Edition) by John. E Hopcraft, Rajeev Matwani, and Jeffrey D. Ullman: <em>Section 10.1 - The Classes <span class="math notranslate nohighlight">\(P\)</span> and <span class="math notranslate nohighlight">\(NP\)</span></em></p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content - backup\Part_4_Advanced_Topics"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#graphs">1. Graphs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-konigsberg-bridge-problem">2. The Königsberg Bridge Problem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#polynomial-time-p-complexity">3. Polynomial Time (P) Complexity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nondeterministic-polynomial-time-np-complexity">4. Nondeterministic Polynomial Time (NP) Complexity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-exercises">5. Practice Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">6. Further Reading</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Yong Zhang, Dylan Zwick
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
