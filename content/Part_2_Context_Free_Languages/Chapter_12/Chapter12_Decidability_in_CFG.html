@@ -8,6 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
+    <meta property="article:modified_time" content="2025-08-21T16:38:06-06:00" />
     <title>12. Decidability in Context-Free Grammars (CFGs) &#8212; Decode Computation:Hands-On Formal Languages and Algorithms</title>
   
   
@@ -66,6 +67,7 @@
     <link rel="prev" title="11. Properties of Context-free Languages (CFL)" href="../Chapter_11/Chapter11_Properties_of_Context_free%20Languages.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="Aug 21, 2025"/>
   </head>
   
   
@@ -183,7 +185,7 @@
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Preliminary Material</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../../Part_0_Preliminary_Material/Chapter00_Set_Theory.html">1. Chapter 0 - Set Theory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Part_0_Preliminary_Material/Chapter00_Set_Theory.html">1. Set Theory</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Regular Languages</span></p>
 <ul class="nav bd-sidenav">
@@ -856,7 +858,7 @@ Is empty_lang language empty? True
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Useless non-terminals: {&#39;D&#39;, &#39;C&#39;, &#39;B&#39;}
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Useless non-terminals: {&#39;C&#39;, &#39;D&#39;, &#39;B&#39;}
 Grammar after eliminating useless symbols:
 Start symbol: S
 Productions:
@@ -1968,32 +1970,32 @@ True
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Results of finiteness checking:
-Useful symbols: {&#39;T&#39;, &#39;U&#39;, &#39;S&#39;}
+Useful symbols: {&#39;S&#39;, &#39;T&#39;, &#39;U&#39;}
 Example 1: Finite (should be Finite)
 Useful symbols: {&#39;S&#39;}
 Example 2: Infinite (should be Infinite)
-Useful symbols: {&#39;C&#39;, &#39;S&#39;}
+Useful symbols: {&#39;S&#39;, &#39;C&#39;}
 Example 3: Finite (should be Finite)
-Useful symbols: {&#39;A&#39;, &#39;F&#39;, &#39;D&#39;, &#39;S&#39;, &#39;C&#39;, &#39;B&#39;, &#39;E&#39;}
+Useful symbols: {&#39;S&#39;, &#39;C&#39;, &#39;D&#39;, &#39;A&#39;, &#39;F&#39;, &#39;B&#39;, &#39;E&#39;}
 Example 4: Finite (should be Finite)
 Useful symbols: {&#39;S&#39;}
 Example 5: Infinite (should be Infinite)
-Useful symbols: {&#39;A&#39;, &#39;X&#39;, &#39;S&#39;, &#39;B&#39;}
+Useful symbols: {&#39;S&#39;, &#39;X&#39;, &#39;A&#39;, &#39;B&#39;}
 Example 6: Infinite (should be Infinite)
 
-Example 1 self-embedded non-terminals (among useful symbols {&#39;T&#39;, &#39;U&#39;, &#39;S&#39;}):
+Example 1 self-embedded non-terminals (among useful symbols {&#39;S&#39;, &#39;T&#39;, &#39;U&#39;}):
 
 Example 2 self-embedded non-terminals (among useful symbols {&#39;S&#39;}):
   S is self-embedded
 
-Example 3 self-embedded non-terminals (among useful symbols {&#39;C&#39;, &#39;S&#39;}):
+Example 3 self-embedded non-terminals (among useful symbols {&#39;S&#39;, &#39;C&#39;}):
 
-Example 4 self-embedded non-terminals (among useful symbols {&#39;A&#39;, &#39;F&#39;, &#39;D&#39;, &#39;S&#39;, &#39;C&#39;, &#39;B&#39;, &#39;E&#39;}):
+Example 4 self-embedded non-terminals (among useful symbols {&#39;S&#39;, &#39;C&#39;, &#39;D&#39;, &#39;A&#39;, &#39;F&#39;, &#39;B&#39;, &#39;E&#39;}):
 
 Example 5 self-embedded non-terminals (among useful symbols {&#39;S&#39;}):
   S is self-embedded
 
-Example 6 self-embedded non-terminals (among useful symbols {&#39;A&#39;, &#39;X&#39;, &#39;S&#39;, &#39;B&#39;}):
+Example 6 self-embedded non-terminals (among useful symbols {&#39;S&#39;, &#39;X&#39;, &#39;A&#39;, &#39;B&#39;}):
   A is self-embedded
   X is self-embedded
 </pre></div>
@@ -2217,7 +2219,10 @@ By Yong Zhang, Dylan Zwick
   </div>
   
   <div class="footer-item">
-    
+    <p class="last-updated">
+  Last updated on Aug 21, 2025.
+  <br/>
+</p>
   </div>
   
   <div class="footer-item">
