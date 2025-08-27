@@ -1,0 +1,875 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>1. Set Theory &#8212; Decode Computation:Hands-On Formal Languages and Algorithms</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/Part_0_Preliminary_Material/Chapter00_Set_Theory';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="2. Languages" href="../Part_1_Regular_Languages/Chapter01_Languages.html" />
+    <link rel="prev" title="Decode Computation︰ Hands-On Formal Languages and Algorithms" href="../../intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Decode Computation:Hands-On Formal Languages and Algorithms - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Decode Computation:Hands-On Formal Languages and Algorithms - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Decode Computation︰ Hands-On Formal Languages and Algorithms
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Preliminary Material</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">1. Set Theory</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Regular Languages</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Part_1_Regular_Languages/Chapter01_Languages.html">2. Languages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_1_Regular_Languages/Chapter02_Regular_Expressions.html">3. Regular Expressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_1_Regular_Languages/Chapter03_Finite_Automata.html">4. Finite Automata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_1_Regular_Languages/Chapter04_Nondeterministic_Finite_Automata.html">5. Nondeterministic Finite Automata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_1_Regular_Languages/Chapter05_Kleene%27s_Theorem_Part1.html">6. Kleene’s Theorem (Part 1)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_1_Regular_Languages/Chapter07_Nonregular_Languages.html">7. Nonregular Languages</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Context Free Languages</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Part_2_Context_Free_Languages/Chapter_08/Chapter08_Fundamentals_of_CFG.html">8. Fundamentals of Context-Free Grammar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_2_Context_Free_Languages/Chapter_09/Chapter09_CFG_Normal_Forms_and_Transformations.html">9. Normal Forms and Transformations in Context-Free Grammars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_2_Context_Free_Languages/Chapter_10/Chapter10_PDA.html">10. Pushdown Automata (PDA)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_2_Context_Free_Languages/Chapter_11/Chapter11_Properties_of_Context_free%20Languages.html">11. Properties of Context-free Languages (CFL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_2_Context_Free_Languages/Chapter_12/Chapter12_Decidability_in_CFG.html">12. Decidability in Context-Free Grammars (CFGs)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Turing Machines</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Part_3_Turing_Machines/Chapter_13/Chapter13_Introduction_to_Turing_Machines.html">13. Introduction to Turing Machines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_3_Turing_Machines/Chapter_14/Chapter14_Turing_Machine_Languages.html">14. Turing Machine Languages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_3_Turing_Machines/Chapter_15/Chapter15_Turing_Machine_Encoding.html">15. Turing Machine Encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_3_Turing_Machines/Chapter_16/Chapter16_Universal_Turing_Machine.html">16. The Universal Turing Machine</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced Topics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Part_4_Advanced_Topics/Chapter17_P_and_NP_Problems.html">17. P and NP Problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_4_Advanced_Topics/Chapter18_NP_Completeness.html">18. NP-Completeness</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Appendix/Jupyter%20Notebook%20Setup%20Guide.html">19. Appendix: Getting Started with Jupyter Notebooks (JupyterLab and Google Colab)</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontent/Part_0_Preliminary_Material/Chapter00_Set_Theory.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/content/Part_0_Preliminary_Material/Chapter00_Set_Theory.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Set Theory</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-definitions">1. Basic Definitions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#containment-equality-and-cardinality">2. Containment, Equality, and Cardinality</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-cartesian-product">3. The Cartesian Product</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-operations">4. Set Operations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#naive-set-theory">5. Naive Set Theory</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-exercises">6. Practice Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references-and-further-reading">7. References and Further Reading</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="set-theory">
+<h1><span class="section-number">1. </span>Set Theory<a class="headerlink" href="#set-theory" title="Link to this heading">#</a></h1>
+<p>Before we discuss languages and computability, we’ll want some foundational understanding of <em>set theory</em>, which we’ll use frequently in the rest of this book.</p>
+<p>After completing this chapter you will:</p>
+<ul class="simple">
+<li><p>Know the definition of a set.</p></li>
+<li><p>Understand set containment and equality.</p></li>
+<li><p>Understand the basic set operations like union and intersection.</p></li>
+</ul>
+<section id="basic-definitions">
+<h2>1. Basic Definitions<a class="headerlink" href="#basic-definitions" title="Link to this heading">#</a></h2>
+<p>The fundamental object in mathematics - that serves as the basis for all other mathematical structures and indeed all of mathematics itself - is the <em>set</em>.</p>
+<hr class="docutils" />
+<p><strong>Definition</strong> - A <em>set</em> is an unordered collection of distinct objects, called <em>elements</em> or <em>members</em>. A set is said to <em>contain</em> its elements. We write <span class="math notranslate nohighlight">\(a \in A\)</span> to denote that <span class="math notranslate nohighlight">\(a\)</span> is an element of the set <span class="math notranslate nohighlight">\(A\)</span>. The notation <span class="math notranslate nohighlight">\(a \notin A\)</span> denotes that <span class="math notranslate nohighlight">\(a\)</span> is not an element of the set <span class="math notranslate nohighlight">\(A\)</span>.</p>
+<p><em>Note</em> - The elements within a set must be <em>distinct</em>, and so we can’t have repeated elements. So, the collection of numbers <span class="math notranslate nohighlight">\(\{1,2,3,4,5\}\)</span> would be a set, but the collection <span class="math notranslate nohighlight">\(\{1,1,2,3,5\}\)</span> would not be, as <span class="math notranslate nohighlight">\(1\)</span> appears twice.</p>
+<hr class="docutils" />
+<p>Some examples of sets include:</p>
+<ul class="simple">
+<li><p>The set of all vowels in the English alphabet: <span class="math notranslate nohighlight">\(\{a,e,i,o,u\}\)</span>.</p></li>
+<li><p>The set of all living former U.S. Presidents: <span class="math notranslate nohighlight">\(\{Clinton,Bush,Obama,Biden\}\)</span></p></li>
+<li><p>The set of all positive integers less than <span class="math notranslate nohighlight">\(5\)</span>: <span class="math notranslate nohighlight">\(\{1,2,3,4\}\)</span>.</p></li>
+<li><p>The set of all integers, typically written <span class="math notranslate nohighlight">\(\mathbb{Z}\)</span>.</p></li>
+<li><p>The set of all rational numbers, typically written <span class="math notranslate nohighlight">\(\mathbb{Q}\)</span>.</p></li>
+<li><p>The set of all real numbers, typically written <span class="math notranslate nohighlight">\(\mathbb{R}\)</span>.</p></li>
+<li><p>The set of all complex numbers, typcially written <span class="math notranslate nohighlight">\(\mathbb{C}\)</span>.</p></li>
+</ul>
+<p>One of the fundamental data structures in Python is the set. To specify a set we can use curly braces or the <span class="math notranslate nohighlight">\(set()\)</span> constructor. The empty set must be created with <span class="math notranslate nohighlight">\(set()\)</span>, not <span class="math notranslate nohighlight">\(\{\}\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Using curly braces</span>
+<span class="n">my_set</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">}</span>
+
+<span class="c1"># Using the set() constructor</span>
+<span class="n">another_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>  <span class="c1"># duplicates removed</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">another_set</span><span class="p">)</span>  <span class="c1"># {1, 2, 3, 4}</span>
+
+<span class="c1"># Empty set must be created with set(), not {}</span>
+<span class="n">empty_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{1, 2, 3, 4}
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can add or remove elements from a set using the <em>add</em> and <em>remove</em> methods. The <em>remove</em> method will throw an error if you ask to remove an element that isn’t in the set. The <em>discard</em> method works just like remove, except it doesn’t throw an error in that case.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">}</span>
+
+<span class="c1"># Add an element</span>
+<span class="n">s</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>  <span class="c1"># {1, 2, 3, 4}</span>
+<span class="n">s</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{1, 2, 3, 4}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Remove an element</span>
+<span class="n">s</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># KeyError if 2 not found</span>
+<span class="n">s</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{1, 3, 4}
+</pre></div>
+</div>
+</div>
+</div>
+<p>If we run that <em>remove</em> method again, we get:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Remove an element</span>
+<span class="n">s</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># KeyError if 2 not found</span>
+<span class="n">s</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyError</span><span class="g g-Whitespace">                                  </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Remove an element</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="n">s</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># KeyError if 2 not found</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">s</span>
+
+<span class="ne">KeyError</span>: 2
+</pre></div>
+</div>
+</div>
+</div>
+<p>Because <span class="math notranslate nohighlight">\(2\)</span> is no longer in the set. However, if instead we use the <span class="math notranslate nohighlight">\(discard\)</span> method, it works the same, except without the error.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">}</span>
+
+<span class="c1"># Discard an element</span>
+<span class="n">s</span><span class="o">.</span><span class="n">discard</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># No error if 2 not found</span>
+<span class="n">s</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Discard an element</span>
+<span class="n">s</span><span class="o">.</span><span class="n">discard</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># No error if 2 not found</span>
+<span class="n">s</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="containment-equality-and-cardinality">
+<h2>2. Containment, Equality, and Cardinality<a class="headerlink" href="#containment-equality-and-cardinality" title="Link to this heading">#</a></h2>
+<p>We say that two sets are <em>equal</em> if and only if they have the same elements. We write <span class="math notranslate nohighlight">\(A = B\)</span> if the set <span class="math notranslate nohighlight">\(A\)</span> equals the set <span class="math notranslate nohighlight">\(B\)</span>. A set <span class="math notranslate nohighlight">\(A\)</span> is a <em>subset</em> of <span class="math notranslate nohighlight">\(B\)</span> if every element of <span class="math notranslate nohighlight">\(A\)</span> is also an element of <span class="math notranslate nohighlight">\(B\)</span>, and we write this as <span class="math notranslate nohighlight">\(A \subseteq B\)</span>. A set <span class="math notranslate nohighlight">\(A\)</span> is a <em>superset</em> of <span class="math notranslate nohighlight">\(B\)</span> if every element of <span class="math notranslate nohighlight">\(B\)</span> is also an element of <span class="math notranslate nohighlight">\(A\)</span>, and we write this as <span class="math notranslate nohighlight">\(A \supseteq B\)</span>. Note that if <span class="math notranslate nohighlight">\(A\)</span> is both a subset and superset of <span class="math notranslate nohighlight">\(B\)</span>, then <span class="math notranslate nohighlight">\(A = B\)</span>. Sometimes we want to denote that <span class="math notranslate nohighlight">\(A\)</span> is a proper subset of <span class="math notranslate nohighlight">\(B\)</span>, which means <span class="math notranslate nohighlight">\(A\)</span> is a subset of <span class="math notranslate nohighlight">\(B\)</span> and <span class="math notranslate nohighlight">\(A \neq B\)</span>. In this case, we write it as <span class="math notranslate nohighlight">\(A \subset B\)</span>.</p>
+<p><strong>Examples</strong> - The set of all positive integers less than <span class="math notranslate nohighlight">\(5\)</span> is a subset of the integers, <span class="math notranslate nohighlight">\(\{1,2,3,4\} \subseteq \mathbb{Z}\)</span>. The set of integers is a subset of the rational numbers, <span class="math notranslate nohighlight">\(\mathbb{Z} \subseteq \mathbb{Q}\)</span>, the set of rational numbers is a subset of the real numbers, <span class="math notranslate nohighlight">\(\mathbb{Q} \subseteq \mathbb{R}\)</span>, and the set of real numbers is a subset of the complex numbers, <span class="math notranslate nohighlight">\(\mathbb{R} \subseteq \mathbb{C}\)</span>.</p>
+<p>It’s possible for a set to contain other sets. For example, the set of all sets of distinct positive numbers that sum to <span class="math notranslate nohighlight">\(5\)</span> would be <span class="math notranslate nohighlight">\(\{\{5\},\{4,1\},\{3,2\}\}\)</span>. It’s also possible for a set to contain <em>nothing</em>. This is called the empty set, denoted <span class="math notranslate nohighlight">\(\emptyset\)</span>.</p>
+<p>The number of elements in a set is called the <em>cardinality</em> of a set. If the set is finite this is straightforward. However, if the set is infinite the question is quite subtle - there are actually different degrees of infinity! In particular, regarding our examples above, the cardinality of the integers is equal to the cardinality of the rational numbers, and the cardinality of the real numbers is equal to the cardinality of the complex numbers, but the cardinality of the real numbers is <em>greater</em> than the cardinality of the rational numbers! We won’t concern ourselves with the different infinite cardinals much in this book, but they will come up (in disguise) when we discuss decidability in Turing Machines.</p>
+<p><strong>Examples</strong> -</p>
+<ul class="simple">
+<li><p>The cardinality of the set of vowels is <span class="math notranslate nohighlight">\(5\)</span>.</p></li>
+<li><p>The cardinality of the set of U.S. states is <span class="math notranslate nohighlight">\(50\)</span>.</p></li>
+<li><p>The cardinality of the set of integers is infinite, or more precisely <em>countably infinite</em>.</p></li>
+</ul>
+<p>The <em>powerset</em> of a set is the set of all its subsets. So, for example, the subsets of <span class="math notranslate nohighlight">\(A = \{1,2,3\}\)</span> are <span class="math notranslate nohighlight">\(\emptyset\)</span>, <span class="math notranslate nohighlight">\(\{1\}\)</span>, <span class="math notranslate nohighlight">\(\{2\}\)</span>, <span class="math notranslate nohighlight">\(\{3\}\)</span>, <span class="math notranslate nohighlight">\(\{1,2\}\)</span>, <span class="math notranslate nohighlight">\(\{1,3\}\)</span>, <span class="math notranslate nohighlight">\(\{2,3\}\)</span>, <span class="math notranslate nohighlight">\(\{1,2,3\}\)</span>, and so its powerset, written <span class="math notranslate nohighlight">\(2^{A}\)</span>, is <span class="math notranslate nohighlight">\(\{\emptyset,\{1\},\{2\},\{3\},\{1,2\},\{1,3\},\{2,3\},\{1,2,3\}\}\)</span>. The notation is based on the fact that if the cardinality of <span class="math notranslate nohighlight">\(A\)</span>, <span class="math notranslate nohighlight">\(|A|\)</span>, is finite, then the cardinality of its powerset is <span class="math notranslate nohighlight">\(2^{|A|}\)</span>. In particular, we note that for our example <span class="math notranslate nohighlight">\(|A| = 3\)</span>, while <span class="math notranslate nohighlight">\(|2^{A}| = 8\)</span>.</p>
+<p>In Python, we can check if an element is in a set with the <em>in</em> operator. This returns a boolean (True of False)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">}</span>
+<span class="mi">1</span> <span class="ow">in</span> <span class="n">s</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="mi">4</span> <span class="ow">in</span> <span class="n">s</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can also check if a set is a subset of another with the <em>issubset</em> method.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">}</span>
+<span class="n">u</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">}</span>
+<span class="n">u</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can use the “==” operator to check for equality of two sets.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">}</span>
+<span class="n">t</span> <span class="o">=</span> <span class="p">{</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">}</span>
+<span class="n">u</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">}</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span> <span class="o">==</span> <span class="n">t</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note that the two sets <span class="math notranslate nohighlight">\(s\)</span> and <span class="math notranslate nohighlight">\(t\)</span> are equal, even though we specified their elements in a different order. In a set, order doesn’t matter.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">s</span> <span class="o">==</span> <span class="n">u</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can get the cardinality of a set with the <span class="math notranslate nohighlight">\(len()\)</span> function:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">({</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><em>Note</em> - All sets you’ll use in Python are finite.</p>
+<p>Python has no built in powerset method. In fact, in Python a set object cannot be an element of another set. The technical reason for this is set objects are mutable and therefore not hashable, but getting into what that means, why it presents a limitation, and how to work around it would take us too deep into the specifics of Python’s implementation and too far away from this course.</p>
+</section>
+<section id="the-cartesian-product">
+<h2>3. The Cartesian Product<a class="headerlink" href="#the-cartesian-product" title="Link to this heading">#</a></h2>
+<p><strong>Definition</strong> - The <em>Cartesian product</em> of sets <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, denoted <span class="math notranslate nohighlight">\(A \times B\)</span>, is the set of all ordered pairs <span class="math notranslate nohighlight">\((a,b)\)</span>, where <span class="math notranslate nohighlight">\(a \in A\)</span> and <span class="math notranslate nohighlight">\(b \in B\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[A \times B = \{(a,b)| a \in A \land b \in B\}\]</div>
+<p><em>Note</em> - The operator <span class="math notranslate nohighlight">\(\land\)</span> is the “and” operator. So, the statement “<span class="math notranslate nohighlight">\(a \in A \land b \in B\)</span>” means <span class="math notranslate nohighlight">\(a\)</span> in <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(b\)</span> in <span class="math notranslate nohighlight">\(B\)</span>.</p>
+<p>For example, the 2-dimension plane, <span class="math notranslate nohighlight">\(\mathbb{R}^{2}\)</span>, is the Cartesian product of the real line with itself <span class="math notranslate nohighlight">\(\mathbb{R} \times \mathbb{R}\)</span>.</p>
+<p><strong>Example</strong> - If <span class="math notranslate nohighlight">\(A = \{1,2\}\)</span> and <span class="math notranslate nohighlight">\(B = \{a,b,c\}\)</span>, then the Cartesian product of the two sets is</p>
+<div class="math notranslate nohighlight">
+\[ 
+A \times B = \{(1,a),(2,a),(1,b),(2,b),(1,c),(2,c)\}
+\]</div>
+<p>The cardinality of the Cartesian product of <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> will be <span class="math notranslate nohighlight">\(|A||B|\)</span>.</p>
+<p><strong>Example</strong> - <span class="math notranslate nohighlight">\(|A \times B|\)</span>, the cardinality of <span class="math notranslate nohighlight">\(A \times B\)</span>, is <span class="math notranslate nohighlight">\(8\)</span>, which is <span class="math notranslate nohighlight">\(|A||B| = 2 \times 4\)</span>.</p>
+<p>Python has no built in function for generating the Cartesian product of two sets, but we can easily write one:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">cartesian_product</span><span class="p">(</span><span class="n">A</span><span class="p">:</span> <span class="nb">set</span><span class="p">,</span> <span class="n">B</span><span class="p">:</span> <span class="nb">set</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">set</span><span class="p">[</span><span class="nb">tuple</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return the Cartesian product A × B as a set of (a, b) tuples.</span>
+<span class="sd">    Example: cartesian_product({1,2}, {&#39;x&#39;}) -&gt; {(1, &#39;x&#39;), (2, &#39;x&#39;)}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">{(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">A</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">B</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">}</span>
+<span class="n">B</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">}</span>
+<span class="n">cartesian_product</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="set-operations">
+<h2>4. Set Operations<a class="headerlink" href="#set-operations" title="Link to this heading">#</a></h2>
+<p><strong>Definitions</strong> - Let <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> be sets.</p>
+<p>The <em>union</em> of the sets <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, denoted <span class="math notranslate nohighlight">\(A \cup B\)</span>, is the set that contains those elements in either <span class="math notranslate nohighlight">\(A\)</span>, or <span class="math notranslate nohighlight">\(B\)</span>, or both.</p>
+<p>The <em>intersection</em> of the sets <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, denoted <span class="math notranslate nohighlight">\(A \cap B\)</span>, is the set containing those elements in both <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>.</p>
+<p>Two sets are called <em>disjoint</em> if their intersection is the empty set.</p>
+<p>The <em>difference</em> of sets <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, denoted <span class="math notranslate nohighlight">\(A - B\)</span>, is the set of all elements in <span class="math notranslate nohighlight">\(A\)</span> that are not in <span class="math notranslate nohighlight">\(B\)</span>.</p>
+<p><strong>Examples</strong> - The union of the sets <span class="math notranslate nohighlight">\(A = \{1,2,3\}\)</span> and <span class="math notranslate nohighlight">\(B = \{1,3,5\}\)</span> is <span class="math notranslate nohighlight">\(A \cup B = \{1,2,3,5\}\)</span>. Their intersection is <span class="math notranslate nohighlight">\(A \cap B = \{1,3\}\)</span>. Their difference is <span class="math notranslate nohighlight">\(A - B = \{2\}\)</span>.</p>
+<p>The union operator in Python is “|”. The intersection operator is “&amp;”. The difference operator is “-“.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">}</span>
+<span class="n">B</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">};</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Union</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="o">|</span><span class="n">B</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Intersection</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="o">&amp;</span><span class="n">B</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Difference</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="o">-</span><span class="n">B</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Sometimes, sets are defined in relation to a larger <em>universal set</em> that contains all elements that can appear in sets. For example, you could define sets as being subsets of the real numbers, where the real number line is the universal set. In this context, it makes sense to talk about the <em>complement</em> of a set.</p>
+<p><strong>Definition</strong> - Let <span class="math notranslate nohighlight">\(U\)</span> be a defined universal set. The <em>complement</em> of the set <span class="math notranslate nohighlight">\(A\)</span>, denoted by <span class="math notranslate nohighlight">\(\overline{A}\)</span>, is the complement of <span class="math notranslate nohighlight">\(A\)</span> with respect to <span class="math notranslate nohighlight">\(U\)</span>. It is the set of all elements in <span class="math notranslate nohighlight">\(U\)</span> not in <span class="math notranslate nohighlight">\(A\)</span>.</p>
+<p><strong>Example</strong> - The complement of the positive integers within the set of all integers, <span class="math notranslate nohighlight">\(\mathbb{Z}\)</span>, is the set of non-negative integers.</p>
+<p>If we take the union of many sets <span class="math notranslate nohighlight">\(A_{1},A_{2},\ldots,A_{n}\)</span> we can write it as:</p>
+<div class="math notranslate nohighlight">
+\[\displaystyle A_{1} \cup A_{2} \cup \cdots \cup A_{n} = \bigcup_{i = 1}^{n}A_{i}\]</div>
+<p>If we take the intersection of many sets <span class="math notranslate nohighlight">\(A_{1},A_{2},\ldots,A_{n}\)</span> we can write it as:</p>
+<div class="math notranslate nohighlight">
+\[\displaystyle A_{1} \cap A_{2} \cap \cdots \cap A_{n} = \bigcap_{i = 1}^{n}A_{i}\]</div>
+</section>
+<section id="naive-set-theory">
+<h2>5. Naive Set Theory<a class="headerlink" href="#naive-set-theory" title="Link to this heading">#</a></h2>
+<p>We’ve played a bit loose with our definition of a set, and in particular we never made precise what we meant by an “object” that can go in a set. Treating set theory like this is called “naive set theory”, and if you go looking for problems with this naive approach, you can find them. In particular, you can run into contradictions like the set of all sets that do not contain themselves. We won’t deal with these issues in this class, but they are serious, and the formal foundations of set theory require a more precise set of fundamental definitions and specifications to fix them.</p>
+<p>This contradictory notion of the set of all sets that do not contain themselves was discovered and popularized by Bertrand Russell. A great book about Russell is the graphic novel <em>Logicomix</em>.</p>
+</section>
+<section id="practice-exercises">
+<h2>6. Practice Exercises<a class="headerlink" href="#practice-exercises" title="Link to this heading">#</a></h2>
+<p><strong>Exercise 1</strong> - What is the Cartesian product of the sets <span class="math notranslate nohighlight">\(A = \{1,2,5\}\)</span> and <span class="math notranslate nohighlight">\(B = \{x,y,z\}\)</span>? What is its cardinality?</p>
+<p><strong>Exercise 2</strong> - What is are the union and intersection of the sets <span class="math notranslate nohighlight">\(A = \{a,b,c\}\)</span> and <span class="math notranslate nohighlight">\(B = \{a,e,i,o,u\}\)</span>.</p>
+<p><strong>Exercise 3</strong> - What is the powerset of the set <span class="math notranslate nohighlight">\(P = \{1,3,7\}\)</span>.</p>
+</section>
+<section id="references-and-further-reading">
+<h2>7. References and Further Reading<a class="headerlink" href="#references-and-further-reading" title="Link to this heading">#</a></h2>
+<ul>
+<li><p><a class="reference external" href="https://www.cengage.com/c/introduction-to-the-theory-of-computation-3e-sipser/9781133187790/">Introduction to the Theory of Computation</a> (Third Edition) by Michael Sipser</p>
+<p><em>Section 0.2 - Mathematical Notions and Terminology</em></p>
+</li>
+<li><p><a class="reference external" href="https://link.springer.com/book/10.1007/978-1-4757-1645-0">Naive Set Theory</a> by Paul Halmos.</p></li>
+<li><p><a class="reference external" href="https://www.kingsenglish.com/item/R503eGKA3NJqETeOz-RJIQ">Logicomix</a></p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content\Part_0_Preliminary_Material"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../../intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Decode Computation︰ Hands-On Formal Languages and Algorithms</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../Part_1_Regular_Languages/Chapter01_Languages.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">2. </span>Languages</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-definitions">1. Basic Definitions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#containment-equality-and-cardinality">2. Containment, Equality, and Cardinality</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-cartesian-product">3. The Cartesian Product</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-operations">4. Set Operations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#naive-set-theory">5. Naive Set Theory</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-exercises">6. Practice Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references-and-further-reading">7. References and Further Reading</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Yong Zhang, Dylan Zwick
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

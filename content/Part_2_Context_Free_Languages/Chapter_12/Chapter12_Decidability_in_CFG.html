@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>10. Decidability in Context-Free Grammars (CFGs) &#8212; Decode Computation:Hands-On Formal Languages and Algorithms</title>
+    <title>12. Decidability in Context-Free Grammars (CFGs) &#8212; Decode Computation:Hands-On Formal Languages and Algorithms</title>
   
   
   
@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -62,8 +62,8 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'content/Part_2_Context_Free_Languages/Chapter_12/Chapter12_Decidability_in_CFG';</script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="11. Introduction to Turing Machines" href="../../Part_3_Turing_Machines/Chapter_13/Chapter13_Introduction_to_Turing_Machines.html" />
-    <link rel="prev" title="9. Properties of Context-free Languages (CFL)" href="../Chapter_11/Chapter11_Properties_of_Context_free%20Languages.html" />
+    <link rel="next" title="13. Introduction to Turing Machines" href="../../Part_3_Turing_Machines/Chapter_13/Chapter13_Introduction_to_Turing_Machines.html" />
+    <link rel="prev" title="11. Properties of Context-free Languages (CFL)" href="../Chapter_11/Chapter11_Properties_of_Context_free%20Languages.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -181,33 +181,42 @@
                 </a>
             </li>
         </ul>
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Regular Languages</span></p>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Preliminary Material</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../../Part_1_Regular_Languages/Chapter01_Languages.html">1. Languages</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Part_1_Regular_Languages/Chapter02_Regular_Expressions.html">2. Regular Expressions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Part_1_Regular_Languages/Chapter03_Finite_Automata.html">3. Finite Automata</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Part_1_Regular_Languages/Chapter04_Nondeterministic_Finite_Automata.html">4. Nondeterministic Finite Automata</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Part_1_Regular_Languages/Chapter05_Nonregular_Languages.html">5. Nonregular Languages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Part_0_Preliminary_Material/Chapter00_Set_Theory.html">1. Chapter 0 - Set Theory</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Regular Languages</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Part_1_Regular_Languages/Chapter01_Languages.html">2. Languages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Part_1_Regular_Languages/Chapter02_Regular_Expressions.html">3. Regular Expressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Part_1_Regular_Languages/Chapter03_Finite_Automata.html">4. Finite Automata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Part_1_Regular_Languages/Chapter04_Nondeterministic_Finite_Automata.html">5. Nondeterministic Finite Automata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Part_1_Regular_Languages/Chapter05_Kleene%27s_Theorem_Part1.html">6. Kleene’s Theorem (Part 1)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Part_1_Regular_Languages/Chapter07_Nonregular_Languages.html">7. Nonregular Languages</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Context Free Languages</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../Chapter_08/Chapter08_Fundamentals_of_CFG.html">6. Fundamentals of Context-Free Grammar</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Chapter_09/Chapter09_CFG_Normal_Forms_and_Transformations.html">7. Normal Forms and Transformations in Context-Free Grammars</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Chapter_10/Chapter10_PDA.html">8. Pushdown Automata (PDA)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Chapter_11/Chapter11_Properties_of_Context_free%20Languages.html">9. Properties of Context-free Languages (CFL)</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">10. Decidability in Context-Free Grammars (CFGs)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Chapter_08/Chapter08_Fundamentals_of_CFG.html">8. Fundamentals of Context-Free Grammar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Chapter_09/Chapter09_CFG_Normal_Forms_and_Transformations.html">9. Normal Forms and Transformations in Context-Free Grammars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Chapter_10/Chapter10_PDA.html">10. Pushdown Automata (PDA)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Chapter_11/Chapter11_Properties_of_Context_free%20Languages.html">11. Properties of Context-free Languages (CFL)</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">12. Decidability in Context-Free Grammars (CFGs)</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Turing Machines</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../../Part_3_Turing_Machines/Chapter_13/Chapter13_Introduction_to_Turing_Machines.html">11. Introduction to Turing Machines</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Part_3_Turing_Machines/Chapter_14/Chapter14_Turing_Machine_Languages.html">12. Turing Machine Languages</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Part_3_Turing_Machines/Chapter_15/Chapter15_Turing_Machine_Encoding.html">13. Turing Machine Encoding</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Part_3_Turing_Machines/Chapter_16/Chapter16_Universal_Turing_Machine.html">14. The Universal Turing Machine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Part_3_Turing_Machines/Chapter_13/Chapter13_Introduction_to_Turing_Machines.html">13. Introduction to Turing Machines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Part_3_Turing_Machines/Chapter_14/Chapter14_Turing_Machine_Languages.html">14. Turing Machine Languages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Part_3_Turing_Machines/Chapter_15/Chapter15_Turing_Machine_Encoding.html">15. Turing Machine Encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Part_3_Turing_Machines/Chapter_16/Chapter16_Universal_Turing_Machine.html">16. The Universal Turing Machine</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced Topics</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../../Part_4_Advanced_Topics/Chapter17_P_and_NP_Problems.html">15. P and NP Problems</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Part_4_Advanced_Topics/Chapter18_NP_Completeness.html">16. NP-Completeness</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Part_4_Advanced_Topics/Chapter17_P_and_NP_Problems.html">17. P and NP Problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Part_4_Advanced_Topics/Chapter18_NP_Completeness.html">18. NP-Completeness</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Appendix/Jupyter%20Notebook%20Setup%20Guide.html">19. Appendix: Getting Started with Jupyter Notebooks (JupyterLab and Google Colab)</a></li>
 </ul>
 
     </div>
@@ -461,7 +470,7 @@ document.write(`
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="decidability-in-context-free-grammars-cfgs">
-<h1><span class="section-number">10. </span>Decidability in Context-Free Grammars (CFGs)<a class="headerlink" href="#decidability-in-context-free-grammars-cfgs" title="Link to this heading">#</a></h1>
+<h1><span class="section-number">12. </span>Decidability in Context-Free Grammars (CFGs)<a class="headerlink" href="#decidability-in-context-free-grammars-cfgs" title="Link to this heading">#</a></h1>
 <section id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">#</a></h2>
 <p>This section explores several decidable problems related to Context-Free Grammars (CFGs). Decidability in formal language theory refers to whether an algorithm exists that can determine the answer to a specific problem for all possible inputs within a given class of languages. For context-free grammars (CFGs), several important problems are decidable, meaning there exist algorithms to solve them effectively. This chapter covers key decidable problems in the context of CFGs, including:</p>
@@ -2102,7 +2111,7 @@ $<span class="math notranslate nohighlight">\(\{S \rightarrow AB \mid aS, A \rig
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><span class="section-number">9. </span>Properties of Context-free Languages (CFL)</p>
+        <p class="prev-next-title"><span class="section-number">11. </span>Properties of Context-free Languages (CFL)</p>
       </div>
     </a>
     <a class="right-next"
@@ -2110,7 +2119,7 @@ $<span class="math notranslate nohighlight">\(\{S \rightarrow AB \mid aS, A \rig
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">11. </span>Introduction to Turing Machines</p>
+        <p class="prev-next-title"><span class="section-number">13. </span>Introduction to Turing Machines</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

@@ -1,0 +1,1069 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>6. Kleene’s Theorem (Part 1) &#8212; Decode Computation:Hands-On Formal Languages and Algorithms</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/Part_1_Regular_Languages/Chapter05_Kleene's_Theorem_Part1';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="7. Nonregular Languages" href="Chapter07_Nonregular_Languages.html" />
+    <link rel="prev" title="5. Nondeterministic Finite Automata" href="Chapter04_Nondeterministic_Finite_Automata.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Decode Computation:Hands-On Formal Languages and Algorithms - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Decode Computation:Hands-On Formal Languages and Algorithms - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Decode Computation︰ Hands-On Formal Languages and Algorithms
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Preliminary Material</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Part_0_Preliminary_Material/Chapter00_Set_Theory.html">1. Chapter 0 - Set Theory</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Regular Languages</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Chapter01_Languages.html">2. Languages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter02_Regular_Expressions.html">3. Regular Expressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter03_Finite_Automata.html">4. Finite Automata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter04_Nondeterministic_Finite_Automata.html">5. Nondeterministic Finite Automata</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">6. Kleene’s Theorem (Part 1)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter07_Nonregular_Languages.html">7. Nonregular Languages</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Context Free Languages</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Part_2_Context_Free_Languages/Chapter_08/Chapter08_Fundamentals_of_CFG.html">8. Fundamentals of Context-Free Grammar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_2_Context_Free_Languages/Chapter_09/Chapter09_CFG_Normal_Forms_and_Transformations.html">9. Normal Forms and Transformations in Context-Free Grammars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_2_Context_Free_Languages/Chapter_10/Chapter10_PDA.html">10. Pushdown Automata (PDA)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_2_Context_Free_Languages/Chapter_11/Chapter11_Properties_of_Context_free%20Languages.html">11. Properties of Context-free Languages (CFL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_2_Context_Free_Languages/Chapter_12/Chapter12_Decidability_in_CFG.html">12. Decidability in Context-Free Grammars (CFGs)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Turing Machines</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Part_3_Turing_Machines/Chapter_13/Chapter13_Introduction_to_Turing_Machines.html">13. Introduction to Turing Machines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_3_Turing_Machines/Chapter_14/Chapter14_Turing_Machine_Languages.html">14. Turing Machine Languages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_3_Turing_Machines/Chapter_15/Chapter15_Turing_Machine_Encoding.html">15. Turing Machine Encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_3_Turing_Machines/Chapter_16/Chapter16_Universal_Turing_Machine.html">16. The Universal Turing Machine</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced Topics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Part_4_Advanced_Topics/Chapter17_P_and_NP_Problems.html">17. P and NP Problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_4_Advanced_Topics/Chapter18_NP_Completeness.html">18. NP-Completeness</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Appendix/Jupyter%20Notebook%20Setup%20Guide.html">19. Appendix: Getting Started with Jupyter Notebooks (JupyterLab and Google Colab)</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontent/Part_1_Regular_Languages/Chapter05_Kleene's_Theorem_Part1.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/content/Part_1_Regular_Languages/Chapter05_Kleene's_Theorem_Part1.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Kleene’s Theorem (Part 1)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kleene-s-theorem">1. Kleene’s Theorem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generated-by-a-regular-expression-subseteq-recognized-by-a-dfa">2. Generated by a Regular Expression <span class="math notranslate nohighlight">\(\subseteq\)</span> Recognized by a DFA</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-empty-string-and-single-letters">2.1 The Empty String and Single Letters</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#unions">2.2 Unions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#products">2.3 Products</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kleene-star">2.4 Kleene Star</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-exercises">3. Practice Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">4. Further Reading</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="kleene-s-theorem-part-1">
+<h1><span class="section-number">6. </span>Kleene’s Theorem (Part 1)<a class="headerlink" href="#kleene-s-theorem-part-1" title="Link to this heading">#</a></h1>
+<section id="learning-objectives">
+<h2>Learning Objectives<a class="headerlink" href="#learning-objectives" title="Link to this heading">#</a></h2>
+<p>After completing this chapter, you will be able to:</p>
+<ul class="simple">
+<li><p>Understand the statement of Kleene’s Theorem.</p></li>
+<li><p>Create a DFA that recognizes the language generated by a given regular expression.</p></li>
+</ul>
+<p>As in the last chapter, we’ll be creating some directed graphs, so we’ll import the libraries for doing so.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">graphviz</span><span class="w"> </span><span class="kn">import</span> <span class="n">Digraph</span><span class="p">,</span> <span class="n">Source</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="kleene-s-theorem">
+<h2>1. Kleene’s Theorem<a class="headerlink" href="#kleene-s-theorem" title="Link to this heading">#</a></h2>
+<p>We have so far seen three primary ways of defining a language:</p>
+<ol class="arabic simple">
+<li><p>The set of all strings over an alphabet recognized by a DFA.</p></li>
+<li><p>The set of all strings over an alphabet recognized by a NFA.</p></li>
+<li><p>The set of all strings generated by a regular expression.</p></li>
+</ol>
+<p>In Chapter 4, we proved that for any NFA there is a DFA that recognizes the same language, and so the sets of languages we can define using the first two methods are equal. <em>Kleene’s Theorem</em> states that the sets of languages we can define using all three methods are equal. This means for every regular expression, there is a DFA that recognizes exactly the language generated by that regular expression, and for every NFA, there is a regular expression that generates exactly the language recognized by the NFA.</p>
+<p>In this chapter we’ll prove the first of these equalities - that for every regular expression there is a DFA that recognizes exactly the language generated by the regular expression. In the next chapter we’ll prove the second equality.</p>
+</section>
+<section id="generated-by-a-regular-expression-subseteq-recognized-by-a-dfa">
+<h2>2. Generated by a Regular Expression <span class="math notranslate nohighlight">\(\subseteq\)</span> Recognized by a DFA<a class="headerlink" href="#generated-by-a-regular-expression-subseteq-recognized-by-a-dfa" title="Link to this heading">#</a></h2>
+<p>We will now prove that any language generated by a regular expression can be recognized by a DFA. This proof will be constructive, and the algorithm for the construction is known as <em>Thompson’s construction</em>, after the computer sciencist Ken Thompson.</p>
+<p>First, we recall the definition of a regular expression from Chapter 2:</p>
+<hr class="docutils" />
+<p><strong>Definition</strong>
+Formally, the set of <em>regular expressions</em> over an alphabet <span class="math notranslate nohighlight">\(\Sigma\)</span> is defined by the rules:</p>
+<ul class="simple">
+<li><p><strong>Rule 1</strong>: Every letter of <span class="math notranslate nohighlight">\(\Sigma\)</span> can be made into a regular expression by writing it in boldface; <span class="math notranslate nohighlight">\(\boldsymbol{\lambda}\)</span> (the empty string) is a regular expression.</p></li>
+<li><p><strong>Rule 2</strong>: If <span class="math notranslate nohighlight">\(\textbf{r}_{1}\)</span> and <span class="math notranslate nohighlight">\(\textbf{r}_{2}\)</span> are regular expressions, then so are:</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\((\textbf{r}_{1})\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\textbf{r}_{1}\)</span> <span class="math notranslate nohighlight">\(\textbf{r}_{2}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\textbf{r}_{1}\)</span> + <span class="math notranslate nohighlight">\(\textbf{r}_{2}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\textbf{r}_{1}^{*}\)</span></p></li>
+</ul>
+</li>
+<li><p><strong>Rule 3</strong>: Nothing else is a regular expression.</p></li>
+</ul>
+<hr class="docutils" />
+<p>So, in order to prove the languages generated by regular expressions can all be recognized by DFAs, we must first prove that all languages generated by Rule 1 can be recognized by DFAs (easy), and then demonstrate how we handle the operations from Rule 2, namely unions, products, and Kleene stars (harder). If we can do this, then according to Rule 3 we’re done!</p>
+<p>This proof will cover everything you need to know, but will be a bit less formal that you’d see in a precise writeup, and will lean on demonstrations. We’ll assume in each demonstration that our alphabet is <span class="math notranslate nohighlight">\(\Sigma = \{a,b\}\)</span>. It should be straightforward how things would generalize to larger alphabets.</p>
+<section id="the-empty-string-and-single-letters">
+<h3>2.1 The Empty String and Single Letters<a class="headerlink" href="#the-empty-string-and-single-letters" title="Link to this heading">#</a></h3>
+<p>A DFA that recognizes just the empty string is:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">empty</span> <span class="o">=</span> <span class="n">Digraph</span><span class="p">()</span>
+<span class="n">empty</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rankdir</span><span class="o">=</span><span class="s1">&#39;LR&#39;</span><span class="p">)</span> <span class="c1"># This specifies the diagram should go left to right</span>
+
+<span class="c1"># Start arrow</span>
+<span class="n">empty</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+<span class="n">empty</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;start state&#39;</span><span class="p">)</span>
+
+<span class="c1"># States</span>
+<span class="k">with</span> <span class="n">empty</span><span class="o">.</span><span class="n">subgraph</span><span class="p">()</span> <span class="k">as</span> <span class="n">start</span><span class="p">:</span>
+  <span class="n">start</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rank</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+  <span class="n">start</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;start state&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;doublecircle&#39;</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">empty</span><span class="o">.</span><span class="n">subgraph</span><span class="p">()</span> <span class="k">as</span> <span class="n">fail</span><span class="p">:</span>
+  <span class="n">fail</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rank</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+  <span class="n">fail</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;fail state&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
+
+<span class="c1"># Transitions</span>
+<span class="n">empty</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;start state&#39;</span><span class="p">,</span> <span class="s1">&#39;fail state&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;a,b&#39;</span><span class="p">)</span>
+<span class="n">empty</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;fail state&#39;</span><span class="p">,</span> <span class="s1">&#39;fail state&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;a,b&#39;</span><span class="p">)</span>
+
+<span class="n">Source</span><span class="p">(</span><span class="n">empty</span><span class="o">.</span><span class="n">source</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/98d2d25b6acfbf51bb68a81954fbe6dd68916505bfcc0ebfdc3dd9caade59bd4.svg" src="../../_images/98d2d25b6acfbf51bb68a81954fbe6dd68916505bfcc0ebfdc3dd9caade59bd4.svg" />
+</div>
+</div>
+<p>A DFA that accepts only a string of one letter (say <span class="math notranslate nohighlight">\(a\)</span>) is:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">letter</span> <span class="o">=</span> <span class="n">Digraph</span><span class="p">()</span>
+<span class="n">letter</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rankdir</span><span class="o">=</span><span class="s1">&#39;LR&#39;</span><span class="p">)</span> <span class="c1"># This specifies the diagram should go left to right</span>
+
+<span class="c1"># Start arrow</span>
+<span class="n">letter</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+<span class="n">letter</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;start state&#39;</span><span class="p">)</span>
+
+<span class="c1"># States</span>
+<span class="k">with</span> <span class="n">letter</span><span class="o">.</span><span class="n">subgraph</span><span class="p">()</span> <span class="k">as</span> <span class="n">fail</span><span class="p">:</span>
+  <span class="n">fail</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rank</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+  <span class="n">fail</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;start state&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
+  <span class="n">fail</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;fail state&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">letter</span><span class="o">.</span><span class="n">subgraph</span><span class="p">()</span> <span class="k">as</span> <span class="n">success</span><span class="p">:</span>
+  <span class="n">success</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rank</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+  <span class="n">success</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;accept state&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;doublecircle&#39;</span><span class="p">)</span>
+
+<span class="c1"># Transitions</span>
+<span class="n">letter</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;start state&#39;</span><span class="p">,</span> <span class="s1">&#39;accept state&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">letter</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;start state&#39;</span><span class="p">,</span> <span class="s1">&#39;fail state&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">letter</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;accept state&#39;</span><span class="p">,</span> <span class="s1">&#39;fail state&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;a,b&#39;</span><span class="p">)</span>
+<span class="n">letter</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;fail state&#39;</span><span class="p">,</span> <span class="s1">&#39;fail state&#39;</span><span class="p">,</span> <span class="n">tailport</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">headport</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;a,b&#39;</span><span class="p">)</span>
+
+<span class="n">Source</span><span class="p">(</span><span class="n">letter</span><span class="o">.</span><span class="n">source</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/09bad46d17eff4f78e98083360216bd1655a47cf8091d28c82a148a28b4ce602.svg" src="../../_images/09bad46d17eff4f78e98083360216bd1655a47cf8091d28c82a148a28b4ce602.svg" />
+</div>
+</div>
+</section>
+<section id="unions">
+<h3>2.2 Unions<a class="headerlink" href="#unions" title="Link to this heading">#</a></h3>
+<p>To take the union of two DFAs, say <span class="math notranslate nohighlight">\(DFA_{1} + DFA_{2}\)</span>, you need to create another finite automata <span class="math notranslate nohighlight">\(DFA_{3}\)</span>, where the nodes of <span class="math notranslate nohighlight">\(DFA_{3}\)</span> are products of nodes from <span class="math notranslate nohighlight">\(DFA_{1}\)</span> and <span class="math notranslate nohighlight">\(DFA_{2}\)</span>, and the transitions go between these products. The start state is the product of both start states, and the accept states are those where one or the other (but not necessarily both) nodes in the product are final states.</p>
+<p>Let’s go over this with an example. Suppose the DFA below is <span class="math notranslate nohighlight">\(DFA_{1}\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfa1</span> <span class="o">=</span> <span class="n">Digraph</span><span class="p">()</span>
+<span class="n">dfa1</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rankdir</span><span class="o">=</span><span class="s1">&#39;LR&#39;</span><span class="p">)</span> <span class="c1"># This specifies the diagram should go left to right</span>
+
+<span class="c1"># Start arrow</span>
+<span class="n">dfa1</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+<span class="n">dfa1</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;x1&#39;</span><span class="p">)</span>
+
+<span class="c1"># States</span>
+<span class="k">with</span> <span class="n">dfa1</span><span class="o">.</span><span class="n">subgraph</span><span class="p">()</span> <span class="k">as</span> <span class="n">start</span><span class="p">:</span>
+  <span class="n">start</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rank</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+  <span class="n">start</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;x1&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">dfa1</span><span class="o">.</span><span class="n">subgraph</span><span class="p">()</span> <span class="k">as</span> <span class="n">accept</span><span class="p">:</span>
+  <span class="n">accept</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rank</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+  <span class="n">accept</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;x2&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;doublecircle&#39;</span><span class="p">)</span>
+
+<span class="c1"># Transitions</span>
+<span class="n">dfa1</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;x1&#39;</span><span class="p">,</span> <span class="s1">&#39;x2&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">dfa1</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;x1&#39;</span><span class="p">,</span> <span class="s1">&#39;x1&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">dfa1</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;x2&#39;</span><span class="p">,</span> <span class="s1">&#39;x2&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">dfa1</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;x2&#39;</span><span class="p">,</span> <span class="s1">&#39;x1&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+
+<span class="n">Source</span><span class="p">(</span><span class="n">dfa1</span><span class="o">.</span><span class="n">source</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/53af049d21713b72f06b76cc3831283d14c2de808bafe4ed203f794b4cb15e86.svg" src="../../_images/53af049d21713b72f06b76cc3831283d14c2de808bafe4ed203f794b4cb15e86.svg" />
+</div>
+</div>
+<p>The DFA below is <span class="math notranslate nohighlight">\(DFA_{2}\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfa2</span> <span class="o">=</span> <span class="n">Digraph</span><span class="p">()</span>
+<span class="n">dfa2</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rankdir</span><span class="o">=</span><span class="s1">&#39;LR&#39;</span><span class="p">)</span> <span class="c1"># This specifies the diagram should go left to right</span>
+
+<span class="c1"># Start arrow</span>
+<span class="n">dfa2</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+<span class="n">dfa2</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;y1&#39;</span><span class="p">)</span>
+
+<span class="c1"># States</span>
+<span class="k">with</span> <span class="n">dfa2</span><span class="o">.</span><span class="n">subgraph</span><span class="p">()</span> <span class="k">as</span> <span class="n">start</span><span class="p">:</span>
+  <span class="n">start</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rank</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+  <span class="n">start</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;y1&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">dfa2</span><span class="o">.</span><span class="n">subgraph</span><span class="p">()</span> <span class="k">as</span> <span class="n">middle</span><span class="p">:</span>
+  <span class="n">middle</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rank</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+  <span class="n">middle</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;y2&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">dfa2</span><span class="o">.</span><span class="n">subgraph</span><span class="p">()</span> <span class="k">as</span> <span class="n">accept</span><span class="p">:</span>
+  <span class="n">accept</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rank</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+  <span class="n">accept</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;y3&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;doublecircle&#39;</span><span class="p">)</span>
+
+<span class="c1"># Transitions</span>
+<span class="n">dfa2</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;y1&#39;</span><span class="p">,</span> <span class="s1">&#39;y1&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">dfa2</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;y1&#39;</span><span class="p">,</span> <span class="s1">&#39;y2&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">dfa2</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;y2&#39;</span><span class="p">,</span> <span class="s1">&#39;y2&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">dfa2</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;y2&#39;</span><span class="p">,</span> <span class="s1">&#39;y3&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">dfa2</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;y3&#39;</span><span class="p">,</span> <span class="s1">&#39;y3&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;a,b&#39;</span><span class="p">)</span>
+
+<span class="n">Source</span><span class="p">(</span><span class="n">dfa2</span><span class="o">.</span><span class="n">source</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/231fe3ee7460868eaabaae31da3918be5700b6fc3d670151bcb468449c1c55fb.svg" src="../../_images/231fe3ee7460868eaabaae31da3918be5700b6fc3d670151bcb468449c1c55fb.svg" />
+</div>
+</div>
+<p>The union of these two DFAs, <span class="math notranslate nohighlight">\(DFA_{3}\)</span>, would be:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfa3</span> <span class="o">=</span> <span class="n">Digraph</span><span class="p">()</span>
+<span class="n">dfa3</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rankdir</span><span class="o">=</span><span class="s1">&#39;LR&#39;</span><span class="p">)</span> <span class="c1"># This specifies the diagram should go left to right</span>
+
+<span class="c1"># Start arrow</span>
+<span class="n">dfa3</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+<span class="n">dfa3</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;x1,y1&#39;</span><span class="p">)</span>
+
+<span class="c1"># States</span>
+<span class="k">with</span> <span class="n">dfa3</span><span class="o">.</span><span class="n">subgraph</span><span class="p">()</span> <span class="k">as</span> <span class="n">start</span><span class="p">:</span>
+  <span class="n">start</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rank</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+  <span class="n">start</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;x1,y1&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
+  <span class="n">start</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;x2,y1&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;doublecircle&#39;</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">dfa3</span><span class="o">.</span><span class="n">subgraph</span><span class="p">()</span> <span class="k">as</span> <span class="n">middle</span><span class="p">:</span>
+  <span class="n">middle</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rank</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+  <span class="n">middle</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;x1,y2&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
+  <span class="n">middle</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;x2,y2&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;doublecircle&#39;</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">dfa3</span><span class="o">.</span><span class="n">subgraph</span><span class="p">()</span> <span class="k">as</span> <span class="n">accept</span><span class="p">:</span>
+  <span class="n">accept</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rank</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+  <span class="n">accept</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;x1,y3&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;doublecircle&#39;</span><span class="p">)</span>
+  <span class="n">accept</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;x2,y3&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;doublecircle&#39;</span><span class="p">)</span>
+
+<span class="c1"># Transitions</span>
+<span class="n">dfa3</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;x1,y1&#39;</span><span class="p">,</span> <span class="s1">&#39;x2,y2&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">dfa3</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;x1,y1&#39;</span><span class="p">,</span> <span class="s1">&#39;x1,y1&#39;</span><span class="p">,</span> <span class="n">tailport</span><span class="o">=</span><span class="s1">&#39;e&#39;</span><span class="p">,</span> <span class="n">headport</span><span class="o">=</span><span class="s1">&#39;e&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">dfa3</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;x2,y1&#39;</span><span class="p">,</span> <span class="s1">&#39;x2,y2&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">dfa3</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;x2,y1&#39;</span><span class="p">,</span> <span class="s1">&#39;x1,y1&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">dfa3</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;x1,y2&#39;</span><span class="p">,</span> <span class="s1">&#39;x2,y2&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">dfa3</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;x1,y2&#39;</span><span class="p">,</span> <span class="s1">&#39;x1,y3&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">dfa3</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;x2,y2&#39;</span><span class="p">,</span> <span class="s1">&#39;x2,y2&#39;</span><span class="p">,</span> <span class="n">tailport</span><span class="o">=</span><span class="s1">&#39;e&#39;</span><span class="p">,</span> <span class="n">headport</span><span class="o">=</span><span class="s1">&#39;e&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">dfa3</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;x2,y2&#39;</span><span class="p">,</span> <span class="s1">&#39;x1,y3&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">dfa3</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;x1,y3&#39;</span><span class="p">,</span> <span class="s1">&#39;x2,y3&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">dfa3</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;x1,y3&#39;</span><span class="p">,</span> <span class="s1">&#39;x1,y3&#39;</span><span class="p">,</span> <span class="n">tailport</span><span class="o">=</span><span class="s1">&#39;e&#39;</span><span class="p">,</span> <span class="n">headport</span><span class="o">=</span><span class="s1">&#39;e&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">dfa3</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;x2,y3&#39;</span><span class="p">,</span> <span class="s1">&#39;x2,y3&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">dfa3</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;x2,y3&#39;</span><span class="p">,</span> <span class="s1">&#39;x1,y3&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+
+
+<span class="n">Source</span><span class="p">(</span><span class="n">dfa3</span><span class="o">.</span><span class="n">source</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/78be60a9f3bb65f6293e663cef4bcf4233e66275bca08e85d4ab4a9babb928e4.svg" src="../../_images/78be60a9f3bb65f6293e663cef4bcf4233e66275bca08e85d4ab4a9babb928e4.svg" />
+</div>
+</div>
+<p>Now, this would be correct, but we can note there’s no way to reach <span class="math notranslate nohighlight">\((x2,y1)\)</span> or <span class="math notranslate nohighlight">\((x1,y2)\)</span> from the start state <span class="math notranslate nohighlight">\((x1,y1)\)</span>. We can eliminate them and have an equivalent DFA:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfa3reduced</span> <span class="o">=</span> <span class="n">Digraph</span><span class="p">()</span>
+<span class="n">dfa3reduced</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rankdir</span><span class="o">=</span><span class="s1">&#39;LR&#39;</span><span class="p">)</span> <span class="c1"># This specifies the diagram should go left to right</span>
+
+<span class="c1"># Start arrow</span>
+<span class="n">dfa3reduced</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+<span class="n">dfa3reduced</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;x1,y1&#39;</span><span class="p">)</span>
+
+<span class="c1"># States</span>
+<span class="k">with</span> <span class="n">dfa3reduced</span><span class="o">.</span><span class="n">subgraph</span><span class="p">()</span> <span class="k">as</span> <span class="n">start</span><span class="p">:</span>
+  <span class="n">start</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rank</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+  <span class="n">start</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;x1,y1&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">dfa3reduced</span><span class="o">.</span><span class="n">subgraph</span><span class="p">()</span> <span class="k">as</span> <span class="n">middle</span><span class="p">:</span>
+  <span class="n">middle</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rank</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+  <span class="n">middle</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;x2,y2&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;doublecircle&#39;</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">dfa3reduced</span><span class="o">.</span><span class="n">subgraph</span><span class="p">()</span> <span class="k">as</span> <span class="n">accept</span><span class="p">:</span>
+  <span class="n">accept</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rank</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+  <span class="n">accept</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;x1,y3&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;doublecircle&#39;</span><span class="p">)</span>
+  <span class="n">accept</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;x2,y3&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;doublecircle&#39;</span><span class="p">)</span>
+
+<span class="c1"># Transitions</span>
+<span class="n">dfa3reduced</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;x1,y1&#39;</span><span class="p">,</span> <span class="s1">&#39;x2,y2&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">dfa3reduced</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;x1,y1&#39;</span><span class="p">,</span> <span class="s1">&#39;x1,y1&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">dfa3reduced</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;x2,y2&#39;</span><span class="p">,</span> <span class="s1">&#39;x2,y2&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">dfa3reduced</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;x2,y2&#39;</span><span class="p">,</span> <span class="s1">&#39;x1,y3&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">dfa3reduced</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;x1,y3&#39;</span><span class="p">,</span> <span class="s1">&#39;x2,y3&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">dfa3reduced</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;x1,y3&#39;</span><span class="p">,</span> <span class="s1">&#39;x1,y3&#39;</span><span class="p">,</span> <span class="n">tailport</span><span class="o">=</span><span class="s1">&#39;e&#39;</span><span class="p">,</span> <span class="n">headport</span><span class="o">=</span><span class="s1">&#39;e&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">dfa3reduced</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;x2,y3&#39;</span><span class="p">,</span> <span class="s1">&#39;x2,y3&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">dfa3reduced</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;x2,y3&#39;</span><span class="p">,</span> <span class="s1">&#39;x1,y3&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+
+<span class="n">Source</span><span class="p">(</span><span class="n">dfa3reduced</span><span class="o">.</span><span class="n">source</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/6bdd14f78c6a990f3aa508847213a7aa33850502f1961fae5dfadf85568fdcf7.svg" src="../../_images/6bdd14f78c6a990f3aa508847213a7aa33850502f1961fae5dfadf85568fdcf7.svg" />
+</div>
+</div>
+</section>
+<section id="products">
+<h3>2.3 Products<a class="headerlink" href="#products" title="Link to this heading">#</a></h3>
+<p>To take the product of two finite automata, say <span class="math notranslate nohighlight">\(DFA_{1}DFA_{2}\)</span>, you need to create another finite automata <span class="math notranslate nohighlight">\(DFA_{3}\)</span>, where the nodes of <span class="math notranslate nohighlight">\(DFA_{3}\)</span> are of the form <span class="math notranslate nohighlight">\(x \times Y\)</span>, where <span class="math notranslate nohighlight">\(x\)</span> is a node in <span class="math notranslate nohighlight">\(DFA_{1}\)</span>, and <span class="math notranslate nohighlight">\(Y\)</span> is a (possibly empty) subset of the nodes from <span class="math notranslate nohighlight">\(DFA_{2}\)</span>. The transitions move the <span class="math notranslate nohighlight">\(x\)</span> term within <span class="math notranslate nohighlight">\(DFA_{1}\)</span>, and any time you’re at a final state in <span class="math notranslate nohighlight">\(DFA_{1}\)</span> you add the initial state of <span class="math notranslate nohighlight">\(DFA_{2}\)</span> to <span class="math notranslate nohighlight">\(Y\)</span> if it’s not there already. The final states are those where <span class="math notranslate nohighlight">\(Y\)</span> contains a  final state of <span class="math notranslate nohighlight">\(DFA_{2}\)</span>.</p>
+<p>For example, if <span class="math notranslate nohighlight">\(DFA_{1}\)</span> and <span class="math notranslate nohighlight">\(DFA_{2}\)</span> are the two DFAs from Subsection 5.2.2, then their product is:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfa3</span> <span class="o">=</span> <span class="n">Digraph</span><span class="p">()</span>
+<span class="n">dfa3</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rankdir</span><span class="o">=</span><span class="s1">&#39;LR&#39;</span><span class="p">)</span> <span class="c1"># This specifies the diagram should go left to right</span>
+
+<span class="c1"># Start arrow</span>
+<span class="n">dfa3</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+<span class="n">dfa3</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;x1,0&#39;</span><span class="p">)</span>
+
+<span class="c1"># States</span>
+<span class="k">with</span> <span class="n">dfa3</span><span class="o">.</span><span class="n">subgraph</span><span class="p">()</span> <span class="k">as</span> <span class="n">start</span><span class="p">:</span>
+  <span class="n">start</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rank</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+  <span class="n">start</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;x1,0&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;x1,∅&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">dfa3</span><span class="o">.</span><span class="n">subgraph</span><span class="p">()</span> <span class="k">as</span> <span class="n">middle</span><span class="p">:</span>
+  <span class="n">middle</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rank</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+  <span class="n">middle</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;x2,</span><span class="si">{y1}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
+  <span class="n">middle</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;x2,{y1,y2}&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
+  <span class="n">middle</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;x1,{y1,y3}&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;doublecircle&#39;</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">dfa3</span><span class="o">.</span><span class="n">subgraph</span><span class="p">()</span> <span class="k">as</span> <span class="n">end</span><span class="p">:</span>
+  <span class="n">end</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rank</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+  <span class="n">end</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;x1,</span><span class="si">{y1}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
+  <span class="n">end</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;x2,{y1,y2,y3}&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;doublecircle&#39;</span><span class="p">)</span>
+
+<span class="c1"># Transitions</span>
+<span class="n">dfa3</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;x1,0&#39;</span><span class="p">,</span> <span class="s1">&#39;x2,</span><span class="si">{y1}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">dfa3</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;x1,0&#39;</span><span class="p">,</span> <span class="s1">&#39;x1,0&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">dfa3</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;x2,</span><span class="si">{y1}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;x2,{y1,y2}&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">dfa3</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;x2,</span><span class="si">{y1}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;x1,</span><span class="si">{y1}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">dfa3</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;x1,</span><span class="si">{y1}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;x2,{y1,y2}&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">dfa3</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;x1,</span><span class="si">{y1}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;x1,</span><span class="si">{y1}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">dfa3</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;x2,{y1,y2}&#39;</span><span class="p">,</span> <span class="s1">&#39;x2,{y1,y2}&#39;</span><span class="p">,</span> <span class="n">tailport</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">headport</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">dfa3</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;x2,{y1,y2}&#39;</span><span class="p">,</span> <span class="s1">&#39;x1,{y1,y3}&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">dfa3</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;x1,{y1,y3}&#39;</span><span class="p">,</span> <span class="s1">&#39;x2,{y1,y2,y3}&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">dfa3</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;x1,{y1,y3}&#39;</span><span class="p">,</span> <span class="s1">&#39;x1,{y1,y3}&#39;</span><span class="p">,</span> <span class="n">tailport</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">headport</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">dfa3</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;x2,{y1,y2,y3}&#39;</span><span class="p">,</span> <span class="s1">&#39;x2,{y1,y2,y3}&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">dfa3</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;x2,{y1,y2,y3}&#39;</span><span class="p">,</span> <span class="s1">&#39;x1,{y1,y3}&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+
+<span class="n">Source</span><span class="p">(</span><span class="n">dfa3</span><span class="o">.</span><span class="n">source</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/0e901648b3b094bf22b392ff6189dfe3f86ddb031b3c94fb726dee2412c9081e.svg" src="../../_images/0e901648b3b094bf22b392ff6189dfe3f86ddb031b3c94fb726dee2412c9081e.svg" />
+</div>
+</div>
+</section>
+<section id="kleene-star">
+<h3>2.4 Kleene Star<a class="headerlink" href="#kleene-star" title="Link to this heading">#</a></h3>
+<p>To take the Kleene star of a DFA, say <span class="math notranslate nohighlight">\(DFA_{1}\)</span>, you need to create another finite automata <span class="math notranslate nohighlight">\(DFA_{2}\)</span> where the nodes of <span class="math notranslate nohighlight">\(DFA_{2}\)</span> are subsets of the nodes from <span class="math notranslate nohighlight">\(DFA_{1}\)</span>. The transitions act on all the nodes from the subset, and any time the subset includes a final state from <span class="math notranslate nohighlight">\(DFA_{1}\)</span>, you add the initial state of <span class="math notranslate nohighlight">\(DFA_{1}\)</span> if it’s not already there. The start state of <span class="math notranslate nohighlight">\(DFA_{2}\)</span> corresponds with the empty set, and transitions to the states to which the start state of <span class="math notranslate nohighlight">\(DFA_{1}\)</span> transitions. The accepting states of <span class="math notranslate nohighlight">\(DFA_{2}\)</span> are the start state, and any state the contains a start state of <span class="math notranslate nohighlight">\(DFA_{1}\)</span> in its subset.</p>
+<p>For example, suppose the DFA below is <span class="math notranslate nohighlight">\(DFA_{1}\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfa1</span> <span class="o">=</span> <span class="n">Digraph</span><span class="p">()</span>
+<span class="n">dfa1</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rankdir</span><span class="o">=</span><span class="s1">&#39;LR&#39;</span><span class="p">)</span> <span class="c1"># This specifies the diagram should go left to right</span>
+
+<span class="c1"># Start arrow</span>
+<span class="n">dfa1</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+<span class="n">dfa1</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;x1&#39;</span><span class="p">)</span>
+
+<span class="c1"># States</span>
+<span class="k">with</span> <span class="n">dfa1</span><span class="o">.</span><span class="n">subgraph</span><span class="p">()</span> <span class="k">as</span> <span class="n">start</span><span class="p">:</span>
+  <span class="n">start</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rank</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+  <span class="n">start</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;x1&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">dfa1</span><span class="o">.</span><span class="n">subgraph</span><span class="p">()</span> <span class="k">as</span> <span class="n">middle</span><span class="p">:</span>
+  <span class="n">middle</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rank</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+  <span class="n">middle</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;x2&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
+  <span class="n">middle</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;x3&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">dfa1</span><span class="o">.</span><span class="n">subgraph</span><span class="p">()</span> <span class="k">as</span> <span class="n">end</span><span class="p">:</span>
+  <span class="n">end</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rank</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+  <span class="n">end</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;x4&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;doublecircle&#39;</span><span class="p">)</span>
+
+<span class="c1"># Transitions</span>
+<span class="n">dfa1</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;x1&#39;</span><span class="p">,</span> <span class="s1">&#39;x2&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">dfa1</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;x1&#39;</span><span class="p">,</span> <span class="s1">&#39;x3&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">dfa1</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;x2&#39;</span><span class="p">,</span> <span class="s1">&#39;x2&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">dfa1</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;x2&#39;</span><span class="p">,</span> <span class="s1">&#39;x4&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">dfa1</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;x3&#39;</span><span class="p">,</span> <span class="s1">&#39;x3&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;a,b&#39;</span><span class="p">)</span>
+<span class="n">dfa1</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;x4&#39;</span><span class="p">,</span> <span class="s1">&#39;x3&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">dfa1</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;x4&#39;</span><span class="p">,</span> <span class="s1">&#39;x4&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+
+<span class="n">Source</span><span class="p">(</span><span class="n">dfa1</span><span class="o">.</span><span class="n">source</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/afd2bec477ac72f32281ecf62c220e446c1f39dcfff79e48a5d7e467b02c0a0f.svg" src="../../_images/afd2bec477ac72f32281ecf62c220e446c1f39dcfff79e48a5d7e467b02c0a0f.svg" />
+</div>
+</div>
+<p>The Kleene star of <span class="math notranslate nohighlight">\(DFA_{1}\)</span> would be:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfa2</span> <span class="o">=</span> <span class="n">Digraph</span><span class="p">()</span>
+<span class="n">dfa2</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rankdir</span><span class="o">=</span><span class="s1">&#39;LR&#39;</span><span class="p">)</span> <span class="c1"># This specifies the diagram should go left to right</span>
+
+<span class="c1"># Start arrow</span>
+<span class="n">dfa2</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+<span class="n">dfa2</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">)</span>
+
+<span class="c1"># States</span>
+<span class="k">with</span> <span class="n">dfa2</span><span class="o">.</span><span class="n">subgraph</span><span class="p">()</span> <span class="k">as</span> <span class="n">start</span><span class="p">:</span>
+  <span class="n">start</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rank</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+  <span class="n">start</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;∅&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;doublecircle&#39;</span><span class="p">)</span>
+  <span class="n">start</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{x3}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">dfa2</span><span class="o">.</span><span class="n">subgraph</span><span class="p">()</span> <span class="k">as</span> <span class="n">middle</span><span class="p">:</span>
+  <span class="n">middle</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rank</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+  <span class="n">middle</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{x2}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
+  <span class="n">middle</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;{x2,x3}&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">dfa2</span><span class="o">.</span><span class="n">subgraph</span><span class="p">()</span> <span class="k">as</span> <span class="n">end</span><span class="p">:</span>
+  <span class="n">end</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rank</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+  <span class="n">end</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;{x1,x4}&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;doublecircle&#39;</span><span class="p">)</span>
+  <span class="n">end</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;{x1,x3,x4}&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;doublecircle&#39;</span><span class="p">)</span>
+
+<span class="c1"># Transitions</span>
+<span class="n">dfa2</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{x2}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">dfa2</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{x3}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">dfa2</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{x2}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{x2}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">dfa2</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{x2}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;{x1,x4}&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">dfa2</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{x3}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">{x3}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">tailport</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">headport</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;a,b&#39;</span><span class="p">)</span>
+<span class="n">dfa2</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;{x1,x4}&#39;</span><span class="p">,</span> <span class="s1">&#39;{x2,x3}&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">dfa2</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;{x1,x4}&#39;</span><span class="p">,</span> <span class="s1">&#39;{x1,x3,x4}&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">dfa2</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;{x2,x3}&#39;</span><span class="p">,</span> <span class="s1">&#39;{x2,x3}&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">dfa2</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;{x2,x3}&#39;</span><span class="p">,</span> <span class="s1">&#39;{x1,x3,x4}&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">dfa2</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;{x1,x3,x4}&#39;</span><span class="p">,</span> <span class="s1">&#39;{x2,x3}&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">dfa2</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;{x1,x3,x4}&#39;</span><span class="p">,</span> <span class="s1">&#39;{x1,x3,x4}&#39;</span><span class="p">,</span> <span class="n">tailport</span><span class="o">=</span><span class="s1">&#39;e&#39;</span><span class="p">,</span> <span class="n">headport</span><span class="o">=</span><span class="s1">&#39;e&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+
+<span class="n">Source</span><span class="p">(</span><span class="n">dfa2</span><span class="o">.</span><span class="n">source</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/c5375f62b75067da4e8c22cb62f2be235f34a9d5df2db60cfd4b2e4faad01c09.svg" src="../../_images/c5375f62b75067da4e8c22cb62f2be235f34a9d5df2db60cfd4b2e4faad01c09.svg" />
+</div>
+</div>
+<p>That’s it! Now that we can generate the basic building blocks (the empty string and single characters), and how we build with them (unions, products, and stars) we can generate a DFA that recognizes the languages generated by any given regular expression.</p>
+</section>
+</section>
+<section id="practice-exercises">
+<h2>3. Practice Exercises<a class="headerlink" href="#practice-exercises" title="Link to this heading">#</a></h2>
+<p>Suppose <span class="math notranslate nohighlight">\(DFA_{1}\)</span> is:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfa1</span> <span class="o">=</span> <span class="n">Digraph</span><span class="p">()</span>
+<span class="n">dfa1</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rankdir</span><span class="o">=</span><span class="s1">&#39;LR&#39;</span><span class="p">)</span> <span class="c1"># This specifies the diagram should go left to right</span>
+
+<span class="c1"># Start arrow</span>
+<span class="n">dfa1</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+<span class="n">dfa1</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;x1&#39;</span><span class="p">)</span>
+
+<span class="c1"># States</span>
+<span class="k">with</span> <span class="n">dfa1</span><span class="o">.</span><span class="n">subgraph</span><span class="p">()</span> <span class="k">as</span> <span class="n">start</span><span class="p">:</span>
+  <span class="n">start</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rank</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+  <span class="n">start</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;x1&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">dfa1</span><span class="o">.</span><span class="n">subgraph</span><span class="p">()</span> <span class="k">as</span> <span class="n">accept</span><span class="p">:</span>
+  <span class="n">accept</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rank</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+  <span class="n">accept</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;x2&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;doublecircle&#39;</span><span class="p">)</span>
+
+<span class="c1"># Transitions</span>
+<span class="n">dfa1</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;x1&#39;</span><span class="p">,</span> <span class="s1">&#39;x2&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">dfa1</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;x1&#39;</span><span class="p">,</span> <span class="s1">&#39;x1&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">dfa1</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;x2&#39;</span><span class="p">,</span> <span class="s1">&#39;x2&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">dfa1</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;x2&#39;</span><span class="p">,</span> <span class="s1">&#39;x1&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+
+<span class="n">Source</span><span class="p">(</span><span class="n">dfa1</span><span class="o">.</span><span class="n">source</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/53af049d21713b72f06b76cc3831283d14c2de808bafe4ed203f794b4cb15e86.svg" src="../../_images/53af049d21713b72f06b76cc3831283d14c2de808bafe4ed203f794b4cb15e86.svg" />
+</div>
+</div>
+<p>And <span class="math notranslate nohighlight">\(DFA_{2}\)</span> is:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dfa2</span> <span class="o">=</span> <span class="n">Digraph</span><span class="p">()</span>
+<span class="n">dfa2</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rankdir</span><span class="o">=</span><span class="s1">&#39;LR&#39;</span><span class="p">)</span> <span class="c1"># This specifies the diagram should go left to right</span>
+
+<span class="c1"># Start arrow</span>
+<span class="n">dfa2</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+<span class="n">dfa2</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;y1&#39;</span><span class="p">)</span>
+
+<span class="c1"># States</span>
+<span class="k">with</span> <span class="n">dfa2</span><span class="o">.</span><span class="n">subgraph</span><span class="p">()</span> <span class="k">as</span> <span class="n">start</span><span class="p">:</span>
+  <span class="n">start</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rank</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+  <span class="n">start</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;y1&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">dfa2</span><span class="o">.</span><span class="n">subgraph</span><span class="p">()</span> <span class="k">as</span> <span class="n">accept</span><span class="p">:</span>
+  <span class="n">accept</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rank</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+  <span class="n">accept</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;y2&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;doublecircle&#39;</span><span class="p">)</span>
+
+<span class="c1"># Transitions</span>
+<span class="n">dfa2</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;y1&#39;</span><span class="p">,</span> <span class="s1">&#39;y2&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">dfa2</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;y1&#39;</span><span class="p">,</span> <span class="s1">&#39;y1&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">dfa2</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;y2&#39;</span><span class="p">,</span> <span class="s1">&#39;y2&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;a,b&#39;</span><span class="p">)</span>
+
+<span class="n">Source</span><span class="p">(</span><span class="n">dfa2</span><span class="o">.</span><span class="n">source</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/28fdbf3dbcd984ea87c11b53ca9783a681d865676158454a133f60d45e7d367e.svg" src="../../_images/28fdbf3dbcd984ea87c11b53ca9783a681d865676158454a133f60d45e7d367e.svg" />
+</div>
+</div>
+<p><strong>Exercise 1</strong>: What is the union <span class="math notranslate nohighlight">\(DFA_{1} + DFA_{2}\)</span>? What language does it recognize?</p>
+<p><strong>Exercise 2</strong>: What is the product <span class="math notranslate nohighlight">\(DFA_{1}DFA_{2}\)</span>? What language does it recognize?</p>
+<p><strong>Exercise 3</strong>: What is <span class="math notranslate nohighlight">\(DFA_{1}^{*}\)</span>? What language does it recognize?</p>
+</section>
+<section id="further-reading">
+<h2>4. Further Reading<a class="headerlink" href="#further-reading" title="Link to this heading">#</a></h2>
+<ul>
+<li><p><a class="reference external" href="https://www.amazon.com/Introduction-Computer-Theory-Daniel-Cohen/dp/0471137723">Introduction to Computer Theory</a> (Second Edition) by Daniel I.A. Cohen</p>
+<p><em>Chapter 7 - Kleene’s Theorem</em></p>
+</li>
+<li><p><a class="reference external" href="https://www.amazon.com/Introduction-Automata-Theory-Languages-Computation/dp/0321462254">Automata Theory, Languages, and Computation</a> (Third Edition) by Hopcroft, Motwani, and Ullman</p>
+<p><em>Section 3.2 - Finite Automata and Regular Expressions</em></p>
+</li>
+<li><p><a class="reference external" href="https://www.cengage.com/c/introduction-to-the-theory-of-computation-3e-sipser/9781133187790/">Introduction to the Theory of Computation</a> (Third Edition) by Michael Sipser</p>
+<p><em>Section 1.2 - Nondeterminism,</em> <em>Section 1.3 - Regular Expressions</em></p>
+</li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Thompson%27s_construction">Thompson’s Construction</a></p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content\Part_1_Regular_Languages"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Chapter04_Nondeterministic_Finite_Automata.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">5. </span>Nondeterministic Finite Automata</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Chapter07_Nonregular_Languages.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">7. </span>Nonregular Languages</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kleene-s-theorem">1. Kleene’s Theorem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generated-by-a-regular-expression-subseteq-recognized-by-a-dfa">2. Generated by a Regular Expression <span class="math notranslate nohighlight">\(\subseteq\)</span> Recognized by a DFA</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-empty-string-and-single-letters">2.1 The Empty String and Single Letters</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#unions">2.2 Unions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#products">2.3 Products</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kleene-star">2.4 Kleene Star</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-exercises">3. Practice Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">4. Further Reading</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Yong Zhang, Dylan Zwick
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
