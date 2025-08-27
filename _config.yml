@@ -41,5 +41,10 @@ html:
 
 # Sphinx extensions
 sphinx:
+  config:
+    html_last_updated_fmt: '%b %d, %Y'
+    html_show_sourcelink: true  
   extra_extensions:
     - sphinxcontrib.mermaid  # Enables {mermaid} blocks
+    - sphinx.ext.githubpages
+    - sphinx_last_updated_by_git
