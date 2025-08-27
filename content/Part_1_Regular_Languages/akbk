@@ -1,0 +1,91 @@
+digraph {
+	"" [shape=none]
+	"" -> "start state"
+	{
+		rank=same
+		"fail state" [shape=circle]
+	}
+	{
+		rank=same
+		"start state" [shape=circle]
+		"1a" [label=a shape=circle]
+		"2a" [label=aa shape=circle]
+		"3a" [label=aaa shape=circle]
+		ellipsis1 [label="..." shape=plaintext]
+		"k-1a" [label=<a<SUP>k-1</SUP>> shape=circle]
+		ka [label=<a<SUP>k</SUP>> shape=circle]
+	}
+	{
+		rank=same
+		"2a1b" [label=aab shape=circle]
+		"3a1b" [label=aaab shape=circle]
+		"k-1a1b" [label=<a<SUP>k-1</SUP>b> shape=circle]
+		ka1b [label=<a<SUP>k</SUP>b> shape=circle]
+	}
+	{
+		rank=same
+		"3a2b" [label=aaabb shape=circle]
+		"k-1a2b" [label=<a<SUP>k-1</SUP>bb> shape=circle]
+		ka2b [label=<a<SUP>k</SUP>bb> shape=circle]
+	}
+	{
+		rank=same
+		ellipsis2 [label="..." shape=plaintext]
+		ellipsis3 [label="..." shape=plaintext]
+	}
+	{
+		rank=same
+		"k-1ak-2b" [label=<a<SUP>k-1</SUP>b<SUP>k-2</SUP>> shape=circle]
+		"kak-1b" [label=<a<SUP>k</SUP>b<SUP>k-1</SUP>> shape=circle]
+	}
+	{
+		rank=same
+		"1a1b" [label=ab shape=doublecircle]
+		"2a2b" [label=aabb shape=doublecircle]
+		"3a3b" [label=aaabbb shape=doublecircle]
+		"k-1ak-1b" [label=<a<SUP>k-1</SUP>b<SUP>k-1</SUP>> shape=doublecircle]
+		kakb [label=<a<SUP>k</SUP>b<SUP>k</SUP>> shape=doublecircle]
+	}
+	"start state" -> "1a" [label=a]
+	"start state" -> "fail state" [label=b]
+	"1a" -> "2a" [label=a]
+	"1a" -> "1a1b" [label=b]
+	"2a" -> "3a" [label=a]
+	"2a" -> "2a1b" [label=b]
+	"3a" -> ellipsis1 [label=a]
+	"3a" -> "3a1b" [label=b]
+	ellipsis1 -> "k-1a" [label=a]
+	ellipsis1 -> "fail state" [label=b]
+	"k-1a" -> ka [label=a]
+	"k-1a" -> "k-1a1b" [label=b]
+	"k-1a1b" -> "fail state" [label=a]
+	"k-1a1b" -> "k-1a2b" [label=b]
+	"k-1a2b" -> "fail state" [label=a]
+	"k-1a2b" -> ellipsis2 [label=b]
+	ellipsis2 -> "fail state" [label=a]
+	ellipsis2 -> "k-1ak-2b" [label=b]
+	"k-1ak-2b" -> "fail state" [label=a]
+	"k-1ak-2b" -> "k-1ak-1b" [label=b]
+	ka -> "fail state" [label=a]
+	ka -> ka1b [label=b]
+	"2a1b" -> "fail state" [label=a]
+	"2a1b" -> "2a2b" [label=b]
+	"3a1b" -> "fail state" [label=a]
+	"3a1b" -> "3a2b" [label=b]
+	"3a2b" -> "fail state" [label=a]
+	"3a2b" -> "3a3b" [label=b]
+	ka1b -> "fail state" [label=a]
+	ka1b -> ka2b [label=b]
+	ka2b -> "fail state" [label=a]
+	ka2b -> ellipsis3 [label=b]
+	ellipsis3 -> "fail state" [label=a]
+	ellipsis3 -> "kak-1b" [label=b]
+	"kak-1b" -> "fail state" [label=a]
+	"kak-1b" -> kakb [label=b]
+	"1a1b" -> "fail state" [label="a,b"]
+	"2a2b" -> "fail state" [label="a,b"]
+	"3a3b" -> "fail state" [label="a,b"]
+	"k-1ak-1b" -> "fail state" [label="a,b"]
+	kakb -> "fail state" [label="a,b"]
+	"fail state" -> "fail state" [label="a,b"]
+}

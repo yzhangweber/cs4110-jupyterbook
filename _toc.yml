@@ -4,6 +4,10 @@
 format: jb-book
 root: intro
 parts:
+  - caption: Preliminary Material
+    numbered: 1
+    chapters:
+    - file: content/Part_0_Preliminary_Material/Chapter00_Set_Theory
   - caption: Regular Languages
     numbered: 1
     chapters:
@@ -11,7 +15,8 @@ parts:
     - file: content/Part_1_Regular_Languages/Chapter02_Regular_Expressions
     - file: content/Part_1_Regular_Languages/Chapter03_Finite_Automata
     - file: content/Part_1_Regular_Languages/Chapter04_Nondeterministic_Finite_Automata
-    - file: content/Part_1_Regular_Languages/Chapter05_Nonregular_Languages
+    - file: content/Part_1_Regular_Languages/Chapter05_Kleene's_Theorem_Part1
+    - file: content/Part_1_Regular_Languages/Chapter07_Nonregular_Languages
   - caption: Context Free Languages
     numbered: 1
     chapters:
