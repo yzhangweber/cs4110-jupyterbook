@@ -1,0 +1,857 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta property="article:modified_time" content="2025-09-05T11:50:47-06:00" />
+    <title>7. Kleene’s Theorem (Part 2) &#8212; Decode Computation:Hands-On Formal Languages and Algorithms</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/Part_1_Regular_Languages/Chapter06_Kleene's_Theorem_Part2';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="8. Nonregular Languages" href="Chapter07_Nonregular_Languages.html" />
+    <link rel="prev" title="6. Kleene’s Theorem (Part 1)" href="Chapter05_Kleene%27s_Theorem_Part1.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+    <meta name="docbuild:last-update" content="Sep 05, 2025"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Decode Computation:Hands-On Formal Languages and Algorithms - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Decode Computation:Hands-On Formal Languages and Algorithms - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Decode Computation︰ Hands-On Formal Languages and Algorithms
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Preliminary Material</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Part_0_Preliminary_Material/Chapter00_Set_Theory.html">1. Set Theory</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Regular Languages</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Chapter01_Languages.html">2. Languages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter02_Regular_Expressions.html">3. Regular Expressions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter03_Finite_Automata.html">4. Finite Automata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter04_Nondeterministic_Finite_Automata.html">5. Nondeterministic Finite Automata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter05_Kleene%27s_Theorem_Part1.html">6. Kleene’s Theorem (Part 1)</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">7. Kleene’s Theorem (Part 2)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Chapter07_Nonregular_Languages.html">8. Nonregular Languages</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Context Free Languages</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Part_2_Context_Free_Languages/Chapter_08/Chapter08_Fundamentals_of_CFG.html">9. Fundamentals of Context-Free Grammar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_2_Context_Free_Languages/Chapter_09/Chapter09_CFG_Normal_Forms_and_Transformations.html">10. Normal Forms and Transformations in Context-Free Grammars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_2_Context_Free_Languages/Chapter_10/Chapter10_PDA.html">11. Pushdown Automata (PDA)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_2_Context_Free_Languages/Chapter_11/Chapter11_Properties_of_Context_free%20Languages.html">12. Properties of Context-free Languages (CFL)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_2_Context_Free_Languages/Chapter_12/Chapter12_Decidability_in_CFG.html">13. Decidability in Context-Free Grammars (CFGs)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Turing Machines</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Part_3_Turing_Machines/Chapter_13/Chapter13_Introduction_to_Turing_Machines.html">14. Introduction to Turing Machines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_3_Turing_Machines/Chapter_14/Chapter14_Turing_Machine_Languages.html">15. Turing Machine Languages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_3_Turing_Machines/Chapter_15/Chapter15_Turing_Machine_Encoding.html">16. Turing Machine Encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_3_Turing_Machines/Chapter_16/Chapter16_Universal_Turing_Machine.html">17. The Universal Turing Machine</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Advanced Topics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Part_4_Advanced_Topics/Chapter17_P_and_NP_Problems.html">18. P and NP Problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Part_4_Advanced_Topics/Chapter18_NP_Completeness.html">19. NP-Completeness</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Appendix/Jupyter%20Notebook%20Setup%20Guide.html">20. Appendix: Getting Started with Jupyter Notebooks (JupyterLab and Google Colab)</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontent/Part_1_Regular_Languages/Chapter06_Kleene's_Theorem_Part2.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/content/Part_1_Regular_Languages/Chapter06_Kleene's_Theorem_Part2.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Kleene’s Theorem (Part 2)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kleene-s-theorem-review">1. Kleene’s Theorem Review</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generalized-nondeterministic-finite-automata-gnfas">2. Generalized Nondeterministic Finite Automata (GNFAs)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recognized-by-a-nfa-subseteq-generated-by-a-regular-expression">3. Recognized by a NFA <span class="math notranslate nohighlight">\(\subseteq\)</span> Generated by a Regular Expression</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-create-a-unique-unenterable-initial-state-and-a-unique-unleaveable-accepting-state">3.1. <strong>Step 1</strong> - Create a unique, unenterable initial state, and a unique, unleaveable accepting state.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-one-by-one-in-any-order-bypass-and-eliminate-all-the-non-initial-and-non-final-states-in-the-gnfa">3.2. <strong>Step 2</strong> - One by one, in any order, bypass and eliminate all the non-initial and non-final states in the GNFA.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-when-two-states-are-joined-by-more-than-one-edge-going-in-the-same-direction-unify-them-by-adding-their-labels">3.3. <strong>Step 3</strong> - When two states are joined by more than one edge going in the same direction, unify them by adding their labels.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-finally-when-all-that-is-left-is-one-edge-from-the-unique-initial-state-to-the-unique-accepting-state-the-label-on-that-edge-is-a-regular-expression-that-generates-the-same-language-as-was-recognized-by-the-original-gnfa">3.4. <strong>Step 4</strong> - Finally, when all that is left is one edge from the unique initial state to the unique accepting state, the label on that edge is a regular expression that generates the same language as was recognized by the original GNFA.</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regular-languages">4. Regular Languages</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-exercises">5. Practice Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">6. Further Reading</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="kleene-s-theorem-part-2">
+<h1><span class="section-number">7. </span>Kleene’s Theorem (Part 2)<a class="headerlink" href="#kleene-s-theorem-part-2" title="Link to this heading">#</a></h1>
+<section id="learning-objectives">
+<h2>Learning Objectives<a class="headerlink" href="#learning-objectives" title="Link to this heading">#</a></h2>
+<p>After completing this chapter, you will be able to:</p>
+<ul class="simple">
+<li><p>Create a regular expression that generates exactly the language recognized by a given NFA.</p></li>
+</ul>
+<p>Again, we’ll be creating some directed graphs, so we’ll import the libraries for doing so.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">graphviz</span><span class="w"> </span><span class="kn">import</span> <span class="n">Digraph</span><span class="p">,</span> <span class="n">Source</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="kleene-s-theorem-review">
+<h2>1. Kleene’s Theorem Review<a class="headerlink" href="#kleene-s-theorem-review" title="Link to this heading">#</a></h2>
+<p>Kleene’s Theorem states that the three ways of defining a language enumerated below:</p>
+<ol class="arabic simple">
+<li><p>The set of all strings over an alphabet recognized by a DFA.</p></li>
+<li><p>The set of all strings over an alphabet recognized by a NFA.</p></li>
+<li><p>The set of all strings generated by a regular expression.</p></li>
+</ol>
+<p>are equivalent. In Chapter 4, we proved that for any NFA there is a DFA that recognizes the same language, and so the sets of languages we can define using the first two methods are equal. In Chapter 5, we proved that for any regular expression we can create a DFA that recognizes exactly the language generated by that regular expression.</p>
+<p>In this chapter, we complete the proof of Kleene’s Theorem by proving the remaining connection - that for every NFA, there is a regular expression that generates exactly the language recognized by that NFA.</p>
+<p>As with the major proofs from Chapter 4 and Chapter 5, this proof is constructive, and we will demonstrade how to construct an appropriate regular expression. The proof will be complete, but a bit more informal than you’d see in a precise writeup.</p>
+</section>
+<section id="generalized-nondeterministic-finite-automata-gnfas">
+<h2>2. Generalized Nondeterministic Finite Automata (GNFAs)<a class="headerlink" href="#generalized-nondeterministic-finite-automata-gnfas" title="Link to this heading">#</a></h2>
+<p>Before we prove the final connection for Kleene’s Theorem, we’ll need to define another type of automaton - the <em>generalized nondeterministic finite automaton</em> or GNFA. Generalized nondeterministic finite automata are simply nondeterministic finite automata where the transition arrows may have any regular expression as labels, not just letters or the empty string <span class="math notranslate nohighlight">\(\lambda\)</span>. A GNFA moves along a transition arrow connecting two states by reading a block of symbols from the input which themselves constitute a string described by the regular expression on the arrow.</p>
+<p>For example, one GNFA is:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">GNFA</span> <span class="o">=</span> <span class="n">Digraph</span><span class="p">()</span>
+<span class="n">GNFA</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rankdir</span><span class="o">=</span><span class="s1">&#39;LR&#39;</span><span class="p">)</span> <span class="c1"># This specifies the diagram should go left to right</span>
+
+<span class="c1"># Start arrow</span>
+<span class="n">GNFA</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+<span class="n">GNFA</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;q0&#39;</span><span class="p">)</span>
+
+<span class="c1"># States</span>
+<span class="k">with</span> <span class="n">GNFA</span><span class="o">.</span><span class="n">subgraph</span><span class="p">()</span> <span class="k">as</span> <span class="n">q0</span><span class="p">:</span>
+  <span class="n">q0</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rank</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+  <span class="n">q0</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;q0&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">GNFA</span><span class="o">.</span><span class="n">subgraph</span><span class="p">()</span> <span class="k">as</span> <span class="n">q1</span><span class="p">:</span>
+  <span class="n">q1</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rank</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+  <span class="n">q1</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;q1&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">GNFA</span><span class="o">.</span><span class="n">subgraph</span><span class="p">()</span> <span class="k">as</span> <span class="n">q2</span><span class="p">:</span>
+  <span class="n">q2</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rank</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+  <span class="n">q2</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;q2&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;doublecircle&#39;</span><span class="p">)</span>
+
+<span class="c1"># Transitions</span>
+<span class="n">GNFA</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;q0&#39;</span><span class="p">,</span> <span class="s1">&#39;q1&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">GNFA</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;q1&#39;</span><span class="p">,</span> <span class="s1">&#39;q1&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;b*&#39;</span><span class="p">)</span>
+<span class="n">GNFA</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;q1&#39;</span><span class="p">,</span> <span class="s1">&#39;q2&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;ab&#39;</span><span class="p">)</span>
+
+<span class="n">Source</span><span class="p">(</span><span class="n">GNFA</span><span class="o">.</span><span class="n">source</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/3ef14807de1e7d5cf01e36a9334dba521d779dbf24c399fd617f48abf3d9a6bc.svg" src="../../_images/3ef14807de1e7d5cf01e36a9334dba521d779dbf24c399fd617f48abf3d9a6bc.svg" />
+</div>
+</div>
+<p>This GNFA would accept the string <span class="math notranslate nohighlight">\(abbbab\)</span> by first reading <span class="math notranslate nohighlight">\(a\)</span> and transitioning from <span class="math notranslate nohighlight">\(q0\)</span> to <span class="math notranslate nohighlight">\(q1\)</span>, then reading <span class="math notranslate nohighlight">\(bbb\)</span> (which is a string generated by the regular expression <span class="math notranslate nohighlight">\(b^*\)</span>) to transition from <span class="math notranslate nohighlight">\(q1\)</span> to itself, and then finally reading <span class="math notranslate nohighlight">\(ab\)</span> to transition from <span class="math notranslate nohighlight">\(q1\)</span> to <span class="math notranslate nohighlight">\(q2\)</span>. Both the second and third transition arrows are not single letters, but regular expressions.</p>
+<p>A GNFA is nondeterministic, and as a single letter is also a regular expression, the set of NFAs is contained within the set of GNFAs. Therefore, any language recognized by a NFA can be recognized by a GNFA, and we have the language containment:</p>
+<div class="math notranslate nohighlight">
+\[\text{Recognized by a NFA} \subseteq \text{Recognized by a GNFA}\]</div>
+<p>We’ll complete Kleene’s theorem by proving that the set of languages recognized by GNFAs is contained within the set of languages generated by regular expressions.</p>
+</section>
+<section id="recognized-by-a-nfa-subseteq-generated-by-a-regular-expression">
+<h2>3. Recognized by a NFA <span class="math notranslate nohighlight">\(\subseteq\)</span> Generated by a Regular Expression<a class="headerlink" href="#recognized-by-a-nfa-subseteq-generated-by-a-regular-expression" title="Link to this heading">#</a></h2>
+<p>We’ll assume we start with a GNFA. The construction consists of four steps which if followed correctly and in order will provide a regular expression that generates exactly the language recognized by the given GNFA.</p>
+<section id="step-1-create-a-unique-unenterable-initial-state-and-a-unique-unleaveable-accepting-state">
+<h3>3.1. <strong>Step 1</strong> - Create a unique, unenterable initial state, and a unique, unleaveable accepting state.<a class="headerlink" href="#step-1-create-a-unique-unenterable-initial-state-and-a-unique-unleaveable-accepting-state" title="Link to this heading">#</a></h3>
+<p>The basic idea here is that if there is a set of initial states, we make them no longer initial states and add a new, unique initial state with empty string transitions from the new, unique initial state to the original initial states.</p>
+<p>Similarly, if there is a set of final states, we make them no longer final states and add a new, unique final state with empty string transitions from the original final states to the new, unique final state.</p>
+<p>I hope you’ll agree it’s clear this doesn’t alter the set of strings accepted by the DFA.</p>
+</section>
+<section id="step-2-one-by-one-in-any-order-bypass-and-eliminate-all-the-non-initial-and-non-final-states-in-the-gnfa">
+<h3>3.2. <strong>Step 2</strong> - One by one, in any order, bypass and eliminate all the non-initial and non-final states in the GNFA.<a class="headerlink" href="#step-2-one-by-one-in-any-order-bypass-and-eliminate-all-the-non-initial-and-non-final-states-in-the-gnfa" title="Link to this heading">#</a></h3>
+<p>A state is bypassed by connecting each incoming edge with each outgoing edge. The label of each resultant edge is the concatenation of the label on the incoming edge with the label on the loop edge if there is one and the label on the outgoing edge.</p>
+<p>For example, the idea here is that if you’ve got a GNFA like the one below, with states <span class="math notranslate nohighlight">\(q1\)</span> through <span class="math notranslate nohighlight">\(q5\)</span> and regular expression transition labels <span class="math notranslate nohighlight">\(r1\)</span> through <span class="math notranslate nohighlight">\(r5\)</span>, we can just bypass this with a transition directly from state <span class="math notranslate nohighlight">\(q1\)</span> to states <span class="math notranslate nohighlight">\(q3, q4\)</span> and <span class="math notranslate nohighlight">\(q5\)</span>.</p>
+<p>We start with the GNFA:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">OGNFA</span> <span class="o">=</span> <span class="n">Digraph</span><span class="p">()</span>
+<span class="n">OGNFA</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rankdir</span><span class="o">=</span><span class="s1">&#39;LR&#39;</span><span class="p">)</span> <span class="c1"># This specifies the diagram should go left to right</span>
+
+<span class="c1"># States</span>
+<span class="k">with</span> <span class="n">OGNFA</span><span class="o">.</span><span class="n">subgraph</span><span class="p">()</span> <span class="k">as</span> <span class="n">l1</span><span class="p">:</span>
+  <span class="n">l1</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rank</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+  <span class="n">l1</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;q1&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">OGNFA</span><span class="o">.</span><span class="n">subgraph</span><span class="p">()</span> <span class="k">as</span> <span class="n">l2</span><span class="p">:</span>
+  <span class="n">l2</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rank</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+  <span class="n">l2</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;q2&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">OGNFA</span><span class="o">.</span><span class="n">subgraph</span><span class="p">()</span> <span class="k">as</span> <span class="n">l3</span><span class="p">:</span>
+  <span class="n">l3</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rank</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+  <span class="n">l3</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;q3&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
+  <span class="n">l3</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;q4&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
+  <span class="n">l3</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;q5&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
+
+<span class="c1"># Transitions</span>
+<span class="n">OGNFA</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;q1&#39;</span><span class="p">,</span> <span class="s1">&#39;q2&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;r1&#39;</span><span class="p">)</span>
+<span class="n">OGNFA</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;q2&#39;</span><span class="p">,</span> <span class="s1">&#39;q2&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;r2&#39;</span><span class="p">)</span>
+<span class="n">OGNFA</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;q2&#39;</span><span class="p">,</span> <span class="s1">&#39;q3&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;r3&#39;</span><span class="p">)</span>
+<span class="n">OGNFA</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;q2&#39;</span><span class="p">,</span> <span class="s1">&#39;q4&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;r4&#39;</span><span class="p">)</span>
+<span class="n">OGNFA</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;q2&#39;</span><span class="p">,</span> <span class="s1">&#39;q5&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;r5&#39;</span><span class="p">)</span>
+
+<span class="n">Source</span><span class="p">(</span><span class="n">OGNFA</span><span class="o">.</span><span class="n">source</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/da094493ac4b58754e58992f290acd038154bd46877f6395ba4e43e61370aeb0.svg" src="../../_images/da094493ac4b58754e58992f290acd038154bd46877f6395ba4e43e61370aeb0.svg" />
+</div>
+</div>
+<p>We reduce it to:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">RGNFA</span> <span class="o">=</span> <span class="n">Digraph</span><span class="p">()</span>
+<span class="n">RGNFA</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rankdir</span><span class="o">=</span><span class="s1">&#39;LR&#39;</span><span class="p">)</span> <span class="c1"># This specifies the diagram should go left to right</span>
+
+<span class="c1"># States</span>
+<span class="k">with</span> <span class="n">RGNFA</span><span class="o">.</span><span class="n">subgraph</span><span class="p">()</span> <span class="k">as</span> <span class="n">l1</span><span class="p">:</span>
+  <span class="n">l1</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rank</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+  <span class="n">l1</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;q1&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">RGNFA</span><span class="o">.</span><span class="n">subgraph</span><span class="p">()</span> <span class="k">as</span> <span class="n">l2</span><span class="p">:</span>
+  <span class="n">l2</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rank</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+  <span class="n">l2</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;q3&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
+  <span class="n">l2</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;q4&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
+  <span class="n">l2</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;q5&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
+
+<span class="c1"># Transitions</span>
+<span class="n">RGNFA</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;q1&#39;</span><span class="p">,</span> <span class="s1">&#39;q3&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;r1r2*r3&#39;</span><span class="p">)</span>
+<span class="n">RGNFA</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;q1&#39;</span><span class="p">,</span> <span class="s1">&#39;q4&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;r1r2*r4&#39;</span><span class="p">)</span>
+<span class="n">RGNFA</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;q1&#39;</span><span class="p">,</span> <span class="s1">&#39;q5&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;r1r2*r5&#39;</span><span class="p">)</span>
+
+<span class="n">Source</span><span class="p">(</span><span class="n">RGNFA</span><span class="o">.</span><span class="n">source</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/f3647e8f672679797e576bce46271485b6038991959fc58f1562770d4e6b7e01.svg" src="../../_images/f3647e8f672679797e576bce46271485b6038991959fc58f1562770d4e6b7e01.svg" />
+</div>
+</div>
+<p>Note that the strings that would transition from, say, <span class="math notranslate nohighlight">\(q1\)</span> to <span class="math notranslate nohighlight">\(q3\)</span> in the first GNFA are the same as those that would transition from <span class="math notranslate nohighlight">\(q1\)</span> to <span class="math notranslate nohighlight">\(q3\)</span> in the second. We’ve just eliminated the middleman state <span class="math notranslate nohighlight">\(q2\)</span> in the second.</p>
+</section>
+<section id="step-3-when-two-states-are-joined-by-more-than-one-edge-going-in-the-same-direction-unify-them-by-adding-their-labels">
+<h3>3.3. <strong>Step 3</strong> - When two states are joined by more than one edge going in the same direction, unify them by adding their labels.<a class="headerlink" href="#step-3-when-two-states-are-joined-by-more-than-one-edge-going-in-the-same-direction-unify-them-by-adding-their-labels" title="Link to this heading">#</a></h3>
+<p>For example, the GNFA:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">TwoGNFA</span> <span class="o">=</span> <span class="n">Digraph</span><span class="p">()</span>
+<span class="n">TwoGNFA</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rankdir</span><span class="o">=</span><span class="s1">&#39;LR&#39;</span><span class="p">)</span> <span class="c1"># This specifies the diagram should go left to right</span>
+
+<span class="c1"># States</span>
+<span class="k">with</span> <span class="n">TwoGNFA</span><span class="o">.</span><span class="n">subgraph</span><span class="p">()</span> <span class="k">as</span> <span class="n">l1</span><span class="p">:</span>
+  <span class="n">l1</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rank</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+  <span class="n">l1</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;q1&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">TwoGNFA</span><span class="o">.</span><span class="n">subgraph</span><span class="p">()</span> <span class="k">as</span> <span class="n">l2</span><span class="p">:</span>
+  <span class="n">l2</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rank</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+  <span class="n">l2</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;q2&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
+
+<span class="c1"># Transitions</span>
+<span class="n">TwoGNFA</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;q1&#39;</span><span class="p">,</span> <span class="s1">&#39;q2&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;r1&#39;</span><span class="p">)</span>
+<span class="n">TwoGNFA</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;q1&#39;</span><span class="p">,</span> <span class="s1">&#39;q2&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;r2&#39;</span><span class="p">)</span>
+
+<span class="n">Source</span><span class="p">(</span><span class="n">TwoGNFA</span><span class="o">.</span><span class="n">source</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/03939b3dad85361822ed2330f4b4cf41849da69353a16f0b196313926f0b1f6a.svg" src="../../_images/03939b3dad85361822ed2330f4b4cf41849da69353a16f0b196313926f0b1f6a.svg" />
+</div>
+</div>
+<p>Can be reduced to:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">OneGNFA</span> <span class="o">=</span> <span class="n">Digraph</span><span class="p">()</span>
+<span class="n">OneGNFA</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rankdir</span><span class="o">=</span><span class="s1">&#39;LR&#39;</span><span class="p">)</span> <span class="c1"># This specifies the diagram should go left to right</span>
+
+<span class="c1"># States</span>
+<span class="k">with</span> <span class="n">OneGNFA</span><span class="o">.</span><span class="n">subgraph</span><span class="p">()</span> <span class="k">as</span> <span class="n">l1</span><span class="p">:</span>
+  <span class="n">l1</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rank</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+  <span class="n">l1</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;q1&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">OneGNFA</span><span class="o">.</span><span class="n">subgraph</span><span class="p">()</span> <span class="k">as</span> <span class="n">l2</span><span class="p">:</span>
+  <span class="n">l2</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rank</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+  <span class="n">l2</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;q2&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
+
+<span class="c1"># Transitions</span>
+<span class="n">OneGNFA</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;q1&#39;</span><span class="p">,</span> <span class="s1">&#39;q2&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;r1+r2&#39;</span><span class="p">)</span>
+
+<span class="n">Source</span><span class="p">(</span><span class="n">OneGNFA</span><span class="o">.</span><span class="n">source</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/1c312844bba60a4f2c8d051def58c5dd4b2ce6d1cc92f836ab868b92164bbd1e.svg" src="../../_images/1c312844bba60a4f2c8d051def58c5dd4b2ce6d1cc92f836ab868b92164bbd1e.svg" />
+</div>
+</div>
+<p>This applies as well to loops on a single node as to transitions between two nodes.</p>
+</section>
+<section id="step-4-finally-when-all-that-is-left-is-one-edge-from-the-unique-initial-state-to-the-unique-accepting-state-the-label-on-that-edge-is-a-regular-expression-that-generates-the-same-language-as-was-recognized-by-the-original-gnfa">
+<h3>3.4. <strong>Step 4</strong> - Finally, when all that is left is one edge from the unique initial state to the unique accepting state, the label on that edge is a regular expression that generates the same language as was recognized by the original GNFA.<a class="headerlink" href="#step-4-finally-when-all-that-is-left-is-one-edge-from-the-unique-initial-state-to-the-unique-accepting-state-the-label-on-that-edge-is-a-regular-expression-that-generates-the-same-language-as-was-recognized-by-the-original-gnfa" title="Link to this heading">#</a></h3>
+<p>This is it. You just apply Step 2 until only two nodes (the initial and accepting) left, and then you merge all the edges connecting them into one. The regular expression for that unique edge generates the language accepted by the original GNFA.</p>
+<p>This procedure works. However, as mentioned above, to formally prove this we’d have to construct a more precise argument for why it must work and why it always works. We won’t focus on that here, but complete formal proofs can be found in the reference textbooks referenced at the end of the chapter.</p>
+</section>
+</section>
+<section id="regular-languages">
+<h2>4. Regular Languages<a class="headerlink" href="#regular-languages" title="Link to this heading">#</a></h2>
+<p>Kleene’s Theorem states that, for a given alphabet <span class="math notranslate nohighlight">\(\Sigma\)</span>,  the following sets are equal:</p>
+<ul class="simple">
+<li><p>The set of languages that can be recognized by a DFA.</p></li>
+<li><p>The set of languages that can be recognized by a NFA.</p></li>
+<li><p>The set of languages that can be generated by a regular expression.</p></li>
+</ul>
+<p>Call these sets <span class="math notranslate nohighlight">\(DFA\)</span>, <span class="math notranslate nohighlight">\(NFA\)</span>, and <span class="math notranslate nohighlight">\(REG\)</span>, respectively. In this chapter we also introduced the generalized nondeterministic finite automaton. Call the set of language that can be recognized by a GNFA, well, <span class="math notranslate nohighlight">\(GNFA\)</span>.</p>
+<p>Obviously <span class="math notranslate nohighlight">\(DFA \subseteq NFA\)</span>, as DFAs are NFAs. Obviously <span class="math notranslate nohighlight">\(NFA \subseteq GNFA\)</span>, as NFAs are GNFAs. We proved in Chapter 5 that <span class="math notranslate nohighlight">\(REG \subseteq DFA\)</span>. We proved in this chapter that <span class="math notranslate nohighlight">\(GNFA \subseteq REG\)</span>. So, we have the following containments:</p>
+<div class="math notranslate nohighlight">
+\[DFA \subseteq NFA \subseteq GNFA \subseteq REG \subseteq DFA\]</div>
+<p>The only way this is possible is if they’re all equal. So, all these sets of languages are the same. We call this set the <strong>regular languages</strong>.</p>
+<p>You may well ask whether all languages over an alphabet are regular. The answer, it turns out, is <em>no</em>, and we’ll discuss this in the next chapter.</p>
+</section>
+<section id="practice-exercises">
+<h2>5. Practice Exercises<a class="headerlink" href="#practice-exercises" title="Link to this heading">#</a></h2>
+<p><strong>Exercise 1</strong>: For the GNFA below, follow the steps in this chapter to construct a regular expression generating the language recognized by the GNFA.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">E1</span> <span class="o">=</span> <span class="n">Digraph</span><span class="p">()</span>
+<span class="n">E1</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rankdir</span><span class="o">=</span><span class="s1">&#39;LR&#39;</span><span class="p">)</span> <span class="c1"># This specifies the diagram should go left to right</span>
+
+<span class="c1"># Start arrow</span>
+<span class="n">E1</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+<span class="n">E1</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;q0&#39;</span><span class="p">)</span>
+
+<span class="c1"># States</span>
+<span class="k">with</span> <span class="n">E1</span><span class="o">.</span><span class="n">subgraph</span><span class="p">()</span> <span class="k">as</span> <span class="n">l0</span><span class="p">:</span>
+  <span class="n">l0</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rank</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+  <span class="n">l0</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;q0&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">E1</span><span class="o">.</span><span class="n">subgraph</span><span class="p">()</span> <span class="k">as</span> <span class="n">l1</span><span class="p">:</span>
+  <span class="n">l1</span><span class="o">.</span><span class="n">attr</span><span class="p">(</span><span class="n">rank</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">)</span>
+  <span class="n">l1</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;q1&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;doublecircle&#39;</span><span class="p">)</span>
+  <span class="n">l1</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;q2&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;doublecircle&#39;</span><span class="p">)</span>
+  <span class="n">l1</span><span class="o">.</span><span class="n">node</span><span class="p">(</span><span class="s1">&#39;q3&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
+
+<span class="c1"># Transitions</span>
+<span class="n">E1</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;q0&#39;</span><span class="p">,</span> <span class="s1">&#39;q0&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;a,b&#39;</span><span class="p">)</span>
+<span class="n">E1</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;q0&#39;</span><span class="p">,</span> <span class="s1">&#39;q1&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">E1</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;q0&#39;</span><span class="p">,</span> <span class="s1">&#39;q2&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">E1</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;q0&#39;</span><span class="p">,</span> <span class="s1">&#39;q3&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;ab&#39;</span><span class="p">)</span>
+<span class="n">E1</span><span class="o">.</span><span class="n">edge</span><span class="p">(</span><span class="s1">&#39;q3&#39;</span><span class="p">,</span> <span class="s1">&#39;q0&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;ba&#39;</span><span class="p">)</span>
+
+<span class="n">Source</span><span class="p">(</span><span class="n">E1</span><span class="o">.</span><span class="n">source</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/3cdcec1d907f32dc03e4ec687e8f397aafe0386a1eb788b50032fccabd253b17.svg" src="../../_images/3cdcec1d907f32dc03e4ec687e8f397aafe0386a1eb788b50032fccabd253b17.svg" />
+</div>
+</div>
+</section>
+<section id="further-reading">
+<h2>6. Further Reading<a class="headerlink" href="#further-reading" title="Link to this heading">#</a></h2>
+<ul>
+<li><p><a class="reference external" href="https://www.amazon.com/Introduction-Computer-Theory-Daniel-Cohen/dp/0471137723">Introduction to Computer Theory</a> (Second Edition) by Daniel I.A. Cohen</p>
+<p><em>Chapter 7 - Kleene’s Theorem</em></p>
+</li>
+<li><p><a class="reference external" href="https://www.amazon.com/Introduction-Automata-Theory-Languages-Computation/dp/0321462254">Automata Theory, Languages, and Computation</a> (Third Edition) by Hopcroft, Motwani, and Ullman</p>
+<p><em>Section 3.2 - Finite Automata and Regular Expressions</em></p>
+</li>
+<li><p><a class="reference external" href="https://www.cengage.com/c/introduction-to-the-theory-of-computation-3e-sipser/9781133187790/">Introduction to the Theory of Computation</a> (Third Edition) by Michael Sipser</p>
+<p><em>Section 1.2 - Nondeterminism,</em> <em>Section 1.3 - Regular Expressions</em></p>
+</li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content\Part_1_Regular_Languages"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Chapter05_Kleene%27s_Theorem_Part1.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">6. </span>Kleene’s Theorem (Part 1)</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Chapter07_Nonregular_Languages.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">8. </span>Nonregular Languages</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kleene-s-theorem-review">1. Kleene’s Theorem Review</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generalized-nondeterministic-finite-automata-gnfas">2. Generalized Nondeterministic Finite Automata (GNFAs)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recognized-by-a-nfa-subseteq-generated-by-a-regular-expression">3. Recognized by a NFA <span class="math notranslate nohighlight">\(\subseteq\)</span> Generated by a Regular Expression</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-create-a-unique-unenterable-initial-state-and-a-unique-unleaveable-accepting-state">3.1. <strong>Step 1</strong> - Create a unique, unenterable initial state, and a unique, unleaveable accepting state.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-one-by-one-in-any-order-bypass-and-eliminate-all-the-non-initial-and-non-final-states-in-the-gnfa">3.2. <strong>Step 2</strong> - One by one, in any order, bypass and eliminate all the non-initial and non-final states in the GNFA.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-when-two-states-are-joined-by-more-than-one-edge-going-in-the-same-direction-unify-them-by-adding-their-labels">3.3. <strong>Step 3</strong> - When two states are joined by more than one edge going in the same direction, unify them by adding their labels.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-finally-when-all-that-is-left-is-one-edge-from-the-unique-initial-state-to-the-unique-accepting-state-the-label-on-that-edge-is-a-regular-expression-that-generates-the-same-language-as-was-recognized-by-the-original-gnfa">3.4. <strong>Step 4</strong> - Finally, when all that is left is one edge from the unique initial state to the unique accepting state, the label on that edge is a regular expression that generates the same language as was recognized by the original GNFA.</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regular-languages">4. Regular Languages</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-exercises">5. Practice Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">6. Further Reading</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Yong Zhang, Dylan Zwick
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Last updated on Sep 05, 2025.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
