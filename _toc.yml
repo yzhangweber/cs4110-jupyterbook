@@ -16,6 +16,7 @@ parts:
     - file: content/Part_1_Regular_Languages/Chapter03_Finite_Automata
     - file: content/Part_1_Regular_Languages/Chapter04_Nondeterministic_Finite_Automata
     - file: content/Part_1_Regular_Languages/Chapter05_Kleene's_Theorem_Part1
+    - file: content/Part_1_Regular_Languages/Chapter06_Kleene's_Theorem_Part2
     - file: content/Part_1_Regular_Languages/Chapter07_Nonregular_Languages
   - caption: Context Free Languages
     numbered: 1
