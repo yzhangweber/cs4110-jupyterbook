@@ -11,34 +11,34 @@ parts:
   - caption: Regular Languages
     numbered: 1
     chapters:
-    - file: content/Part_1_Regular_Languages/Chapter01_Languages
-    - file: content/Part_1_Regular_Languages/Chapter02_Regular_Expressions
-    - file: content/Part_1_Regular_Languages/Chapter03_Finite_Automata
-    - file: content/Part_1_Regular_Languages/Chapter04_Nondeterministic_Finite_Automata
-    - file: content/Part_1_Regular_Languages/Chapter05_Kleene's_Theorem_Part1
-    - file: content/Part_1_Regular_Languages/Chapter06_Kleene's_Theorem_Part2
-    - file: content/Part_1_Regular_Languages/Chapter07_Nonregular_Languages
+      - file: content/Part_1_Regular_Languages/Chapter01_Languages
+      - file: content/Part_1_Regular_Languages/Chapter02_Regular_Expressions
+      - file: content/Part_1_Regular_Languages/Chapter03_Finite_Automata
+      - file: content/Part_1_Regular_Languages/Chapter04_Nondeterministic_Finite_Automata
+      - file: content/Part_1_Regular_Languages/Chapter05_Kleene's_Theorem_Part1
+      - file: content/Part_1_Regular_Languages/Chapter06_Kleene's_Theorem_Part2
+      - file: content/Part_1_Regular_Languages/Chapter07_Nonregular_Languages
   - caption: Context Free Languages
     numbered: 1
     chapters:
-    - file: content/Part_2_Context_Free_Languages/Chapter_08/Chapter08_Fundamentals_of_CFG
-    - file: content/Part_2_Context_Free_Languages/Chapter_09/Chapter09_CFG_Normal_Forms_and_Transformations
-    - file: content/Part_2_Context_Free_Languages/Chapter_10/Chapter10_PDA
-    - file: content/Part_2_Context_Free_Languages/Chapter_11/Chapter11_Properties_of_Context_free Languages
-    - file: content/Part_2_Context_Free_Languages/Chapter_12/Chapter12_Decidability_in_CFG
+      - file: content/Part_2_Context_Free_Languages/Chapter_08/Chapter08_Fundamentals_of_CFG
+      - file: content/Part_2_Context_Free_Languages/Chapter_09/Chapter09_CFG_Normal_Forms_and_Transformations
+      - file: content/Part_2_Context_Free_Languages/Chapter_10/Chapter10_PDA
+      - file: content/Part_2_Context_Free_Languages/Chapter_11/Chapter11_Properties_of_Context_free Languages
+      - file: content/Part_2_Context_Free_Languages/Chapter_12/Chapter12_Decidability_in_CFG
   - caption: Turing Machines
     numbered: 1
     chapters:
-    - file: content/Part_3_Turing_Machines/Chapter_13/Chapter13_Introduction_to_Turing_Machines
-    - file: content/Part_3_Turing_Machines/Chapter_14/Chapter14_Turing_Machine_Languages
-    - file: content/Part_3_Turing_Machines/Chapter_15/Chapter15_Turing_Machine_Encoding
-    - file: content/Part_3_Turing_Machines/Chapter_16/Chapter16_Universal_Turing_Machine
+      - file: content/Part_3_Turing_Machines/Chapter_13/Chapter13_Introduction_to_Turing_Machines
+      - file: content/Part_3_Turing_Machines/Chapter_14/Chapter14_Turing_Machine_Languages
+      - file: content/Part_3_Turing_Machines/Chapter_15/Chapter15_Turing_Machine_Encoding
+      - file: content/Part_3_Turing_Machines/Chapter_16/Chapter16_Universal_Turing_Machine
   - caption: Advanced Topics
     numbered: 1
     chapters:
-    - file: content/Part_4_Advanced_Topics/Chapter17_P_and_NP_Problems
-    - file: content/Part_4_Advanced_Topics/Chapter18_NP_Completeness
+      - file: content/Part_4_Advanced_Topics/Chapter17_P_and_NP_Problems
+      - file: content/Part_4_Advanced_Topics/Chapter18_NP_Completeness
   - caption: Appendix
     numbered: 1
     chapters:
-    - file: content/Appendix/Jupyter Notebook Setup Guide
+      - file: content/Appendix/Jupyter Notebook Setup Guide
