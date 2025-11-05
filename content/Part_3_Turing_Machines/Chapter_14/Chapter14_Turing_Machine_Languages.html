@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <meta property="article:modified_time" content="2025-08-27T15:04:06-06:00" />
+    <meta property="article:modified_time" content="2025-11-05T15:13:26-07:00" />
     <title>15. Turing Machine Languages &#8212; Decode Computation:Hands-On Formal Languages and Algorithms</title>
   
   
@@ -33,7 +33,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -75,7 +75,7 @@ window.addEventListener("load", () => mermaid.run());
     <link rel="prev" title="14. Introduction to Turing Machines" href="../Chapter_13/Chapter13_Introduction_to_Turing_Machines.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Aug 27, 2025"/>
+    <meta name="docbuild:last-update" content="Nov 05, 2025"/>
   </head>
   
   
@@ -454,9 +454,14 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-exercises">5. Practice Exercises</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1">5.1 Exercise 1:</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2">5.2 Exercise 2:</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-3">5.3 Exercise 3:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">5.1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">5.2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">5.3</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#binary-string-parity-checker-recursive-language">5.4 Binary String Parity Checker (Recursive Language)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#palindrome-recognizer-recursively-enumerable">5.5 Palindrome Recognizer (Recursively Enumerable)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#union-of-two-languages-dovetailing">5.6 Union of Two Languages (Dovetailing)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#complement-language-analysis">5.7 Complement Language Analysis</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#language-intersection">5.8 Language Intersection</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">6. Further Reading</a></li>
@@ -1143,21 +1148,78 @@ String: &#39;cab&#39;, Result: reject, Expected: reject
 </section>
 <section id="practice-exercises">
 <h2>5. Practice Exercises<a class="headerlink" href="#practice-exercises" title="Link to this heading">#</a></h2>
-<section id="exercise-1">
-<h3>5.1 Exercise 1:<a class="headerlink" href="#exercise-1" title="Link to this heading">#</a></h3>
+<section id="id3">
+<h3>5.1<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
 <p>Give an example of a language that is recursively enumerable but not recursive. Explain why it falls into this category.</p>
 </section>
-<section id="exercise-2">
-<h3>5.2 Exercise 2:<a class="headerlink" href="#exercise-2" title="Link to this heading">#</a></h3>
+<section id="id4">
+<h3>5.2<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
 <p>Prove that every recursive language is recursively enumerable, but not every recursively enumerable language is recursive.</p>
 </section>
-<section id="exercise-3">
-<h3>5.3 Exercise 3:<a class="headerlink" href="#exercise-3" title="Link to this heading">#</a></h3>
+<section id="id5">
+<h3>5.3<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
 <p>Let <span class="math notranslate nohighlight">\(L_1\)</span> and <span class="math notranslate nohighlight">\(L_2\)</span> be recursively enumerable languages. Which of the following must also be recursively enumerable? Justify your answer.</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(L_1 \cup L_2\)</span></p></li>
 <li><p><span class="math notranslate nohighlight">\(L_1 \cap L_2\)</span></p></li>
 <li><p><span class="math notranslate nohighlight">\(L_1 - L_2\)</span></p></li>
+</ul>
+</section>
+<section id="binary-string-parity-checker-recursive-language">
+<h3>5.4 Binary String Parity Checker (Recursive Language)<a class="headerlink" href="#binary-string-parity-checker-recursive-language" title="Link to this heading">#</a></h3>
+<p>Design a Turing machine that accepts binary strings with an even number of 1s. This is a recursive language because the machine should always halt and give a definitive answer.</p>
+<p>Requirements:</p>
+<ul class="simple">
+<li><p>Accept strings like “00”, “11”, “0011”, “1100”</p></li>
+<li><p>Reject strings like “1”, “01”, “101”, “111”</p></li>
+<li><p>The machine must always halt (no infinite loops)</p></li>
+</ul>
+</section>
+<section id="palindrome-recognizer-recursively-enumerable">
+<h3>5.5 Palindrome Recognizer (Recursively Enumerable)<a class="headerlink" href="#palindrome-recognizer-recursively-enumerable" title="Link to this heading">#</a></h3>
+<p>Create a Turing machine that recognizes palindromes over the alphabet {a, b}. The machine should accept palindromes and may loop on non-palindromes.</p>
+<p>Requirements:</p>
+<ul class="simple">
+<li><p>Accept palindromes like “a”, “b”, “aa”, “bb”, “aba”, “bab”, “abba”</p></li>
+<li><p>May reject or loop on non-palindromes like “ab”, “abc”, “abab”</p></li>
+</ul>
+</section>
+<section id="union-of-two-languages-dovetailing">
+<h3>5.6 Union of Two Languages (Dovetailing)<a class="headerlink" href="#union-of-two-languages-dovetailing" title="Link to this heading">#</a></h3>
+<p>Implement the dovetailing technique to create a Turing machine that accepts the union of two recursively enumerable languages:</p>
+<ul class="simple">
+<li><p>L1: Strings containing “aa”</p></li>
+<li><p>L2: Strings starting with “b”</p></li>
+</ul>
+<p>Requirements:</p>
+<ul class="simple">
+<li><p>Use dovetailing to simulate both machines in parallel</p></li>
+<li><p>Accept if either machine accepts</p></li>
+<li><p>Demonstrate the union property</p></li>
+</ul>
+</section>
+<section id="complement-language-analysis">
+<h3>5.7 Complement Language Analysis<a class="headerlink" href="#complement-language-analysis" title="Link to this heading">#</a></h3>
+<p>Given a recursive language L = {strings over {a,b} that start with ‘a’}, create its complement and demonstrate that the complement is also recursive.</p>
+<p>Requirements:</p>
+<ul class="simple">
+<li><p>Implement the original language recognizer</p></li>
+<li><p>Implement the complement language recognizer</p></li>
+<li><p>Show both always halt (proving recursiveness)</p></li>
+</ul>
+</section>
+<section id="language-intersection">
+<h3>5.8 Language Intersection<a class="headerlink" href="#language-intersection" title="Link to this heading">#</a></h3>
+<p>Create a Turing machine that recognizes the intersection of two languages:</p>
+<ul class="simple">
+<li><p>L1: Binary strings with even number of 1s</p></li>
+<li><p>L2: Binary strings with even length</p></li>
+</ul>
+<p>Requirements:</p>
+<ul class="simple">
+<li><p>Implement both individual language recognizers</p></li>
+<li><p>Create the intersection recognizer using sequential composition</p></li>
+<li><p>Test with various inputs</p></li>
 </ul>
 </section>
 </section>
@@ -1266,9 +1328,14 @@ String: &#39;cab&#39;, Result: reject, Expected: reject
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-exercises">5. Practice Exercises</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1">5.1 Exercise 1:</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2">5.2 Exercise 2:</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-3">5.3 Exercise 3:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">5.1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">5.2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">5.3</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#binary-string-parity-checker-recursive-language">5.4 Binary String Parity Checker (Recursive Language)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#palindrome-recognizer-recursively-enumerable">5.5 Palindrome Recognizer (Recursively Enumerable)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#union-of-two-languages-dovetailing">5.6 Union of Two Languages (Dovetailing)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#complement-language-analysis">5.7 Complement Language Analysis</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#language-intersection">5.8 Language Intersection</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">6. Further Reading</a></li>
@@ -1305,7 +1372,7 @@ By Yong Zhang, Dylan Zwick
   
   <div class="footer-item">
     <p class="last-updated">
-  Last updated on Aug 27, 2025.
+  Last updated on Nov 05, 2025.
   <br/>
 </p>
   </div>

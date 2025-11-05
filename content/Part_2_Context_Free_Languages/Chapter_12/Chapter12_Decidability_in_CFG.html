@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <meta property="article:modified_time" content="2025-08-21T16:38:06-06:00" />
+    <meta property="article:modified_time" content="2025-11-05T15:13:26-07:00" />
     <title>13. Decidability in Context-Free Grammars (CFGs) &#8212; Decode Computation:Hands-On Formal Languages and Algorithms</title>
   
   
@@ -33,7 +33,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -67,7 +67,7 @@
     <link rel="prev" title="12. Properties of Context-free Languages (CFL)" href="../Chapter_11/Chapter11_Properties_of_Context_free%20Languages.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Aug 21, 2025"/>
+    <meta name="docbuild:last-update" content="Nov 05, 2025"/>
   </head>
   
   
@@ -451,13 +451,17 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-exercises">5. Practice Exercises</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1-short-answer-questions">5.1 Exercise 1: Short Answer Questions</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2-emptiness-problem">5.2 Exercise 2: Emptiness Problem</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-3-uselessness-problem">5.3 Exercise 3: Uselessness Problem</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-4-membership-problem">5.4 Exercise 4: Membership Problem</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-5-finiteness-problem">5.5 Exercise 5: Finiteness Problem</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-6-integrated-problem">5.6 Exercise 6: Integrated Problem</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-7-algorithm-implementation">5.7 Exercise 7: Algorithm Implementation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#short-answer-questions">5.1 Short Answer Questions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">5.2 Emptiness Problem</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">5.3 Uselessness Problem</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">5.4 Membership Problem</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">5.5 Finiteness Problem</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#integrated-problem">5.6 Integrated Problem</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#algorithm-implementation">5.7 Algorithm Implementation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cfg-language-analyzer-emptiness-uselessness">5.8 CFG Language Analyzer (Emptiness &amp; Uselessness)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cyk-parser-with-visualization-membership-problem">5.9 CYK Parser with Visualization (Membership Problem)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#earley-parser-with-error-recovery-membership-problem">5.10 Earley Parser with Error Recovery (Membership Problem)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#language-finiteness-detector-with-cycle-analysis-finiteness-problem">5.11 Language Finiteness Detector with Cycle Analysis (Finiteness Problem)</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">6. Further Reading</a></li>
@@ -859,7 +863,7 @@ Is empty_lang language empty? True
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Useless non-terminals: {&#39;D&#39;, &#39;B&#39;, &#39;C&#39;}
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Useless non-terminals: {&#39;C&#39;, &#39;D&#39;, &#39;B&#39;}
 Grammar after eliminating useless symbols:
 Start symbol: S
 Productions:
@@ -1971,32 +1975,32 @@ True
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Results of finiteness checking:
-Useful symbols: {&#39;U&#39;, &#39;S&#39;, &#39;T&#39;}
+Useful symbols: {&#39;T&#39;, &#39;U&#39;, &#39;S&#39;}
 Example 1: Finite (should be Finite)
 Useful symbols: {&#39;S&#39;}
 Example 2: Infinite (should be Infinite)
-Useful symbols: {&#39;S&#39;, &#39;C&#39;}
+Useful symbols: {&#39;C&#39;, &#39;S&#39;}
 Example 3: Finite (should be Finite)
-Useful symbols: {&#39;E&#39;, &#39;C&#39;, &#39;B&#39;, &#39;S&#39;, &#39;F&#39;, &#39;A&#39;, &#39;D&#39;}
+Useful symbols: {&#39;S&#39;, &#39;D&#39;, &#39;A&#39;, &#39;F&#39;, &#39;C&#39;, &#39;B&#39;, &#39;E&#39;}
 Example 4: Finite (should be Finite)
 Useful symbols: {&#39;S&#39;}
 Example 5: Infinite (should be Infinite)
-Useful symbols: {&#39;B&#39;, &#39;S&#39;, &#39;A&#39;, &#39;X&#39;}
+Useful symbols: {&#39;A&#39;, &#39;S&#39;, &#39;B&#39;, &#39;X&#39;}
 Example 6: Infinite (should be Infinite)
 
-Example 1 self-embedded non-terminals (among useful symbols {&#39;U&#39;, &#39;S&#39;, &#39;T&#39;}):
+Example 1 self-embedded non-terminals (among useful symbols {&#39;T&#39;, &#39;U&#39;, &#39;S&#39;}):
 
 Example 2 self-embedded non-terminals (among useful symbols {&#39;S&#39;}):
   S is self-embedded
 
-Example 3 self-embedded non-terminals (among useful symbols {&#39;S&#39;, &#39;C&#39;}):
+Example 3 self-embedded non-terminals (among useful symbols {&#39;C&#39;, &#39;S&#39;}):
 
-Example 4 self-embedded non-terminals (among useful symbols {&#39;E&#39;, &#39;C&#39;, &#39;B&#39;, &#39;S&#39;, &#39;F&#39;, &#39;A&#39;, &#39;D&#39;}):
+Example 4 self-embedded non-terminals (among useful symbols {&#39;S&#39;, &#39;D&#39;, &#39;A&#39;, &#39;F&#39;, &#39;C&#39;, &#39;B&#39;, &#39;E&#39;}):
 
 Example 5 self-embedded non-terminals (among useful symbols {&#39;S&#39;}):
   S is self-embedded
 
-Example 6 self-embedded non-terminals (among useful symbols {&#39;B&#39;, &#39;S&#39;, &#39;A&#39;, &#39;X&#39;}):
+Example 6 self-embedded non-terminals (among useful symbols {&#39;A&#39;, &#39;S&#39;, &#39;B&#39;, &#39;X&#39;}):
   A is self-embedded
   X is self-embedded
 </pre></div>
@@ -2007,8 +2011,8 @@ Example 6 self-embedded non-terminals (among useful symbols {&#39;B&#39;, &#39;S
 </section>
 <section id="practice-exercises">
 <h2>5. Practice Exercises<a class="headerlink" href="#practice-exercises" title="Link to this heading">#</a></h2>
-<section id="exercise-1-short-answer-questions">
-<h3>5.1 Exercise 1: Short Answer Questions<a class="headerlink" href="#exercise-1-short-answer-questions" title="Link to this heading">#</a></h3>
+<section id="short-answer-questions">
+<h3>5.1 Short Answer Questions<a class="headerlink" href="#short-answer-questions" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Explain the difference between a non-generating non-terminal and an unreachable non-terminal.</p></li>
 <li><p>Why does the CYK algorithm require the grammar to be in Chomsky Normal Form?</p></li>
@@ -2016,8 +2020,8 @@ Example 6 self-embedded non-terminals (among useful symbols {&#39;B&#39;, &#39;S
 <li><p>How does Earley’s algorithm differ from the CYK algorithm in terms of grammar requirements?</p></li>
 </ul>
 </section>
-<section id="exercise-2-emptiness-problem">
-<h3>5.2 Exercise 2: Emptiness Problem<a class="headerlink" href="#exercise-2-emptiness-problem" title="Link to this heading">#</a></h3>
+<section id="id10">
+<h3>5.2 Emptiness Problem<a class="headerlink" href="#id10" title="Link to this heading">#</a></h3>
 <p>Determine if the language generated by each following grammar is empty:</p>
 <ol class="arabic simple">
 <li><p><span class="math notranslate nohighlight">\(\{S \rightarrow AB, A \rightarrow BC, B \rightarrow CA, C \rightarrow DA, D \rightarrow AD\}\)</span></p></li>
@@ -2025,8 +2029,8 @@ Example 6 self-embedded non-terminals (among useful symbols {&#39;B&#39;, &#39;S
 <li><p><span class="math notranslate nohighlight">\(\{S \rightarrow aS \mid bS, A \rightarrow SbS\}\)</span></p></li>
 </ol>
 </section>
-<section id="exercise-3-uselessness-problem">
-<h3>5.3 Exercise 3: Uselessness Problem<a class="headerlink" href="#exercise-3-uselessness-problem" title="Link to this heading">#</a></h3>
+<section id="id11">
+<h3>5.3 Uselessness Problem<a class="headerlink" href="#id11" title="Link to this heading">#</a></h3>
 <p>Identify all useless non-terminals in the following grammar:</p>
 <ol class="arabic simple">
 <li><p><span class="math notranslate nohighlight">\(\{S \rightarrow AB \mid CD, A \rightarrow aA \mid a, B \rightarrow bB \mid b, C \rightarrow cD, D \rightarrow d\}\)</span></p></li>
@@ -2034,8 +2038,8 @@ Example 6 self-embedded non-terminals (among useful symbols {&#39;B&#39;, &#39;S
 <li><p><span class="math notranslate nohighlight">\(\{S \rightarrow XY \mid a, X \rightarrow YZ, Y \rightarrow XZ, Z \rightarrow b\}\)</span></p></li>
 </ol>
 </section>
-<section id="exercise-4-membership-problem">
-<h3>5.4 Exercise 4: Membership Problem<a class="headerlink" href="#exercise-4-membership-problem" title="Link to this heading">#</a></h3>
+<section id="id12">
+<h3>5.4 Membership Problem<a class="headerlink" href="#id12" title="Link to this heading">#</a></h3>
 <ol class="arabic simple">
 <li><p>Using the CYK algorithm, determine if the string <span class="math notranslate nohighlight">\(abbab\)</span> is in the language of the following grammar.
 <span class="math notranslate nohighlight">\(\{S \rightarrow AB \mid BB, A \rightarrow AB \mid a, B \rightarrow Ba \mid b\}\)</span></p></li>
@@ -2043,8 +2047,8 @@ Example 6 self-embedded non-terminals (among useful symbols {&#39;B&#39;, &#39;S
 <span class="math notranslate nohighlight">\(\{S \rightarrow AA \mid B, A \rightarrow aA \mid a, B \rightarrow b\}\)</span></p></li>
 </ol>
 </section>
-<section id="exercise-5-finiteness-problem">
-<h3>5.5 Exercise 5: Finiteness Problem<a class="headerlink" href="#exercise-5-finiteness-problem" title="Link to this heading">#</a></h3>
+<section id="id13">
+<h3>5.5 Finiteness Problem<a class="headerlink" href="#id13" title="Link to this heading">#</a></h3>
 <p>Determine if each following grammar generates a finite or infinite language:</p>
 <ol class="arabic simple">
 <li><p><span class="math notranslate nohighlight">\(\{S \rightarrow aS \mid A, A \rightarrow bA \mid b\}\)</span></p></li>
@@ -2052,8 +2056,8 @@ Example 6 self-embedded non-terminals (among useful symbols {&#39;B&#39;, &#39;S
 <li><p><span class="math notranslate nohighlight">\(\{S \rightarrow AB, A \rightarrow aA \mid a, B \rightarrow b\}\)</span></p></li>
 </ol>
 </section>
-<section id="exercise-6-integrated-problem">
-<h3>5.6 Exercise 6: Integrated Problem<a class="headerlink" href="#exercise-6-integrated-problem" title="Link to this heading">#</a></h3>
+<section id="integrated-problem">
+<h3>5.6 Integrated Problem<a class="headerlink" href="#integrated-problem" title="Link to this heading">#</a></h3>
 <p>For the following grammar, determine:</p>
 <ol class="arabic simple">
 <li><p>Is the language empty?</p></li>
@@ -2063,9 +2067,95 @@ Example 6 self-embedded non-terminals (among useful symbols {&#39;B&#39;, &#39;S
 $<span class="math notranslate nohighlight">\(\{S \rightarrow AB \mid aS, A \rightarrow aA \mid a, B \rightarrow bB \mid BA \mid b\}\)</span>$</p></li>
 </ol>
 </section>
-<section id="exercise-7-algorithm-implementation">
-<h3>5.7 Exercise 7: Algorithm Implementation<a class="headerlink" href="#exercise-7-algorithm-implementation" title="Link to this heading">#</a></h3>
+<section id="algorithm-implementation">
+<h3>5.7 Algorithm Implementation<a class="headerlink" href="#algorithm-implementation" title="Link to this heading">#</a></h3>
 <p>Write pseudocode/Python Code for an algorithm that takes a CFG and returns a simplified equivalent grammar with no useless symbols.</p>
+</section>
+<section id="cfg-language-analyzer-emptiness-uselessness">
+<h3>5.8 CFG Language Analyzer (Emptiness &amp; Uselessness)<a class="headerlink" href="#cfg-language-analyzer-emptiness-uselessness" title="Link to this heading">#</a></h3>
+<p>Create a comprehensive CFG analyzer that can determine if a grammar generates an empty language and identify all useless symbols. Your program should also provide detailed analysis of why certain symbols are useless.</p>
+<p>Requirements</p>
+<ul class="simple">
+<li><p>Implement a CFGAnalyzer class with methods:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">is_empty()</span></code>: Returns True if language is empty</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">find_useless_symbols()</span></code>: Returns a dictionary categorizing useless symbols</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">simplify_grammar()</span></code>: Returns a new CFG with useless symbols removed</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">analysis_report()</span></code>: Returns a detailed text report</p></li>
+</ul>
+</li>
+<li><p>Handle edge cases like grammars with no productions, self-referencing symbols, etc.</p></li>
+</ul>
+<p>Sample Input/Output:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">grammar</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;S&#39;</span><span class="p">:</span> <span class="p">[[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;C&#39;</span><span class="p">]],</span>
+    <span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">]],</span>
+    <span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="p">[[</span><span class="s1">&#39;b&#39;</span><span class="p">]],</span>
+    <span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="p">[[</span><span class="s1">&#39;D&#39;</span><span class="p">]],</span>
+    <span class="s1">&#39;D&#39;</span><span class="p">:</span> <span class="p">[[</span><span class="s1">&#39;C&#39;</span><span class="p">]],</span>
+    <span class="s1">&#39;E&#39;</span><span class="p">:</span> <span class="p">[[</span><span class="s1">&#39;e&#39;</span><span class="p">]]</span>
+<span class="p">}</span>
+
+<span class="n">analyzer</span> <span class="o">=</span> <span class="n">CFGAnalyzer</span><span class="p">(</span><span class="n">grammar</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">analyzer</span><span class="o">.</span><span class="n">is_empty</span><span class="p">())</span>  <span class="c1"># False</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">analyzer</span><span class="o">.</span><span class="n">find_useless_symbols</span><span class="p">())</span>
+<span class="c1"># {&#39;non_generating&#39;: [&#39;C&#39;, &#39;D&#39;], &#39;unreachable&#39;: [&#39;E&#39;], &#39;useless&#39;: [&#39;C&#39;, &#39;D&#39;, &#39;E&#39;]}</span>
+</pre></div>
+</div>
+</section>
+<section id="cyk-parser-with-visualization-membership-problem">
+<h3>5.9 CYK Parser with Visualization (Membership Problem)<a class="headerlink" href="#cyk-parser-with-visualization-membership-problem" title="Link to this heading">#</a></h3>
+<p>Implement a CYK parser that not only determines membership but also provides a visual representation of the parsing table and can extract parse trees for successful parses.</p>
+<p>Requirements</p>
+<ul class="simple">
+<li><p>Convert grammar to CNF automatically</p></li>
+<li><p>Implement CYK algorithm with detailed table tracking</p></li>
+<li><p>Provide ASCII visualization of the parsing table</p></li>
+<li><p>Extract and display parse trees for successful parses</p></li>
+<li><p>Handle multiple parse trees (ambiguous grammars)</p></li>
+</ul>
+<p>Sample Input/Output:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">grammar</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;S&#39;</span><span class="p">:</span> <span class="p">[[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">]],</span>
+    <span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="p">[[</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]],</span>
+    <span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="p">[[</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]],</span>
+    <span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="p">[[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]]</span>
+<span class="p">}</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">CYKParser</span><span class="p">(</span><span class="n">grammar</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;baaba&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;String accepted: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;accepted&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;table_visualization&#39;</span><span class="p">])</span>
+<span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;accepted&#39;</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Parse Trees:&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">tree</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;parse_trees&#39;</span><span class="p">]:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="earley-parser-with-error-recovery-membership-problem">
+<h3>5.10 Earley Parser with Error Recovery (Membership Problem)<a class="headerlink" href="#earley-parser-with-error-recovery-membership-problem" title="Link to this heading">#</a></h3>
+<p>Implement an Earley parser that can handle any CFG and provides detailed parsing information including partial parses for invalid strings and suggestions for error correction.</p>
+<p>Requirements:</p>
+<ul class="simple">
+<li><p>Implement full Earley algorithm (predictor, scanner, completer)</p></li>
+<li><p>Provide detailed step-by-step parsing trace</p></li>
+<li><p>For invalid strings, show where parsing failed and suggest corrections</p></li>
+<li><p>Handle ambiguous grammars by showing multiple parse paths</p></li>
+<li><p>Implement prefix recognition (determine if string is a valid prefix)</p></li>
+</ul>
+</section>
+<section id="language-finiteness-detector-with-cycle-analysis-finiteness-problem">
+<h3>5.11 Language Finiteness Detector with Cycle Analysis (Finiteness Problem)<a class="headerlink" href="#language-finiteness-detector-with-cycle-analysis-finiteness-problem" title="Link to this heading">#</a></h3>
+<p>Create a sophisticated tool that determines if a CFG generates a finite or infinite language by detecting self-embedded non-terminals and analyzing dependency cycles. The tool should also estimate the maximum string length for finite languages.</p>
+<p>Requirements</p>
+<ul class="simple">
+<li><p>Implement the self-embedding detection algorithm</p></li>
+<li><p>Visualize the dependency graph between non-terminals</p></li>
+<li><p>For finite languages, estimate the maximum possible string length</p></li>
+<li><p>Identify all cycles in the grammar and classify them as productive or non-productive</p></li>
+<li><p>Provide recommendations for converting infinite languages to finite ones</p></li>
+</ul>
 </section>
 </section>
 <section id="further-reading">
@@ -2178,13 +2268,17 @@ $<span class="math notranslate nohighlight">\(\{S \rightarrow AB \mid aS, A \rig
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-exercises">5. Practice Exercises</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1-short-answer-questions">5.1 Exercise 1: Short Answer Questions</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2-emptiness-problem">5.2 Exercise 2: Emptiness Problem</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-3-uselessness-problem">5.3 Exercise 3: Uselessness Problem</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-4-membership-problem">5.4 Exercise 4: Membership Problem</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-5-finiteness-problem">5.5 Exercise 5: Finiteness Problem</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-6-integrated-problem">5.6 Exercise 6: Integrated Problem</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-7-algorithm-implementation">5.7 Exercise 7: Algorithm Implementation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#short-answer-questions">5.1 Short Answer Questions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">5.2 Emptiness Problem</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">5.3 Uselessness Problem</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">5.4 Membership Problem</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">5.5 Finiteness Problem</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#integrated-problem">5.6 Integrated Problem</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#algorithm-implementation">5.7 Algorithm Implementation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cfg-language-analyzer-emptiness-uselessness">5.8 CFG Language Analyzer (Emptiness &amp; Uselessness)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cyk-parser-with-visualization-membership-problem">5.9 CYK Parser with Visualization (Membership Problem)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#earley-parser-with-error-recovery-membership-problem">5.10 Earley Parser with Error Recovery (Membership Problem)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#language-finiteness-detector-with-cycle-analysis-finiteness-problem">5.11 Language Finiteness Detector with Cycle Analysis (Finiteness Problem)</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">6. Further Reading</a></li>
@@ -2221,7 +2315,7 @@ By Yong Zhang, Dylan Zwick
   
   <div class="footer-item">
     <p class="last-updated">
-  Last updated on Aug 21, 2025.
+  Last updated on Nov 05, 2025.
   <br/>
 </p>
   </div>

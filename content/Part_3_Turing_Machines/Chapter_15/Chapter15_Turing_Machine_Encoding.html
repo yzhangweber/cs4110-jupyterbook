@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <meta property="article:modified_time" content="2025-08-21T16:38:06-06:00" />
+    <meta property="article:modified_time" content="2025-11-05T15:13:26-07:00" />
     <title>16. Turing Machine Encoding &#8212; Decode Computation:Hands-On Formal Languages and Algorithms</title>
   
   
@@ -33,7 +33,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -75,7 +75,7 @@ window.addEventListener("load", () => mermaid.run());
     <link rel="prev" title="15. Turing Machine Languages" href="../Chapter_14/Chapter14_Turing_Machine_Languages.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Aug 21, 2025"/>
+    <meta name="docbuild:last-update" content="Nov 05, 2025"/>
   </head>
   
   
@@ -462,16 +462,20 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-exercises">4. Practice Exercises</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1-state-numbering-convention">4.1 Exercise 1: State Numbering Convention</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2-encode-a-single-transition">4.2 Exercise 2: Encode a Single Transition</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-3-transition-table-creation">4.3 Exercise 3: Transition Table Creation</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-4-decode-a-complete-transition">4.4 Exercise 4: Decode a Complete Transition</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-5-decode-multiple-transitions">4.5 Exercise 5: Decode Multiple Transitions</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-6-cwl-membership">4.6 Exercise 6: CWL Membership</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-7-cwl-pattern-analysis">4.7 Exercise 7: CWL Pattern Analysis</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-8-alan-membership-analysis">4.8 Exercise 8: ALAN Membership Analysis</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-9-self-reference-problem">4.9 Exercise 9: Self-Reference Problem</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-10-mathison-quick-check">4.10 Exercise 10: MATHISON Quick Check</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#state-numbering-convention">4.1 State Numbering Convention</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encode-a-single-transition">4.2 Encode a Single Transition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#transition-table-creation">4.3 Transition Table Creation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#decode-a-complete-transition">4.4 Decode a Complete Transition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#decode-multiple-transitions">4.5 Decode Multiple Transitions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cwl-membership">4.6 CWL Membership</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cwl-pattern-analysis">4.7 CWL Pattern Analysis</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#alan-membership-analysis">4.8 ALAN Membership Analysis</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#self-reference-problem">4.9 Self-Reference Problem</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mathison-quick-check">4.10 MATHISON Quick Check</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tm-encoder-implementation">4.11 TM Encoder Implementation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tm-decoder-with-error-handling">4.12 TM Decoder with Error Handling</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cwl-validator">4.13 CWL Validator</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#alan-membership-checker">4.14 ALAN Membership Checker</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">5. Further Reading</a></li>
@@ -2787,8 +2791,8 @@ Encoding: abaabbabbb (length: 10)
 </section>
 <section id="practice-exercises">
 <h2>4. Practice Exercises<a class="headerlink" href="#practice-exercises" title="Link to this heading">#</a></h2>
-<section id="exercise-1-state-numbering-convention">
-<h3>4.1 Exercise 1: State Numbering Convention<a class="headerlink" href="#exercise-1-state-numbering-convention" title="Link to this heading">#</a></h3>
+<section id="state-numbering-convention">
+<h3>4.1 State Numbering Convention<a class="headerlink" href="#state-numbering-convention" title="Link to this heading">#</a></h3>
 <p>Given the following Turing machine with descriptive state names, apply the standard numbering convention:</p>
 <ul class="simple">
 <li><p>States: q_init, q_loop, q_check, q_final, q_process</p></li>
@@ -2796,13 +2800,13 @@ Encoding: abaabbabbb (length: 10)
 <li><p>Halt state: q_final</p></li>
 </ul>
 </section>
-<section id="exercise-2-encode-a-single-transition">
-<h3>4.2 Exercise 2: Encode a Single Transition<a class="headerlink" href="#exercise-2-encode-a-single-transition" title="Link to this heading">#</a></h3>
+<section id="encode-a-single-transition">
+<h3>4.2 Encode a Single Transition<a class="headerlink" href="#encode-a-single-transition" title="Link to this heading">#</a></h3>
 <p>Encode the following transition using the ‘a’ and ‘b’ encoding scheme:</p>
 <p>Transition: (State 3, symbol ‘b’) → (State 5, symbol ‘a’, move Left)</p>
 </section>
-<section id="exercise-3-transition-table-creation">
-<h3>4.3 Exercise 3: Transition Table Creation<a class="headerlink" href="#exercise-3-transition-table-creation" title="Link to this heading">#</a></h3>
+<section id="transition-table-creation">
+<h3>4.3 Transition Table Creation<a class="headerlink" href="#transition-table-creation" title="Link to this heading">#</a></h3>
 <p>Create a transition table for a TM that:</p>
 <ul class="simple">
 <li><p>Starts in state 1</p></li>
@@ -2812,16 +2816,16 @@ Encoding: abaabbabbb (length: 10)
 </ul>
 <p>Task: Create the table with columns: From, To, Read, Write, Move</p>
 </section>
-<section id="exercise-4-decode-a-complete-transition">
-<h3>4.4 Exercise 4: Decode a Complete Transition<a class="headerlink" href="#exercise-4-decode-a-complete-transition" title="Link to this heading">#</a></h3>
+<section id="decode-a-complete-transition">
+<h3>4.4 Decode a Complete Transition<a class="headerlink" href="#decode-a-complete-transition" title="Link to this heading">#</a></h3>
 <p>Decode the following string: <span class="math notranslate nohighlight">\(aabaaabbabaa\)</span></p>
 </section>
-<section id="exercise-5-decode-multiple-transitions">
-<h3>4.5 Exercise 5: Decode Multiple Transitions<a class="headerlink" href="#exercise-5-decode-multiple-transitions" title="Link to this heading">#</a></h3>
+<section id="decode-multiple-transitions">
+<h3>4.5 Decode Multiple Transitions<a class="headerlink" href="#decode-multiple-transitions" title="Link to this heading">#</a></h3>
 <p>Decode the following string: <span class="math notranslate nohighlight">\(ababbabaabaabaabbaba\)</span></p>
 </section>
-<section id="exercise-6-cwl-membership">
-<h3>4.6 Exercise 6: CWL Membership<a class="headerlink" href="#exercise-6-cwl-membership" title="Link to this heading">#</a></h3>
+<section id="cwl-membership">
+<h3>4.6 CWL Membership<a class="headerlink" href="#cwl-membership" title="Link to this heading">#</a></h3>
 <p>Determine if the following strings belong to CWL. If not, explain why:</p>
 <ol class="arabic simple">
 <li><p>abaabbabbb</p></li>
@@ -2831,12 +2835,12 @@ Encoding: abaabbabbb (length: 10)
 <li><p>abaabbabbbaabaabbaba</p></li>
 </ol>
 </section>
-<section id="exercise-7-cwl-pattern-analysis">
-<h3>4.7 Exercise 7: CWL Pattern Analysis<a class="headerlink" href="#exercise-7-cwl-pattern-analysis" title="Link to this heading">#</a></h3>
+<section id="cwl-pattern-analysis">
+<h3>4.7 CWL Pattern Analysis<a class="headerlink" href="#cwl-pattern-analysis" title="Link to this heading">#</a></h3>
 <p>Given that <span class="math notranslate nohighlight">\(CWL = (a^+ba^+b(a+b)^5)^*\)</span>, explain why a string of length 15 might or might not be in CWL.</p>
 </section>
-<section id="exercise-8-alan-membership-analysis">
-<h3>4.8 Exercise 8: ALAN Membership Analysis<a class="headerlink" href="#exercise-8-alan-membership-analysis" title="Link to this heading">#</a></h3>
+<section id="alan-membership-analysis">
+<h3>4.8 ALAN Membership Analysis<a class="headerlink" href="#alan-membership-analysis" title="Link to this heading">#</a></h3>
 <p>For each encoding below, determine if it belongs to ALAN and explain why:</p>
 <ol class="arabic simple">
 <li><p>aaabaaabbabbb (TM with no state 1)</p></li>
@@ -2844,8 +2848,8 @@ Encoding: abaabbabbb (length: 10)
 <li><p>abaabbaba (TM that halts immediately)</p></li>
 </ol>
 </section>
-<section id="exercise-9-self-reference-problem">
-<h3>4.9 Exercise 9: Self-Reference Problem<a class="headerlink" href="#exercise-9-self-reference-problem" title="Link to this heading">#</a></h3>
+<section id="self-reference-problem">
+<h3>4.9 Self-Reference Problem<a class="headerlink" href="#self-reference-problem" title="Link to this heading">#</a></h3>
 <p>Consider the TM encoded by <span class="math notranslate nohighlight">\(abaabbaaabaaabaaababbb\)</span>,</p>
 <ul class="simple">
 <li><p>Does this TM accept its own encoding?</p></li>
@@ -2853,14 +2857,52 @@ Encoding: abaabbabbb (length: 10)
 <li><p>Trace the first 5 steps of execution when the TM runs on its own encoding</p></li>
 </ul>
 </section>
-<section id="exercise-10-mathison-quick-check">
-<h3>4.10 Exercise 10: MATHISON Quick Check<a class="headerlink" href="#exercise-10-mathison-quick-check" title="Link to this heading">#</a></h3>
+<section id="mathison-quick-check">
+<h3>4.10 MATHISON Quick Check<a class="headerlink" href="#mathison-quick-check" title="Link to this heading">#</a></h3>
 <p>Without full simulation, determine which encodings likely belong to MATHISON:</p>
 <ol class="arabic simple">
 <li><p>abaabbaab</p></li>
 <li><p>ababbaabb</p></li>
 <li><p>abaaabbaaabaaabaabbaba</p></li>
 </ol>
+</section>
+<section id="tm-encoder-implementation">
+<h3>4.11 TM Encoder Implementation<a class="headerlink" href="#tm-encoder-implementation" title="Link to this heading">#</a></h3>
+<p>Create a class that encodes Turing Machines into the ‘a’ and ‘b’ string representation. The encoder should handle state numbering conventions and produce lexicographically sorted encodings.</p>
+<p>Requirements: implement a TMEncoder class with the following methods:</p>
+<ul class="simple">
+<li><p>encode_state(n) - Encodes state number n as a^n b</p></li>
+<li><p>encode_transition(from, to, read, write, move) - Encodes a single transition</p></li>
+<li><p>encode_machine(transitions) - Encodes complete TM with lexicographic sorting</p></li>
+</ul>
+</section>
+<section id="tm-decoder-with-error-handling">
+<h3>4.12 TM Decoder with Error Handling<a class="headerlink" href="#tm-decoder-with-error-handling" title="Link to this heading">#</a></h3>
+<p>Create a robust decoder that can handle malformed encodings and provide detailed error messages.</p>
+<p>Requirements: implement a TMDecoder class that:</p>
+<ul class="simple">
+<li><p>Decodes state numbers from a^n b patterns</p></li>
+<li><p>Decodes symbols and directions</p></li>
+<li><p>Handles incomplete or invalid encodings gracefully</p></li>
+<li><p>Returns structured transition data</p></li>
+</ul>
+</section>
+<section id="cwl-validator">
+<h3>4.13 CWL Validator<a class="headerlink" href="#cwl-validator" title="Link to this heading">#</a></h3>
+<p>Implement a validator that checks if a string belongs to the Code Word Language (CWL).</p>
+<p>Requirements: create a function that validates CWL membership using the pattern: <span class="math notranslate nohighlight">\(CWL = (a^+ba^+b(a+b)^5)^*\)</span></p>
+</section>
+<section id="alan-membership-checker">
+<h3>4.14 ALAN Membership Checker<a class="headerlink" href="#alan-membership-checker" title="Link to this heading">#</a></h3>
+<p>Implement a complete ALAN membership checker that determines if a CWL string belongs to language ALAN.</p>
+<p>Requirements: create a system that:</p>
+<ul class="simple">
+<li><p>Validates CWL membership</p></li>
+<li><p>Decodes the TM</p></li>
+<li><p>Checks TM validity</p></li>
+<li><p>Simulates the TM on its own encoding</p></li>
+<li><p>Determines ALAN membership</p></li>
+</ul>
 </section>
 </section>
 <section id="further-reading">
@@ -2976,16 +3018,20 @@ Encoding: abaabbabbb (length: 10)
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-exercises">4. Practice Exercises</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1-state-numbering-convention">4.1 Exercise 1: State Numbering Convention</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2-encode-a-single-transition">4.2 Exercise 2: Encode a Single Transition</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-3-transition-table-creation">4.3 Exercise 3: Transition Table Creation</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-4-decode-a-complete-transition">4.4 Exercise 4: Decode a Complete Transition</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-5-decode-multiple-transitions">4.5 Exercise 5: Decode Multiple Transitions</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-6-cwl-membership">4.6 Exercise 6: CWL Membership</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-7-cwl-pattern-analysis">4.7 Exercise 7: CWL Pattern Analysis</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-8-alan-membership-analysis">4.8 Exercise 8: ALAN Membership Analysis</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-9-self-reference-problem">4.9 Exercise 9: Self-Reference Problem</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-10-mathison-quick-check">4.10 Exercise 10: MATHISON Quick Check</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#state-numbering-convention">4.1 State Numbering Convention</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encode-a-single-transition">4.2 Encode a Single Transition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#transition-table-creation">4.3 Transition Table Creation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#decode-a-complete-transition">4.4 Decode a Complete Transition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#decode-multiple-transitions">4.5 Decode Multiple Transitions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cwl-membership">4.6 CWL Membership</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cwl-pattern-analysis">4.7 CWL Pattern Analysis</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#alan-membership-analysis">4.8 ALAN Membership Analysis</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#self-reference-problem">4.9 Self-Reference Problem</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mathison-quick-check">4.10 MATHISON Quick Check</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tm-encoder-implementation">4.11 TM Encoder Implementation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tm-decoder-with-error-handling">4.12 TM Decoder with Error Handling</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cwl-validator">4.13 CWL Validator</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#alan-membership-checker">4.14 ALAN Membership Checker</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">5. Further Reading</a></li>
@@ -3022,7 +3068,7 @@ By Yong Zhang, Dylan Zwick
   
   <div class="footer-item">
     <p class="last-updated">
-  Last updated on Aug 21, 2025.
+  Last updated on Nov 05, 2025.
   <br/>
 </p>
   </div>

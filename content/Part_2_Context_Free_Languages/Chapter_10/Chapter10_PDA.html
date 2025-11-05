@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <meta property="article:modified_time" content="2025-08-27T15:04:06-06:00" />
+    <meta property="article:modified_time" content="2025-11-05T15:13:26-07:00" />
     <title>11. Pushdown Automata (PDA) &#8212; Decode Computation:Hands-On Formal Languages and Algorithms</title>
   
   
@@ -33,7 +33,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -75,7 +75,7 @@ window.addEventListener("load", () => mermaid.run());
     <link rel="prev" title="10. Normal Forms and Transformations in Context-Free Grammars" href="../Chapter_09/Chapter09_CFG_Normal_Forms_and_Transformations.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Aug 27, 2025"/>
+    <meta name="docbuild:last-update" content="Nov 05, 2025"/>
   </head>
   
   
@@ -468,9 +468,14 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-exercises">6. Practice Exercises</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1-regular-grammar-conversion">6.1 Exercise 1: Regular Grammar Conversion</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2-null-production-elimination">6.2 Exercise 2: Null Production Elimination</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-3-unit-production-elimination">6.3 Exercise 3: Unit Production Elimination</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regular-grammar-conversion">6.1 Regular Grammar Conversion</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#null-production-elimination">6.2 Null Production Elimination</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#unit-production-elimination">6.3 Unit Production Elimination</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#balanced-parentheses-checker">6.4 Balanced Parentheses Checker</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#expression-validator-with-multiple-bracket-types">6.5 Expression Validator with Multiple Bracket Types</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#context-free-language-recognizer-a-nb-nc-n">6.6 Context-Free Language Recognizer (<span class="math notranslate nohighlight">\(a^nb^nc^n\)</span>)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cfg-to-pda-converter">6.7 CFG to PDA Converter</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pda-simulation-environment">6.8 PDA Simulation Environment</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">7. Further Reading</a></li>
@@ -1726,17 +1731,57 @@ B → b
 </section>
 <section id="practice-exercises">
 <h2>6. Practice Exercises<a class="headerlink" href="#practice-exercises" title="Link to this heading">#</a></h2>
-<section id="exercise-1-regular-grammar-conversion">
-<h3>6.1 Exercise 1: Regular Grammar Conversion<a class="headerlink" href="#exercise-1-regular-grammar-conversion" title="Link to this heading">#</a></h3>
+<section id="regular-grammar-conversion">
+<h3>6.1 Regular Grammar Conversion<a class="headerlink" href="#regular-grammar-conversion" title="Link to this heading">#</a></h3>
 <p>Modify the palindrome PDA to accept palindromes with a middle marker ‘#’</p>
 </section>
-<section id="exercise-2-null-production-elimination">
-<h3>6.2 Exercise 2: Null Production Elimination<a class="headerlink" href="#exercise-2-null-production-elimination" title="Link to this heading">#</a></h3>
+<section id="null-production-elimination">
+<h3>6.2 Null Production Elimination<a class="headerlink" href="#null-production-elimination" title="Link to this heading">#</a></h3>
 <p>Implement a PDA for the language <span class="math notranslate nohighlight">\(L = \{a^nb^n | n ≥ 0\}\)</span></p>
 </section>
-<section id="exercise-3-unit-production-elimination">
-<h3>6.3 Exercise 3: Unit Production Elimination<a class="headerlink" href="#exercise-3-unit-production-elimination" title="Link to this heading">#</a></h3>
+<section id="unit-production-elimination">
+<h3>6.3 Unit Production Elimination<a class="headerlink" href="#unit-production-elimination" title="Link to this heading">#</a></h3>
 <p>Create a PDA for the language <span class="math notranslate nohighlight">\(L = \{ww^R\}\)</span> where w is any string of the alphabet {a, b} and <span class="math notranslate nohighlight">\(w^R\)</span> is the reverse of w.</p>
+</section>
+<section id="balanced-parentheses-checker">
+<h3>6.4 Balanced Parentheses Checker<a class="headerlink" href="#balanced-parentheses-checker" title="Link to this heading">#</a></h3>
+<p>Design and implement a PDA that accepts strings with balanced parentheses using the alphabet {(, )}. The language is L = {w | w contains properly nested parentheses}.</p>
+<p>Examples:</p>
+<ul class="simple">
+<li><p>Accept: “”, “()”, “(())”, “()()”, “((()))”</p></li>
+<li><p>Reject: “(”, “)”, “(()”, “())”</p></li>
+</ul>
+</section>
+<section id="expression-validator-with-multiple-bracket-types">
+<h3>6.5 Expression Validator with Multiple Bracket Types<a class="headerlink" href="#expression-validator-with-multiple-bracket-types" title="Link to this heading">#</a></h3>
+<p>Create a PDA that validates expressions with three types of brackets: (), [], {}. The brackets must be properly nested and matched.</p>
+<p>Examples:</p>
+<ul class="simple">
+<li><p>Accept: “{[()]}”, “()[]{}”, “{[(())]}”</p></li>
+<li><p>Reject: “([)]”, “{[}”, “((]”</p></li>
+</ul>
+</section>
+<section id="context-free-language-recognizer-a-nb-nc-n">
+<h3>6.6 Context-Free Language Recognizer (<span class="math notranslate nohighlight">\(a^nb^nc^n\)</span>)<a class="headerlink" href="#context-free-language-recognizer-a-nb-nc-n" title="Link to this heading">#</a></h3>
+<p>Design a PDA that recognizes the language L = {<span class="math notranslate nohighlight">\(a^ib^jc^k \mid i = j \text{ or } j = k, i,j,k \geq 0\)</span>}. This is a context-free language that cannot be recognized by finite automata.</p>
+<p>Examples:</p>
+<ul class="simple">
+<li><p>Accept: “abc”, “aabbcc”, “aaabbbccc”</p></li>
+<li><p>Reject: “abccc”, “aaabbc”, “abbc”</p></li>
+</ul>
+</section>
+<section id="cfg-to-pda-converter">
+<h3>6.7 CFG to PDA Converter<a class="headerlink" href="#cfg-to-pda-converter" title="Link to this heading">#</a></h3>
+<p>Create a program that automatically converts a Context-Free Grammar to a PDA using the systematic approach described in the chapter.</p>
+</section>
+<section id="pda-simulation-environment">
+<h3>6.8 PDA Simulation Environment<a class="headerlink" href="#pda-simulation-environment" title="Link to this heading">#</a></h3>
+<p>Design and simulate a PDA that recognizes palindromes over {a, b} with a special middle symbol <span class="math notranslate nohighlight">\(\#\)</span>, i.e., strings of the form: <span class="math notranslate nohighlight">\(w\#w^R\)</span>, where <span class="math notranslate nohighlight">\(w^R\)</span> is the reverse of <span class="math notranslate nohighlight">\(w\)</span>.</p>
+<p>Examples:</p>
+<ul class="simple">
+<li><p>Accept: “a#a”, “ab#ba”, “bbb#bbb”</p></li>
+<li><p>Reject: “a#b”, “b#bb”, “abb#abb”</p></li>
+</ul>
 </section>
 </section>
 <section id="further-reading">
@@ -1858,9 +1903,14 @@ B → b
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-exercises">6. Practice Exercises</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1-regular-grammar-conversion">6.1 Exercise 1: Regular Grammar Conversion</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2-null-production-elimination">6.2 Exercise 2: Null Production Elimination</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-3-unit-production-elimination">6.3 Exercise 3: Unit Production Elimination</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regular-grammar-conversion">6.1 Regular Grammar Conversion</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#null-production-elimination">6.2 Null Production Elimination</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#unit-production-elimination">6.3 Unit Production Elimination</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#balanced-parentheses-checker">6.4 Balanced Parentheses Checker</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#expression-validator-with-multiple-bracket-types">6.5 Expression Validator with Multiple Bracket Types</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#context-free-language-recognizer-a-nb-nc-n">6.6 Context-Free Language Recognizer (<span class="math notranslate nohighlight">\(a^nb^nc^n\)</span>)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cfg-to-pda-converter">6.7 CFG to PDA Converter</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pda-simulation-environment">6.8 PDA Simulation Environment</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">7. Further Reading</a></li>
@@ -1897,7 +1947,7 @@ By Yong Zhang, Dylan Zwick
   
   <div class="footer-item">
     <p class="last-updated">
-  Last updated on Aug 27, 2025.
+  Last updated on Nov 05, 2025.
   <br/>
 </p>
   </div>

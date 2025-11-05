@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <meta property="article:modified_time" content="2025-08-21T16:38:06-06:00" />
+    <meta property="article:modified_time" content="2025-11-05T15:13:26-07:00" />
     <title>10. Normal Forms and Transformations in Context-Free Grammars &#8212; Decode Computation:Hands-On Formal Languages and Algorithms</title>
   
   
@@ -33,7 +33,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -75,7 +75,7 @@ window.addEventListener("load", () => mermaid.run());
     <link rel="prev" title="9. Fundamentals of Context-Free Grammar" href="../Chapter_08/Chapter08_Fundamentals_of_CFG.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Aug 21, 2025"/>
+    <meta name="docbuild:last-update" content="Nov 05, 2025"/>
   </head>
   
   
@@ -487,10 +487,16 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-exercises">5. Practice Exercises</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1-regular-grammar-conversion">5.1 Exercise 1: Regular Grammar Conversion</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2-null-production-elimination">5.2 Exercise 2: Null Production Elimination</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-3-unit-production-elimination">5.3 Exercise 3: Unit Production Elimination</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-4-cfg-to-cnf-conversion">5.4 Exercise 4: CFG to CNF Conversion</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regular-grammar-conversion">5.1 Regular Grammar Conversion</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#null-production-elimination">5.2 Null Production Elimination</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#unit-production-elimination">5.3 Unit Production Elimination</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cfg-to-cnf-conversion">5.4 CFG to CNF Conversion</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regular-grammar-validator">5.5 Regular Grammar Validator</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#inite-automaton-to-regular-grammar-converter">5.6 Inite Automaton to Regular Grammar Converter</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nullable-symbol-finder">5.7 Nullable Symbol Finder</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#complete-null-production-eliminator">5.8 Complete Null Production Eliminator</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#unit-pair-finder">5.9 Unit Pair Finder</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cnf-validator">5.10 CNF Validator</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">6. Further Reading</a></li>
@@ -997,7 +1003,7 @@ Analysis of transformation:
 Number of productions: 4 → 5
 Production increase factor: 1.25x
 Warning: Terminal symbols changed during transformation!
-Original terminals: {&#39;a&#39;, &#39;b&#39;, &#39;∧&#39;}
+Original terminals: {&#39;∧&#39;, &#39;a&#39;, &#39;b&#39;}
 New terminals: {&#39;a&#39;, &#39;b&#39;}
 
 Example 2: Complex grammar with multiple nullable symbols
@@ -1025,8 +1031,8 @@ Analysis of transformation:
 Number of productions: 6 → 9
 Production increase factor: 1.50x
 Warning: Terminal symbols changed during transformation!
-Original terminals: {&#39;a&#39;, &#39;c&#39;, &#39;b&#39;, &#39;∧&#39;}
-New terminals: {&#39;a&#39;, &#39;c&#39;, &#39;b&#39;}
+Original terminals: {&#39;c&#39;, &#39;∧&#39;, &#39;a&#39;, &#39;b&#39;}
+New terminals: {&#39;c&#39;, &#39;a&#39;, &#39;b&#39;}
 </pre></div>
 </div>
 </div>
@@ -1235,12 +1241,12 @@ B → aB
 B → b
 
 Grammar after removing unit productions:
-B → aB
 A → aB
 S → aB
-B → b
+B → aB
 A → b
 S → b
+B → b
 </pre></div>
 </div>
 </div>
@@ -1469,8 +1475,8 @@ C → T_cX_6
 </section>
 <section id="practice-exercises">
 <h2>5. Practice Exercises<a class="headerlink" href="#practice-exercises" title="Link to this heading">#</a></h2>
-<section id="exercise-1-regular-grammar-conversion">
-<h3>5.1 Exercise 1: Regular Grammar Conversion<a class="headerlink" href="#exercise-1-regular-grammar-conversion" title="Link to this heading">#</a></h3>
+<section id="regular-grammar-conversion">
+<h3>5.1 Regular Grammar Conversion<a class="headerlink" href="#regular-grammar-conversion" title="Link to this heading">#</a></h3>
 <p>Convert the following finite automaton to a regular grammar:</p>
 <pre  class="mermaid">
         stateDiagram-v2
@@ -1487,8 +1493,8 @@ C → T_cX_6
     
     note right of Q2: Accept State
     </pre></section>
-<section id="exercise-2-null-production-elimination">
-<h3>5.2 Exercise 2: Null Production Elimination<a class="headerlink" href="#exercise-2-null-production-elimination" title="Link to this heading">#</a></h3>
+<section id="null-production-elimination">
+<h3>5.2 Null Production Elimination<a class="headerlink" href="#null-production-elimination" title="Link to this heading">#</a></h3>
 <p>Convert the following grammar to an equivalent one without null productions:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>S → AB | CD
 A → aA | ∧
@@ -1498,8 +1504,8 @@ D → d
 </pre></div>
 </div>
 </section>
-<section id="exercise-3-unit-production-elimination">
-<h3>5.3 Exercise 3: Unit Production Elimination<a class="headerlink" href="#exercise-3-unit-production-elimination" title="Link to this heading">#</a></h3>
+<section id="unit-production-elimination">
+<h3>5.3 Unit Production Elimination<a class="headerlink" href="#unit-production-elimination" title="Link to this heading">#</a></h3>
 <p>Eliminate all unit productions from this grammar:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>E → E&#39; | T
 E&#39; → E + T
@@ -1509,14 +1515,53 @@ F → v | (E)
 </pre></div>
 </div>
 </section>
-<section id="exercise-4-cfg-to-cnf-conversion">
-<h3>5.4 Exercise 4: CFG to CNF Conversion<a class="headerlink" href="#exercise-4-cfg-to-cnf-conversion" title="Link to this heading">#</a></h3>
+<section id="cfg-to-cnf-conversion">
+<h3>5.4 CFG to CNF Conversion<a class="headerlink" href="#cfg-to-cnf-conversion" title="Link to this heading">#</a></h3>
 <p>Convert the following grammar to Chomsky Normal Form:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>S → ASB | ∧
 A → aAS | a
 B → SbS | A | bb
 </pre></div>
 </div>
+</section>
+<section id="regular-grammar-validator">
+<h3>5.5 Regular Grammar Validator<a class="headerlink" href="#regular-grammar-validator" title="Link to this heading">#</a></h3>
+<p>Write a program that determines whether a given context-free grammar is a regular grammar. A regular grammar must have all productions in one of these forms:</p>
+<ul class="simple">
+<li><p>A → xB (where A, B are non-terminals and x is a string of terminals)</p></li>
+<li><p>A → x (where A is a non-terminal and x is a string of terminals)</p></li>
+</ul>
+<p>Input Format:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example input</span>
+<span class="n">productions</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s2">&quot;S&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;A&quot;</span><span class="p">]),</span>
+    <span class="p">(</span><span class="s2">&quot;S&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;b&quot;</span><span class="p">]),</span>
+    <span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;A&quot;</span><span class="p">]),</span>
+    <span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">]),</span>
+    <span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">])</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<section id="inite-automaton-to-regular-grammar-converter">
+<h3>5.6 Inite Automaton to Regular Grammar Converter<a class="headerlink" href="#inite-automaton-to-regular-grammar-converter" title="Link to this heading">#</a></h3>
+<p>Implement a program that converts a finite automaton to its equivalent regular grammar.</p>
+</section>
+<section id="nullable-symbol-finder">
+<h3>5.7 Nullable Symbol Finder<a class="headerlink" href="#nullable-symbol-finder" title="Link to this heading">#</a></h3>
+<p>Write a program that finds all nullable non-terminals in a context-free grammar using the iterative algorithm.</p>
+</section>
+<section id="complete-null-production-eliminator">
+<h3>5.8 Complete Null Production Eliminator<a class="headerlink" href="#complete-null-production-eliminator" title="Link to this heading">#</a></h3>
+<p>Implement a complete null production elimination algorithm that handles all cases including nested nullable dependencies.</p>
+</section>
+<section id="unit-pair-finder">
+<h3>5.9 Unit Pair Finder<a class="headerlink" href="#unit-pair-finder" title="Link to this heading">#</a></h3>
+<p>Write a program that finds all unit pairs in a grammar using transitive closure.</p>
+</section>
+<section id="cnf-validator">
+<h3>5.10 CNF Validator<a class="headerlink" href="#cnf-validator" title="Link to this heading">#</a></h3>
+<p>Write a program that checks if a given grammar is in Chomsky Normal Form (CNF).</p>
 </section>
 </section>
 <section id="further-reading">
@@ -1657,10 +1702,16 @@ B → SbS | A | bb
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-exercises">5. Practice Exercises</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1-regular-grammar-conversion">5.1 Exercise 1: Regular Grammar Conversion</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2-null-production-elimination">5.2 Exercise 2: Null Production Elimination</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-3-unit-production-elimination">5.3 Exercise 3: Unit Production Elimination</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-4-cfg-to-cnf-conversion">5.4 Exercise 4: CFG to CNF Conversion</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regular-grammar-conversion">5.1 Regular Grammar Conversion</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#null-production-elimination">5.2 Null Production Elimination</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#unit-production-elimination">5.3 Unit Production Elimination</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cfg-to-cnf-conversion">5.4 CFG to CNF Conversion</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regular-grammar-validator">5.5 Regular Grammar Validator</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#inite-automaton-to-regular-grammar-converter">5.6 Inite Automaton to Regular Grammar Converter</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nullable-symbol-finder">5.7 Nullable Symbol Finder</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#complete-null-production-eliminator">5.8 Complete Null Production Eliminator</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#unit-pair-finder">5.9 Unit Pair Finder</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cnf-validator">5.10 CNF Validator</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">6. Further Reading</a></li>
@@ -1697,7 +1748,7 @@ By Yong Zhang, Dylan Zwick
   
   <div class="footer-item">
     <p class="last-updated">
-  Last updated on Aug 21, 2025.
+  Last updated on Nov 05, 2025.
   <br/>
 </p>
   </div>

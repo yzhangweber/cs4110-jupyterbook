@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <meta property="article:modified_time" content="2025-08-21T16:38:06-06:00" />
+    <meta property="article:modified_time" content="2025-11-05T15:13:26-07:00" />
     <title>17. The Universal Turing Machine &#8212; Decode Computation:Hands-On Formal Languages and Algorithms</title>
   
   
@@ -33,7 +33,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -67,7 +67,7 @@
     <link rel="prev" title="16. Turing Machine Encoding" href="../Chapter_15/Chapter15_Turing_Machine_Encoding.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Aug 21, 2025"/>
+    <meta name="docbuild:last-update" content="Nov 05, 2025"/>
   </head>
   
   
@@ -460,10 +460,14 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-exercises">5. Practice Exercises</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1">5.1 Exercise 1:</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2">5.2 Exercise 2:</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-3-rices-theorem-in-action">5.3 Exercise 3: Rice’s Theorem in Action</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-4-try-a-reduction-argument">5.4 Exercise 4: Try a Reduction Argument</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">5.1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">5.2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rices-theorem-in-action">5.3 Rice’s Theorem in Action</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#try-a-reduction-argument">5.4 Try a Reduction Argument</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cwl-encoding-validator-and-decoder">5.5 CWL Encoding Validator and Decoder</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simplified-universal-turing-machine-simulator">5.6 Simplified Universal Turing Machine Simulator</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#halting-problem-analyzer">5.7 Halting Problem Analyzer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tm-composition-and-subprograms">5.8 TM Composition and Subprograms</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">6. Further Reading</a></li>
@@ -4293,8 +4297,8 @@ PROGRAMS WITH UNCLEAR HALTING BEHAVIOR:
 </section>
 <section id="practice-exercises">
 <h2>5. Practice Exercises<a class="headerlink" href="#practice-exercises" title="Link to this heading">#</a></h2>
-<section id="exercise-1">
-<h3>5.1 Exercise 1:<a class="headerlink" href="#exercise-1" title="Link to this heading">#</a></h3>
+<section id="id4">
+<h3>5.1<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
 <p>Try answering the following questions (true or false):</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
@@ -4322,12 +4326,12 @@ PROGRAMS WITH UNCLEAR HALTING BEHAVIOR:
 </table>
 </div>
 </section>
-<section id="exercise-2">
-<h3>5.2 Exercise 2:<a class="headerlink" href="#exercise-2" title="Link to this heading">#</a></h3>
+<section id="id5">
+<h3>5.2<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
 <p>Write a short reflection on: “What does the Halting Problem tell us about the role of humans in programming, debugging, or creating intelligent systems? Can intuition or creativity overcome limits that machines cannot?”</p>
 </section>
-<section id="exercise-3-rices-theorem-in-action">
-<h3>5.3 Exercise 3: Rice’s Theorem in Action<a class="headerlink" href="#exercise-3-rices-theorem-in-action" title="Link to this heading">#</a></h3>
+<section id="rices-theorem-in-action">
+<h3>5.3 Rice’s Theorem in Action<a class="headerlink" href="#rices-theorem-in-action" title="Link to this heading">#</a></h3>
 <p>For each of the following program properties, determine whether it is decidable or undecidable using Rice’s Theorem.</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
@@ -4361,8 +4365,8 @@ PROGRAMS WITH UNCLEAR HALTING BEHAVIOR:
 </table>
 </div>
 </section>
-<section id="exercise-4-try-a-reduction-argument">
-<h3>5.4 Exercise 4: Try a Reduction Argument<a class="headerlink" href="#exercise-4-try-a-reduction-argument" title="Link to this heading">#</a></h3>
+<section id="try-a-reduction-argument">
+<h3>5.4 Try a Reduction Argument<a class="headerlink" href="#try-a-reduction-argument" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Goal: Can you outline how to reduce HALT to this problem, showing that it’s at least as hard as the Halting Problem?</p></li>
 <li><p>Problem: Suppose we define the problem: “Given a Turing machine M, does it ever print the symbol ‘#’ when run on blank input?”</p></li>
@@ -4372,6 +4376,67 @@ PROGRAMS WITH UNCLEAR HALTING BEHAVIOR:
 <li><p>Then solving this new problem would solve HALT, which is impossible.</p></li>
 </ul>
 </li>
+</ul>
+</section>
+<section id="cwl-encoding-validator-and-decoder">
+<h3>5.5 CWL Encoding Validator and Decoder<a class="headerlink" href="#cwl-encoding-validator-and-decoder" title="Link to this heading">#</a></h3>
+<p>Implement a complete system for validating and decoding CWL-encoded Turing machines.</p>
+</section>
+<section id="simplified-universal-turing-machine-simulator">
+<h3>5.6 Simplified Universal Turing Machine Simulator<a class="headerlink" href="#simplified-universal-turing-machine-simulator" title="Link to this heading">#</a></h3>
+<p>Build a simplified UTM that can simulate any encoded Turing machine on a given input string.</p>
+</section>
+<section id="halting-problem-analyzer">
+<h3>5.7 Halting Problem Analyzer<a class="headerlink" href="#halting-problem-analyzer" title="Link to this heading">#</a></h3>
+<p>The assignment aims to help students understand the Halting Problem and why a perfect solver cannot exist, build an interpreter for a tiny while-language, implement a semi-decider for halting that sometimes provides correct answers without ever lying but may return “unknown,” and explore a diagonalization (“liar”) construction through code.</p>
+<p>Requirements: what you need to build:</p>
+<ul class="simple">
+<li><p>A tiny language interpreter for integer variables and while/if/assign.</p></li>
+<li><p>A bounded halting tester that runs programs up to a step budget.</p></li>
+<li><p>A few safe static rules that can prove halting (or non-termination) for simple loops.</p></li>
+<li><p>A combined halting checker that returns HALTS, DOES_NOT_HALT, or UNKNOWN without ever lying.</p></li>
+<li><p>A diagonalization demo that shows why a perfect halting oracle leads to a contradiction.</p></li>
+</ul>
+<p>The tiny language (AST): we’ll skip parsing; use Python tuples to describe programs:</p>
+<ul class="simple">
+<li><p>(‘seq’, stmt1, stmt2) — sequence</p></li>
+<li><p>(‘assign’, name:str, expr) — assignment</p></li>
+<li><p>(‘while’, cond, body) — while loop</p></li>
+<li><p>(‘if’, cond, then_stmt, else_stmt) — conditional</p></li>
+<li><p>(‘halt’,) — explicit terminate</p></li>
+</ul>
+<p>Expressions:</p>
+<ul class="simple">
+<li><p>integer: (‘num’, k)</p></li>
+<li><p>variable: (‘var’, name)</p></li>
+<li><p>binary: (‘bin’, op:str, left, right), where op in {‘+’,’-‘,’*’,’//’,’%’}</p></li>
+<li><p>compare: (‘cmp’, op:str, left, right), where op in {‘&lt;’,’&lt;=’,’==’,’!=’,’&gt;=’,’&gt;’} (booleans are 0/1)</p></li>
+</ul>
+<p>State is a dict {‘x’: 0, ‘y’: 7, …} of integers.</p>
+<p>API you must expose</p>
+<ul class="simple">
+<li><p>eval_stmt(stmt, state) -&gt; (state, steps_used, halted:bool)</p></li>
+<li><p>halts_bounded(stmt, state, max_steps) -&gt; bool (True if halts within budget)</p></li>
+<li><p>prove_by_rules(stmt, state) -&gt; ‘HALTS’ | ‘DOES_NOT_HALT’ | ‘UNKNOWN’ (sound only)</p></li>
+<li><p>halts_sound(stmt, state, max_steps) -&gt; ‘HALTS’|’DOES_NOT_HALT’|’UNKNOWN’</p></li>
+<li><p>diagonalization_demo() — constructs a liar around any claimed total halting oracle.</p></li>
+</ul>
+<p>Deliverables</p>
+<ul class="simple">
+<li><p><a class="reference external" href="http://halting.py">halting.py</a> with the above functions</p></li>
+<li><p><a class="reference external" href="http://README.md">README.md</a> (how to run + examples)</p></li>
+<li><p><a class="reference external" href="http://tests.py">tests.py</a> (a few unit tests)</p></li>
+</ul>
+</section>
+<section id="tm-composition-and-subprograms">
+<h3>5.8 TM Composition and Subprograms<a class="headerlink" href="#tm-composition-and-subprograms" title="Link to this heading">#</a></h3>
+<p>Implements INSERT and DELETE subprograms for TMs, shows how complex TMs can be built from simpler components, includes advanced concepts like COPY and REVERSE operations to cover theoretical aspects of subprogram composition</p>
+<p>Requirements: each problem includes:</p>
+<ul class="simple">
+<li><p>Clear problem description and context</p></li>
+<li><p>Complete, working Python implementation</p></li>
+<li><p>Test cases and demonstrations</p></li>
+<li><p>Theoretical insights and practical applications</p></li>
 </ul>
 </section>
 </section>
@@ -4495,10 +4560,14 @@ PROGRAMS WITH UNCLEAR HALTING BEHAVIOR:
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-exercises">5. Practice Exercises</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1">5.1 Exercise 1:</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2">5.2 Exercise 2:</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-3-rices-theorem-in-action">5.3 Exercise 3: Rice’s Theorem in Action</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-4-try-a-reduction-argument">5.4 Exercise 4: Try a Reduction Argument</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">5.1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">5.2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rices-theorem-in-action">5.3 Rice’s Theorem in Action</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#try-a-reduction-argument">5.4 Try a Reduction Argument</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cwl-encoding-validator-and-decoder">5.5 CWL Encoding Validator and Decoder</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simplified-universal-turing-machine-simulator">5.6 Simplified Universal Turing Machine Simulator</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#halting-problem-analyzer">5.7 Halting Problem Analyzer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tm-composition-and-subprograms">5.8 TM Composition and Subprograms</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">6. Further Reading</a></li>
@@ -4535,7 +4604,7 @@ By Yong Zhang, Dylan Zwick
   
   <div class="footer-item">
     <p class="last-updated">
-  Last updated on Aug 21, 2025.
+  Last updated on Nov 05, 2025.
   <br/>
 </p>
   </div>

@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <meta property="article:modified_time" content="2025-08-21T16:38:06-06:00" />
+    <meta property="article:modified_time" content="2025-11-05T15:13:26-07:00" />
     <title>12. Properties of Context-free Languages (CFL) &#8212; Decode Computation:Hands-On Formal Languages and Algorithms</title>
   
   
@@ -33,7 +33,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -67,7 +67,7 @@
     <link rel="prev" title="11. Pushdown Automata (PDA)" href="../Chapter_10/Chapter10_PDA.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-    <meta name="docbuild:last-update" content="Aug 21, 2025"/>
+    <meta name="docbuild:last-update" content="Nov 05, 2025"/>
   </head>
   
   
@@ -452,10 +452,13 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-exercises">6. Practice Exercises</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1-closure-properties">6.1 Exercise 1: Closure Properties</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2-true-or-false">6.2 Exercise 2: True or False</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-3-non-closure-properties">6.3 Exercise 3: Non-Closure Properties</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-4-the-pumping-lemma">6.4 Exercise 4: The Pumping Lemma</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#closure-properties">6.1 Closure Properties</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#true-or-false">6.2 True or False</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#non-closure-properties">6.3 Non-Closure Properties</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cfg-union-builder">6.4 CFG Union Builder</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#concatenation-constructor">6.5 Concatenation Constructor</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kleene-star-generator">6.6 Kleene Star Generator</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pumping-lemma-checker">6.7 Pumping Lemma Checker</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">7. Further Reading</a></li>
@@ -519,7 +522,7 @@ document.write(`
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CFG for {a^n b^n | n ≥ 0}:
 Variables: S
-Terminals: b, a
+Terminals: a, b
 Start: S
 Rules:
   S → aSb
@@ -1115,8 +1118,8 @@ $<span class="math notranslate nohighlight">\(S \rightarrow AX; X \rightarrow bX
 </section>
 <section id="practice-exercises">
 <h2>6. Practice Exercises<a class="headerlink" href="#practice-exercises" title="Link to this heading">#</a></h2>
-<section id="exercise-1-closure-properties">
-<h3>6.1 Exercise 1: Closure Properties<a class="headerlink" href="#exercise-1-closure-properties" title="Link to this heading">#</a></h3>
+<section id="closure-properties">
+<h3>6.1 Closure Properties<a class="headerlink" href="#closure-properties" title="Link to this heading">#</a></h3>
 <p>Given the following context-free languages:
 $<span class="math notranslate nohighlight">\(L_1 = \{a^nb^n \mid n \geq 0\}\)</span><span class="math notranslate nohighlight">\(
 \)</span><span class="math notranslate nohighlight">\(L_2 = \{b^nc^n \mid n \geq 0\}\)</span>$</p>
@@ -1129,8 +1132,8 @@ $<span class="math notranslate nohighlight">\(L_1 = \{a^nb^n \mid n \geq 0\}\)</
 </ol>
 <p>Modify the palindrome PDA to accept palindromes with a middle marker ‘#’</p>
 </section>
-<section id="exercise-2-true-or-false">
-<h3>6.2 Exercise 2: True or False<a class="headerlink" href="#exercise-2-true-or-false" title="Link to this heading">#</a></h3>
+<section id="true-or-false">
+<h3>6.2 True or False<a class="headerlink" href="#true-or-false" title="Link to this heading">#</a></h3>
 <p>Determine whether each statement is true or false. If false, provide a counterexample.</p>
 <ol class="arabic simple">
 <li><p>If L₁ and L₂ are context-free languages, then L₁ ∩ L₂ is a context-free language.</p></li>
@@ -1140,16 +1143,55 @@ $<span class="math notranslate nohighlight">\(L_1 = \{a^nb^n \mid n \geq 0\}\)</
 <li><p>If L is context-free and R is regular, then L - R (set difference) is context-free.</p></li>
 </ol>
 </section>
-<section id="exercise-3-non-closure-properties">
-<h3>6.3 Exercise 3: Non-Closure Properties<a class="headerlink" href="#exercise-3-non-closure-properties" title="Link to this heading">#</a></h3>
+<section id="non-closure-properties">
+<h3>6.3 Non-Closure Properties<a class="headerlink" href="#non-closure-properties" title="Link to this heading">#</a></h3>
 <p>Given the following context-free languages:
 $<span class="math notranslate nohighlight">\(L_1 = \{a^nb^n \mid n \geq 0\}\)</span><span class="math notranslate nohighlight">\(
 \)</span><span class="math notranslate nohighlight">\(L_2 = \{b^nc^n \mid n \geq 0\}\)</span>$
 Determine whether their intersection is context-free. If it is, provide a context-free grammar; if not, prove it using the pumping lemma.</p>
 </section>
-<section id="exercise-4-the-pumping-lemma">
-<h3>6.4 Exercise 4: The Pumping Lemma<a class="headerlink" href="#exercise-4-the-pumping-lemma" title="Link to this heading">#</a></h3>
-<p>Determine whether the language <span class="math notranslate nohighlight">\(L = \{a^pb^qc^r \mid p = q \text{ or } q = r\}\)</span> is context-free. Prove your answer.</p>
+<section id="cfg-union-builder">
+<h3>6.4 CFG Union Builder<a class="headerlink" href="#cfg-union-builder" title="Link to this heading">#</a></h3>
+<p>Implement a complete system for combining two context-free grammars using the union operation. Your implementation should handle naming conflicts automatically and produce a valid CFG that generates the union of the two input languages.</p>
+<p>Inputs: two CFGs representing:</p>
+<ul class="simple">
+<li><p>G1: Language of balanced parentheses <span class="math notranslate nohighlight">\(\{(^n )^n \mid n \ge 0 \}\)</span></p></li>
+<li><p>G2: Language of equal brackets: <span class="math notranslate nohighlight">\(\{[^n ]^n \mid n \ge 0 \}\)</span></p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># CFG for balanced parentheses</span>
+<span class="n">cfg_parens</span> <span class="o">=</span> <span class="n">CFG</span><span class="p">(</span>
+    <span class="n">variables</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;S&#39;</span><span class="p">},</span>
+    <span class="n">terminals</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;(&#39;</span><span class="p">,</span> <span class="s1">&#39;)&#39;</span><span class="p">},</span>
+    <span class="n">rules</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;S&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;( S )&#39;</span><span class="p">,</span> <span class="s1">&#39;∧&#39;</span><span class="p">]},</span>
+    <span class="n">start</span><span class="o">=</span><span class="s1">&#39;S&#39;</span>
+<span class="p">)</span>
+
+<span class="c1"># CFG for balanced brackets</span>
+<span class="n">cfg_brackets</span> <span class="o">=</span> <span class="n">CFG</span><span class="p">(</span>
+    <span class="n">variables</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;S&#39;</span><span class="p">},</span>
+    <span class="n">terminals</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;[&#39;</span><span class="p">,</span> <span class="s1">&#39;]&#39;</span><span class="p">},</span>
+    <span class="n">rules</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;S&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;[ S ]&#39;</span><span class="p">,</span> <span class="s1">&#39;∧&#39;</span><span class="p">]},</span>
+    <span class="n">start</span><span class="o">=</span><span class="s1">&#39;S&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="concatenation-constructor">
+<h3>6.5 Concatenation Constructor<a class="headerlink" href="#concatenation-constructor" title="Link to this heading">#</a></h3>
+<p>Implement a method to concatenate two CFLs. Given CFGs for <span class="math notranslate nohighlight">\(L_1\)</span> and <span class="math notranslate nohighlight">\(L_2\)</span>, create a CFG for <span class="math notranslate nohighlight">\(L_1L_2\)</span>.</p>
+<p>Inputs: two CFGs representing:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(L_1\)</span>: Language of <span class="math notranslate nohighlight">\(\{a^nb^n \mid n \geq 0 \}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(L_2\)</span>: Language of <span class="math notranslate nohighlight">\(\{c^m \mid m \geq 0 \}\)</span></p></li>
+</ul>
+</section>
+<section id="kleene-star-generator">
+<h3>6.6 Kleene Star Generator<a class="headerlink" href="#kleene-star-generator" title="Link to this heading">#</a></h3>
+<p>Implement a function that takes a CFG and produces a new CFG that generates the Kleene closure of the original language. Handle edge cases where the original language already contains ∧.</p>
+</section>
+<section id="pumping-lemma-checker">
+<h3>6.7 Pumping Lemma Checker<a class="headerlink" href="#pumping-lemma-checker" title="Link to this heading">#</a></h3>
+<p>Create a program that verifies whether a given string decomposition satisfies the pumping lemma conditions for CFLs. The program should check all three conditions and demonstrate pumping.</p>
 </section>
 </section>
 <section id="further-reading">
@@ -1263,10 +1305,13 @@ Determine whether their intersection is context-free. If it is, provide a contex
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practice-exercises">6. Practice Exercises</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-1-closure-properties">6.1 Exercise 1: Closure Properties</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-2-true-or-false">6.2 Exercise 2: True or False</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-3-non-closure-properties">6.3 Exercise 3: Non-Closure Properties</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-4-the-pumping-lemma">6.4 Exercise 4: The Pumping Lemma</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#closure-properties">6.1 Closure Properties</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#true-or-false">6.2 True or False</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#non-closure-properties">6.3 Non-Closure Properties</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cfg-union-builder">6.4 CFG Union Builder</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#concatenation-constructor">6.5 Concatenation Constructor</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kleene-star-generator">6.6 Kleene Star Generator</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pumping-lemma-checker">6.7 Pumping Lemma Checker</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">7. Further Reading</a></li>
@@ -1303,7 +1348,7 @@ By Yong Zhang, Dylan Zwick
   
   <div class="footer-item">
     <p class="last-updated">
-  Last updated on Aug 21, 2025.
+  Last updated on Nov 05, 2025.
   <br/>
 </p>
   </div>
