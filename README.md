@@ -25,7 +25,7 @@ The content is organized to support both self-study and classroom instruction.
 ---
 
 ## 📁 Repository Structure
-
+This repository contains the Jupyter notebooks used in the CS 4110 textbook. To access the HTML version of the textbook, visit:[CS 4110 Textbook (HTML)](https://yzhangweber.github.io/cs4110-jupyterbook/intro.html)
 ```
 ./content
 ├── Part_0_Preliminary_Material/ 
