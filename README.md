@@ -71,6 +71,6 @@ This textbook is authored and maintained by:
 
 ## 🙌 Acknowledgments
 
-Thank you to the Weber State OER team and collaborators supporting this project and helping to make high-quality educational materials freely accessible.
+Thank you to the Weber State OER team and WSU Online instructional designer supporting this project and helping to make high-quality educational materials freely accessible.
 
 ---
