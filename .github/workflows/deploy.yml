@@ -34,7 +34,7 @@ jobs:
 
       - name: Build the book
         run: |
-          jupyter-book build . --verbose 2>&1 | tee build.log
+          jupyter-book build . 2>&1 | tee build.log
           if [ ! -d "_build/html" ]; then
             echo "Build failed - _build/html not found"
             cat build.log
