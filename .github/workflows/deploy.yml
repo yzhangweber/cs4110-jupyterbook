@@ -29,9 +29,17 @@ jobs:
         run: |
           pip install jupyter-book
           pip install sphinx-last-updated-by-git
+          pip install sphinxcontrib-mermaid
+          pip install sphinx-book-theme
 
       - name: Build the book
-        run: jupyter-book build .
+        run: |
+          jupyter-book build . --verbose 2>&1 | tee build.log
+          if [ ! -d "_build/html" ]; then
+            echo "Build failed - _build/html not found"
+            cat build.log
+            exit 1
+          fi
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
