@@ -21,18 +21,18 @@ parts:
   - caption: Context Free Languages
     numbered: 1
     chapters:
-      - file: content/Part_2_Context_Free_Languages/Chapter_08/Chapter08_Fundamentals_of_CFG
-      - file: content/Part_2_Context_Free_Languages/Chapter_09/Chapter09_CFG_Normal_Forms_and_Transformations
-      - file: content/Part_2_Context_Free_Languages/Chapter_10/Chapter10_PDA
-      - file: content/Part_2_Context_Free_Languages/Chapter_11/Chapter11_Properties_of_Context_free Languages
-      - file: content/Part_2_Context_Free_Languages/Chapter_12/Chapter12_Decidability_in_CFG
+      - file: content/Part_2_Context_Free_Languages/Chapter_09/Chapter09_Fundamentals_of_CFG
+      - file: content/Part_2_Context_Free_Languages/Chapter_10/Chapter10_CFG_Normal_Forms_and_Transformations
+      - file: content/Part_2_Context_Free_Languages/Chapter_11/Chapter11_PDA
+      - file: content/Part_2_Context_Free_Languages/Chapter_12/Chapter12_Properties_of_Context_free Languages
+      - file: content/Part_2_Context_Free_Languages/Chapter_13/Chapter13_Decidability_in_CFG
   - caption: Turing Machines
     numbered: 1
     chapters:
-      - file: content/Part_3_Turing_Machines/Chapter_13/Chapter13_Introduction_to_Turing_Machines
-      - file: content/Part_3_Turing_Machines/Chapter_14/Chapter14_Turing_Machine_Languages
-      - file: content/Part_3_Turing_Machines/Chapter_15/Chapter15_Turing_Machine_Encoding
-      - file: content/Part_3_Turing_Machines/Chapter_16/Chapter16_Universal_Turing_Machine
+      - file: content/Part_3_Turing_Machines/Chapter_14/Chapter14_Introduction_to_Turing_Machines
+      - file: content/Part_3_Turing_Machines/Chapter_15/Chapter15_Turing_Machine_Languages
+      - file: content/Part_3_Turing_Machines/Chapter_16/Chapter16_Turing_Machine_Encoding
+      - file: content/Part_3_Turing_Machines/Chapter_17/Chapter17_Universal_Turing_Machine
   - caption: Advanced Topics
     numbered: 1
     chapters:
