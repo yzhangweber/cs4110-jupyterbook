@@ -27,7 +27,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install jupyter-book
+          pip install "jupyter-book<2"
           pip install sphinx-last-updated-by-git
           pip install sphinxcontrib-mermaid
           pip install sphinx-book-theme
