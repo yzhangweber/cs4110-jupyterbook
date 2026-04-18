@@ -58,7 +58,6 @@ sphinx:
 
     html_js_files:
       - - a11y-fixes.js
-        - defer: True
 
     # -------------------------------------------------------
     # Accessibility: MathJax 3 screen reader support
