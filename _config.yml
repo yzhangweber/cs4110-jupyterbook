@@ -44,12 +44,43 @@ html:
       numbered_chapters: true
       number_toc_sections: false  
   
-# Sphinx extensions
+# Sphinx extensions and accessibility configuration
 sphinx:
   config:
     html_last_updated_fmt: '%b %d, %Y'
-    html_show_sourcelink: true  
+    html_show_sourcelink: true
+
+    # -------------------------------------------------------
+    # Accessibility: link static fix files into every page
+    # -------------------------------------------------------
+    html_css_files:
+      - a11y-fixes.css
+
+    html_js_files:
+      - - a11y-fixes.js
+        - defer: True
+
+    # -------------------------------------------------------
+    # Accessibility: MathJax 3 screen reader support
+    # Fixes math aria-hidden and tabindex
+    # -------------------------------------------------------
+    mathjax3_config:
+      options:
+        enableMenu: true
+        menuOptions:
+          settings:
+            assistiveMml: true
+      loader:
+        load:
+          - "[tex]/configmacros"
+          - "a11y/assistive-mml"
+      a11y:
+        speech: true
+        braille: false
+        subtitles: false        
+
   extra_extensions:
     - sphinxcontrib.mermaid  # Enables {mermaid} blocks
     - sphinx.ext.githubpages
     - sphinx_last_updated_by_git
+    - sphinx.ext.mathjax        # ensures MathJax 3 is active

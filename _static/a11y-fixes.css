@@ -1,0 +1,134 @@
+/* ============================================================
+   a11y-fixes.css  —  CS 4110 Jupyter Book Accessibility Fixes
+   Drop into: docs/_static/a11y-fixes.css  (or _static/)
+   Referenced via _config.yml html_css_files entry
+   ============================================================ */
+
+/* ----------------------------------------------------------
+   ISSUE 1 — Skip link: make it visible on focus and ensure
+   it is always rendered (some themes hide it off-screen but
+   the z-index or positioning may be wrong).
+   ---------------------------------------------------------- */
+.skip-link,
+a[href="#main-content"]:first-of-type {
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+  z-index: 9999;
+  padding: 0.6em 1.2em;
+  background: #1a1a2e;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 1rem;
+  border: 3px solid #7B2FBE;
+  border-radius: 4px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.skip-link:focus,
+a[href="#main-content"]:first-of-type:focus {
+  top: 8px;
+  left: 8px;
+  outline: 3px solid #ffdd00;   /* high-contrast yellow outline on focus */
+  outline-offset: 2px;
+}
+
+/* ----------------------------------------------------------
+   ISSUE 2 & 6 — Universal focus indicator.
+   Covers all interactive elements including GitHub icon
+   buttons and download links that currently show nothing.
+   ---------------------------------------------------------- */
+
+/* Reset any theme rules that suppress outlines */
+*:focus {
+  outline: none; /* let :focus-visible handle it cleanly */
+}
+
+*:focus-visible {
+  outline: 3px solid #7B2FBE;
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* Buttons — GitHub link, .md/.pdf download, Back-to-top */
+.btn:focus-visible,
+a.btn:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible,
+.headerlink:focus-visible,
+.bd-header-article button:focus-visible,
+.navbar-nav a:focus-visible,
+footer a:focus-visible {
+  outline: 3px solid #7B2FBE;
+  outline-offset: 3px;
+  border-radius: 3px;
+  /* Some Sphinx Book Theme buttons use box-shadow for styling;
+     keep that but add the outline on top */
+  box-shadow: 0 0 0 3px rgba(123, 47, 190, 0.35);
+}
+
+/* ----------------------------------------------------------
+   ISSUE 6 — Headings: visible focus for screen reader /
+   keyboard navigation (h1-h4 can receive programmatic focus
+   via tabindex="-1" from skip link or screen reader commands).
+   ---------------------------------------------------------- */
+h1:focus,
+h2:focus,
+h3:focus,
+h4:focus,
+h5:focus,
+h6:focus {
+  outline: 3px solid #7B2FBE;
+  outline-offset: 5px;
+  border-radius: 3px;
+  /* Subtle background flash so sighted mobility users can
+     see where they landed */
+  background-color: rgba(123, 47, 190, 0.07);
+  scroll-margin-top: 80px;  /* clears sticky header */
+}
+
+/* Heading anchor (#) links — only show on heading focus/hover */
+.headerlink {
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+h1:focus .headerlink,
+h2:focus .headerlink,
+h3:focus .headerlink,
+h1:hover .headerlink,
+h2:hover .headerlink,
+h3:hover .headerlink {
+  opacity: 1;
+}
+
+/* ----------------------------------------------------------
+   ISSUE 5 — Math tabindex stops: visually signal that a math
+   element is focused even before the JS fix removes the
+   tabindex. This makes the stop less confusing for sighted
+   keyboard users who can at least see something happened.
+   ---------------------------------------------------------- */
+mjx-container:focus,
+.MathJax:focus,
+[data-mjx-container]:focus {
+  outline: 2px dashed #7B2FBE;
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+/* ----------------------------------------------------------
+   ISSUE 7 — Code blocks: add a subtle focus ring when a
+   <pre> or <code> cell gains focus for copy/inspection.
+   ---------------------------------------------------------- */
+pre:focus,
+pre:focus-visible,
+div.cell_output:focus-visible {
+  outline: 2px solid #7B2FBE;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Code blocks — labelled region styling (set by JS) */
+[role="region"][aria-label] > pre {
+  margin-top: 0;
+}

@@ -5,6 +5,11 @@ on:
     branches:
       - main
 
+# Prevent overlapping deployments if two pushes happen in quick succession
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 permissions:
   contents: read
   pages: write
@@ -39,6 +44,22 @@ jobs:
             echo "Build failed - _build/html not found"
             cat build.log
             exit 1
+          fi
+
+      # Confirms _static/ files made it into the build output.
+      # If either line prints "NOT FOUND", check that _static/ exists
+      # at the repo root and is committed (not in .gitignore).
+      - name: Verify a11y static files were included
+        run: |
+          if [ -f "_build/html/_static/a11y-fixes.css" ]; then
+            echo "✓ a11y-fixes.css found in build output"
+          else
+            echo "NOT FOUND: a11y-fixes.css — check _static/ is committed at repo root"
+          fi
+          if [ -f "_build/html/_static/a11y-fixes.js" ]; then
+            echo "✓ a11y-fixes.js found in build output"
+          else
+            echo "NOT FOUND: a11y-fixes.js — check _static/ is committed at repo root"
           fi
 
       - name: Upload artifact
