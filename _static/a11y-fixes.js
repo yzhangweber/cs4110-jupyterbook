@@ -429,31 +429,97 @@
   }
 
   /* ============================================================
-     MAIN — Run all fixes in order
-     ============================================================ */
-  ready(function () {
-    fixSkipLink();
-    fixIconButtons();
-    fixTabOrder();
-    fixHeadingFocus();
-    fixHeadingTitles();
-    fixCodeBlocks();
+   UPDATED — hookMathJaxEvents
+   Replaces the previous version. Uses MathJax's own startup
+   promise so fixes run exactly when rendering completes on
+   heavy pages like Chapters 12 and 13, regardless of how
+   long typesetting takes.
+   ============================================================ */
+  function hookMathJaxEvents() {
 
+    // --- Method 1: MathJax 3 startup promise (most reliable) ---
+    // MathJax 3 exposes a promise that resolves when all initial
+    // math on the page has been typeset. Hook into it directly.
+    function hookWhenMathJaxReady() {
+      if (window.MathJax && window.MathJax.startup && window.MathJax.startup.promise) {
+        window.MathJax.startup.promise.then(function () {
+          console.info("[a11y] MathJax startup promise resolved — running math fixes.");
+          fixMathAccessibility();
+          fixMathSelectable();
+        }).catch(function (err) {
+          console.warn("[a11y] MathJax startup promise rejected:", err);
+        });
+      } else {
+        // MathJax not ready yet — retry in 200ms
+        setTimeout(hookWhenMathJaxReady, 200);
+      }
+    }
+    hookWhenMathJaxReady();
+
+    // --- Method 2: MathJax TypesetComplete custom event ---
+    document.addEventListener("MathJax:TypesetComplete", function () {
+      fixMathAccessibility();
+      fixMathSelectable();
+    });
+
+    // --- Method 3: MutationObserver for dynamically added math ---
+    const observer = new MutationObserver(function (mutations) {
+      const hasMath = mutations.some(function (m) {
+        return Array.from(m.addedNodes).some(function (n) {
+          return n.nodeType === 1 &&
+            (n.matches("mjx-container, .MathJax") ||
+             n.querySelector("mjx-container, .MathJax"));
+        });
+      });
+      if (hasMath) {
+        fixMathAccessibility();
+        fixMathSelectable();
+      }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+}
+
+/* ============================================================
+   UPDATED — MAIN ready() block
+   Keeps safety-net timeouts but extends the final one to 10s
+   for heavy pages, while the startup promise handles the
+   precise timing on all pages.
+   ============================================================ */
+ready(function () {
+  fixSkipLink();
+  fixIconButtons();
+  fixTabOrder();
+  fixHeadingFocus();
+  fixHeadingTitles();
+  fixCodeBlocks();
+
+  // Run immediately for any math already in the DOM
+  fixMathAccessibility();
+  fixMathSelectable();
+
+  // Hook MathJax events for math rendered after page load
+  hookMathJaxEvents();
+
+  // Safety-net timeouts — catches edge cases where the startup
+  // promise or events don't fire (e.g. MathJax config errors)
+  setTimeout(function () {
     fixMathAccessibility();
     fixMathSelectable();
-    hookMathJaxEvents();
+  }, 2000);
 
-    // Re-run math fixes after lazy MathJax rendering completes
-    setTimeout(function () {
-      fixMathAccessibility();
-      fixMathSelectable();
-    }, 1500);
+  setTimeout(function () {
+    fixMathAccessibility();
+    fixMathSelectable();
+  }, 5000);
 
-    setTimeout(function () {
-      fixMathAccessibility();
-      fixMathSelectable();
-    }, 4000);
+  // Extended timeout for heavy pages like Chapters 12 and 13
+  // which have significantly more math than other chapters
+  setTimeout(function () {
+    fixMathAccessibility();
+    fixMathSelectable();
+    console.info("[a11y] Final safety-net math pass complete.");
+  }, 10000);
 
-    console.info("[a11y] All accessibility fixes applied.");
-  });
+  console.info("[a11y] All accessibility fixes applied.");
+});
 })();
