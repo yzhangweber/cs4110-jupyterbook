@@ -208,31 +208,44 @@
       // Remove aria-hidden from the container itself
       container.removeAttribute("aria-hidden");
 
-      // Remove tabindex="0" — replaced with "-1" below if labelled
+      // Remove tabindex="0"
       container.removeAttribute("tabindex");
 
-      // Build an aria-label from available sources
+      // --- Build an aria-label from all available sources ---
       let label = "";
 
+      // Source 1: SVG <title> element
       const svgTitle = container.querySelector("svg title");
       if (svgTitle && svgTitle.textContent.trim()) {
         label = svgTitle.textContent.trim();
       }
 
+      // Source 2: data-latex / data-math on a parent
       if (!label) {
-        const parent = container.closest("[data-latex], [data-math], script[type]");
+        const parent = container.closest("[data-latex], [data-math]");
         if (parent) {
           label = parent.getAttribute("data-latex") ||
-                  parent.getAttribute("data-math") ||
-                  parent.textContent.trim();
+                  parent.getAttribute("data-math") || "";
         }
       }
 
-      const assistiveMml = container.querySelector(".MJX_Assistive_MathML, mjx-assistive-mml");
-      if (!label && assistiveMml) {
-        label = assistiveMml.textContent.trim();
+      // Source 3: mjx-assistive-mml text content (preferred — human readable)
+      if (!label) {
+        const assistiveMml = container.querySelector("mjx-assistive-mml");
+        if (assistiveMml) {
+          label = assistiveMml.textContent.trim();
+        }
       }
 
+      // Source 4: .MJX_Assistive_MathML (older MathJax CHTML fallback)
+      if (!label) {
+        const legacyMml = container.querySelector(".MJX_Assistive_MathML");
+        if (legacyMml) {
+          label = legacyMml.textContent.trim();
+        }
+      }
+
+      // Source 5: preceding <script type="math/tex"> sibling
       if (!label) {
         let sib = container.previousElementSibling;
         if (sib && sib.tagName === "SCRIPT" &&
@@ -241,15 +254,43 @@
         }
       }
 
+      // Source 6: any MathML <annotation> encoding tag inside the SVG
+      // MathJax often embeds the original LaTeX source here
+      if (!label) {
+        const annotation = container.querySelector("annotation[encoding='application/x-tex']");
+        if (annotation) {
+          label = annotation.textContent.trim();
+        }
+      }
+
+      // Source 7: full text content of the container as absolute last resort
+      // Strip down to just text nodes, avoiding the visual rendering characters
+      if (!label) {
+        const assistive = container.querySelector("mjx-assistive-mml, .MJX_Assistive_MathML");
+        if (!assistive) {
+          // Walk the MathML structure if present
+          const mathEl = container.querySelector("math");
+          if (mathEl) {
+            label = mathEl.textContent.trim();
+          }
+        }
+      }
+
+      // --- Apply the label or leave exposed without aria-hidden ---
       if (label) {
         container.setAttribute("aria-label", label);
         container.setAttribute("role", "math");
         container.setAttribute("tabindex", "-1");
       } else {
-        container.setAttribute("aria-hidden", "true");
+        // CHANGED: no longer re-adds aria-hidden when label not found.
+        // Leaving the container exposed means screen readers can at least
+        // navigate into the MathML structure directly, which is better
+        // than complete invisibility.
+        container.setAttribute("role", "math");
+        container.setAttribute("aria-label", "mathematical expression");
       }
 
-      // The visual SVG is hidden from AT; the container carries the label
+      // Visual SVG stays hidden from AT — container carries the label
       const svg = container.querySelector("svg");
       if (svg) {
         svg.setAttribute("aria-hidden", "true");
@@ -257,8 +298,7 @@
         svg.setAttribute("focusable", "false");
       }
 
-      // The visual mjx-math element should be hidden from screen readers;
-      // the mjx-assistive-mml element handles the reading
+      // Visual mjx-math hidden — mjx-assistive-mml handles reading
       const mjxMath = container.querySelector("mjx-math");
       if (mjxMath) {
         mjxMath.setAttribute("aria-hidden", "true");
@@ -267,7 +307,7 @@
 
     console.info("[a11y] MathJax containers patched:", containers.length);
   }
-
+  
   /* ============================================================
      NEW — Fix mjx-assistive-mml unselectable="on"
 
