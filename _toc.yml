@@ -7,17 +7,17 @@ parts:
   - caption: Preliminary Material
     numbered: 1
     chapters:
-    - file: content/Part_0_Preliminary_Material/Chapter00_Set_Theory
+    - file: content/Part_0_Preliminary_Material/Chapter_00/Chapter00_Set_Theory
   - caption: Regular Languages
     numbered: 1
     chapters:
-      - file: content/Part_1_Regular_Languages/Chapter01_Languages
-      - file: content/Part_1_Regular_Languages/Chapter02_Regular_Expressions
-      - file: content/Part_1_Regular_Languages/Chapter03_Finite_Automata
-      - file: content/Part_1_Regular_Languages/Chapter04_Nondeterministic_Finite_Automata
-      - file: content/Part_1_Regular_Languages/Chapter05_Kleene's_Theorem_Part1
-      - file: content/Part_1_Regular_Languages/Chapter06_Kleene's_Theorem_Part2
-      - file: content/Part_1_Regular_Languages/Chapter07_Nonregular_Languages
+      - file: content/Part_1_Regular_Languages/Chapter01/Chapter01_Languages
+      - file: content/Part_1_Regular_Languages/Chapter02/Chapter02_Regular_Expressions
+      - file: content/Part_1_Regular_Languages/Chapter03/Chapter03_Finite_Automata
+      - file: content/Part_1_Regular_Languages/Chapter04/Chapter04_Nondeterministic_Finite_Automata
+      - file: content/Part_1_Regular_Languages/Chapter05/Chapter05_Kleene's_Theorem_Part1
+      - file: content/Part_1_Regular_Languages/Chapter06/Chapter06_Kleene's_Theorem_Part2
+      - file: content/Part_1_Regular_Languages/Chapter07/Chapter07_Nonregular_Languages
   - caption: Context Free Languages
     numbered: 1
     chapters:
@@ -36,9 +36,10 @@ parts:
   - caption: Advanced Topics
     numbered: 1
     chapters:
-      - file: content/Part_4_Advanced_Topics/Chapter17_P_and_NP_Problems
-      - file: content/Part_4_Advanced_Topics/Chapter18_NP_Completeness
+      - file: content/Part_4_Advanced_Topics/Chapter_18/Chapter18_P_and_NP_Problems
+      - file: content/Part_4_Advanced_Topics/Chapter_19/Chapter19_NP_Completeness
   - caption: Appendix
     numbered: 1
     chapters:
       - file: content/Appendix/Jupyter Notebook Setup Guide
+      - file: content/Appendix/Appendix_The_Growth_of_Functions
