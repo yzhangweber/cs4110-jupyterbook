@@ -1,0 +1,7 @@
+Collecting pandas==1.5.3
+  Downloading pandas-1.5.3.tar.gz (5.2 MB)
+     ---------------------------------------- 0.0/5.2 MB ? eta -:--:--     -------------------------- ------------- 3.4/5.2 MB 54.9 MB/s eta 0:00:01     ---------------------------------------- 5.2/5.2 MB 56.4 MB/s  0:00:00
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'error'
