@@ -11,13 +11,13 @@ parts:
   - caption: Regular Languages
     numbered: 1
     chapters:
-      - file: content/Part_1_Regular_Languages/Chapter01/Chapter01_Languages
-      - file: content/Part_1_Regular_Languages/Chapter02/Chapter02_Regular_Expressions
-      - file: content/Part_1_Regular_Languages/Chapter03/Chapter03_Finite_Automata
-      - file: content/Part_1_Regular_Languages/Chapter04/Chapter04_Nondeterministic_Finite_Automata
-      - file: content/Part_1_Regular_Languages/Chapter05/Chapter05_Kleene's_Theorem_Part1
-      - file: content/Part_1_Regular_Languages/Chapter06/Chapter06_Kleene's_Theorem_Part2
-      - file: content/Part_1_Regular_Languages/Chapter07/Chapter07_Nonregular_Languages
+      - file: content/Part_1_Regular_Languages/Chapter_01/Chapter01_Languages
+      - file: content/Part_1_Regular_Languages/Chapter_02/Chapter02_Regular_Expressions
+      - file: content/Part_1_Regular_Languages/Chapter_03/Chapter03_Finite_Automata
+      - file: content/Part_1_Regular_Languages/Chapter_04/Chapter04_Nondeterministic_Finite_Automata
+      - file: content/Part_1_Regular_Languages/Chapter_05/Chapter05_Kleene's_Theorem_Part1
+      - file: content/Part_1_Regular_Languages/Chapter_06/Chapter06_Kleene's_Theorem_Part2
+      - file: content/Part_1_Regular_Languages/Chapter_07/Chapter07_Nonregular_Languages
   - caption: Context Free Languages
     numbered: 1
     chapters:
